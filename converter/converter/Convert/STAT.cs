@@ -74,7 +74,7 @@ namespace Convert
         public static TES5.Group start()
         {
             int count = 0;
-            TES3.ESM.open("tes3/morrowind.esm");
+            TES3.ESM.open(Config.Paths.mw_esm);
             
             List<STRUCT_STAT> list_stat = new List<STRUCT_STAT>();
 

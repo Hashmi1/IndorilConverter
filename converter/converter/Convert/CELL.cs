@@ -27,7 +27,7 @@ namespace Convert
         {
             int count = 2; // TES4 header and CELL TOP Group
 
-            TES3.ESM.open("tes3/morrowind.esm");
+            TES3.ESM.open(Config.Paths.mw_esm);
             TES5.Group cell_grup = new TES5.Group("CELL");
 
             while (TES3.ESM.find("CELL"))
@@ -86,7 +86,7 @@ namespace Convert
         static string lookup_replacement(string name)
         {
             string backup = name;
-            TextReader tr = File.OpenText("name_replacement.txt");
+            TextReader tr = File.OpenText(Config.Paths.cell_name_replace);
 
             while (tr.Peek() != -1)
             {
@@ -99,7 +99,7 @@ namespace Convert
                     {
                         tr.Close();
                         Log.info("Invalid Replacement suggested for " + backup +". Must be < 33 chars and not empty.");
-                        Log.info("Please fix name_replacement.txt and press enter.");
+                        Log.info("Please fix in " + Config.Paths.cell_name_replace + " and press enter.");
                         Console.ReadLine();
                         return backup;
                     }
@@ -109,7 +109,7 @@ namespace Convert
             }
 
             tr.Close();
-            TextWriter tx = File.AppendText("name_replacement.txt");
+            TextWriter tx = File.AppendText(Config.Paths.cell_name_replace);
             tx.WriteLine(name + "=");
             tx.Close();
             Log.info("CELL NAME TOO LONG Please update: " + name + " And then press enter to continue");

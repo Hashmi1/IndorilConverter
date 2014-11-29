@@ -21,19 +21,19 @@ namespace Convert
 {
     class DOOR
     {
-        struct door_
+        public struct door_
         {
             public string id;
             public string full_name;
             public string model_path;
-            public string open_sound;
-            public string close_sound;
+            //public string open_sound;
+            //public string close_sound;
         }
 
         public static List<door_> get_tes3_doors()
         {
 
-            TES3.ESM.open("tes3\\morrowind.esm");
+            TES3.ESM.open(Config.Paths.mw_esm);
             
             List<door_> door_list = new List<door_>();
 
@@ -75,9 +75,9 @@ namespace Convert
             
             }
 
-            return dor_list;
+            return door_list;
         }
-
+        
         public static TES5.Group make_tes5_doors(List<door_> lst)
         {
             
@@ -100,7 +100,8 @@ namespace Convert
 
         public static void convert_models(List<door_> lst, string input_path, string output_path)
         {
-            //Config.Paths.mw_meshes + 
+            //Config.Paths.mw_meshes +
+ 
         }
 
 

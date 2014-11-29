@@ -24,57 +24,6 @@ namespace Landscape_Module
     {
         public World world = World.getInstance();
         
-        // obsolete
-        public void reconstruct2(Record land, int cell_x, int cell_y)
-        {
-            Log.error("reconstruct2: Obsolete function, do not call");
-
-            Log.info("Re-Assembling cell " + cell_x + "," + cell_y);
-
-            ATXT atxt = null;
-
-            foreach (Field field in land.fields)
-            {   
-
-                if (field.isType("ATXT"))
-                {
-                    atxt = ATXT.fromField(field);
-                }
-
-                if (field.isType("VTXT"))
-                {
-                    if (atxt == null)
-                    {
-                        Log.error("ATXT not set");
-                    }
-
-                    VTXT vtxt = new VTXT();
-                    
-                    for (ushort pos = 0; pos < 289; pos++)
-                    {
-                        float opacity = world.get(cell_x, cell_y, atxt.quad, atxt.layer, pos);
-                        if (opacity == -1f)
-                        {
-                            continue;
-                        }
-
-                        vtxt.add_point(pos, opacity);
-                    }
-
-                    if (vtxt.size() != field.dataSize)
-                    {
-                        Log.error("NO");
-                    }
-
-                    vtxt.replace(field);
-                    atxt = null;
-                }
-
-
-            }
-
-        }
-
         public void reconstruct(Record land, int cell_x, int cell_y)
         {            
             Log.info("Re-Assembling cell " + cell_x + "," + cell_y);            

@@ -162,7 +162,7 @@ namespace TES5
         }
 
         
-        long temp_store;
+        //long temp_store;
 
         public void read(BinaryReader input, bool unpack = true)
         {            
