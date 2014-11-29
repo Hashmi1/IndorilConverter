@@ -59,6 +59,7 @@
     <Compile Include="Convert\STAT.cs" />
     <Compile Include="Convert\VTEX_HELPER.cs" />
     <Compile Include="External\External_Program.cs" />
+    <Compile Include="External\NifConvert.cs" />
     <Compile Include="External\NVDXT.cs" />
     <Compile Include="Convert\CELL.cs" />
     <Compile Include="Convert\check_cell_tex_count.cs" />

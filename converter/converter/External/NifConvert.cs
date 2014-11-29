@@ -15,10 +15,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Convert
+namespace converter.External
 {
-    class REFR
+    class NifConvert
     {
-
     }
 }
