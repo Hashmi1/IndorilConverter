@@ -20,23 +20,70 @@ namespace TES5
 {
     class ESM
     {
-        public Record tes4 = new Record();
-        public List<Group> groups = new List<Group>();
-        public FileStream fstream;
+        
+        public long length
+        {
+            get { return fstream.Length; }
+            //private set;
+        }
+
+        public long pointer
+        {
+            get { return fstream.Position; }
+            //private set;
+        }
+
+        private string file_name;
+
+        private Record tes4 = new Record();
+        private bool read_ = false;
+        private FileStream fstream;
+        private List<Group> groups = new List<Group>();
+
+        private BinaryReader reader = null;
+        private BinaryWriter writer = null;
+                
+        private FileMode my_mode;
 
         public ESM(string file,FileMode mode)
         {
+            this.my_mode = mode;
+            this.file_name = file;
             fstream = new FileStream(file, mode);
+        }
+
+        private int get_num_records()
+        {
+            return 0;
         }
         
         public BinaryReader getReader()
         {
-            return new BinaryReader(fstream);
+            if (my_mode != FileMode.Open)
+            {
+                Utility.Log.error("Can not read from this file, was opened for writing.");
+            }
+
+            if (reader == null)
+            {
+                reader = new BinaryReader(fstream);
+            }
+            return reader;
         }
 
         public BinaryWriter getWriter()
         {
-            return new BinaryWriter(fstream);
+            if (my_mode != FileMode.Create)
+            {
+                Utility.Log.error("Can not write to this file, was opened for writing.");
+            }
+
+            if (writer == null)
+            {
+                writer = new BinaryWriter(fstream);
+            }
+
+            return writer;
         }
 
         public void close()
@@ -45,9 +92,46 @@ namespace TES5
             fstream.Close();
         }
 
-
-        public void read()
+        public void add_Top_Group(Group g)
         {
+            // TODO: Order matters
+            groups.Add(g);
+        }
+
+        public void write()
+        {
+            if (groups.Count == 0)
+            {
+                Utility.Log.error("ESM has no data.");
+            }
+                        
+            fstream = new FileStream(file_name, FileMode.Create);
+            my_mode = FileMode.Create;
+
+            BinaryWriter bw = getWriter();
+
+            tes4.write(bw);
+
+            foreach (Group g in groups)
+            {
+                g.write(bw);
+            }
+
+
+        }
+
+        public List<Group> read()
+        {
+            if (my_mode != FileMode.Open)
+            {
+                Utility.Log.error("ESM can not be read, is opened in write mode");
+            }
+
+            if (read_)
+            {
+                return groups;
+            }
+            
             long size = fstream.Length;
             
             BinaryReader input = getReader();
@@ -62,6 +146,8 @@ namespace TES5
                 groups.Add(grup);
             }
 
+            read_ = true;
+            return (groups);
         }
 
 

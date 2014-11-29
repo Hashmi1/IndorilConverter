@@ -106,9 +106,10 @@ namespace Convert
         {
             TES5.ESM esm = new TES5.ESM("tes5/tesannwyn.esp", FileMode.Open);
 
-            esm.read();
+            List<TES5.Group> groups = esm.read();
             
-            foreach (TES5.Group group in esm.groups)
+
+            foreach (TES5.Group group in groups)
             {
                 search_group(group);
             }

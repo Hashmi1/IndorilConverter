@@ -14,6 +14,15 @@ namespace Utility
            Console.WriteLine(obj);
         }
 
+        public static void info_(params Object[] objs)
+        {
+            foreach (object obj in objs)
+            {
+                Console.Write(obj + ",");
+            }
+            Console.Write('\n');
+        }
+
         public static void infoX(Object obj)
         {
             Console.WriteLine(obj);

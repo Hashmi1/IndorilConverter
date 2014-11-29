@@ -304,6 +304,19 @@ namespace TES5
 
         }
 
+        public Field find_field(string f_name)
+        {
+            foreach (Field f in fields)
+            {
+                if (f.isType(f_name))
+                {
+                    return f;
+                }
+            }
+
+            return null;
+        }
+
     }
 
 }

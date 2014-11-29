@@ -78,7 +78,7 @@ namespace Utility
             r1.read(br1);
             //r1.write(br2);
             
-            while (p1.fstream.Position < p1.fstream.Length)
+            while (p1.pointer < p1.length)
             {
                 Group g = new Group();
                 g.read(br1);

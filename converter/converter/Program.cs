@@ -32,12 +32,15 @@ namespace Program
                 File.Delete("Landscape-Log.txt");
             }
 
+            //Convert.Exterior_CELL.thiser();
+
+
             //TESAnnwyn tn = new TESAnnwyn();
             //tn.convert();
 
             //Landscape_Module.fixer.start();
 
-            Landscape_Module.Main.start();
+            //Landscape_Module.Main.start();
             //Landscape_Module.comparer.main();
             Log.info("DONE");            
             Console.Read();

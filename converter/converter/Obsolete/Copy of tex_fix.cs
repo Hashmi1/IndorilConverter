@@ -113,11 +113,12 @@ namespace Convert
         {
             TES5.ESM esm = new TES5.ESM("tes5/land2.esp", FileMode.Open);
 
-            esm.read();
-
+            
             mode = 1;
 
-            foreach (TES5.Group group in esm.groups)
+            List<TES5.Group> groups = esm.read();
+
+            foreach (TES5.Group group in groups)
             {
                 search_group(group);
             }
@@ -126,7 +127,8 @@ namespace Convert
 
             mode = 2;
 
-            foreach (TES5.Group group in esm.groups)
+            
+            foreach (TES5.Group group in groups)
             {
                 search_group(group);
             }
@@ -146,7 +148,7 @@ namespace Convert
             //grps[0].write(bw);
             //grps[1].write(bw);
             
-            foreach (TES5.Group group in esm.groups)
+            foreach (TES5.Group group in groups)
             {
                 group.recalculate_size();
                 group.write(bw);

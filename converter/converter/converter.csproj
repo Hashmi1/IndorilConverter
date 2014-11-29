@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="Convert.cs" />
+    <Compile Include="Convert\ECELL.cs" />
     <Compile Include="Obsolete\ACTI.cs" />
     <Compile Include="Obsolete\Copy of tex_fix.cs" />
     <Compile Include="Obsolete\Copy of VTEX_HELPER.cs" />
@@ -57,12 +58,12 @@
     <Compile Include="Obsolete\ESM.cs" />
     <Compile Include="Obsolete\REFR.cs" />
     <Compile Include="Obsolete\REPLACE.cs" />
-    <Compile Include="Obsolete\STAT.cs" />
+    <Compile Include="Convert\STAT.cs" />
     <Compile Include="Obsolete\VTEX_HELPER.cs" />
     <Compile Include="External\External_Program.cs" />
     <Compile Include="External\NifConvert.cs" />
     <Compile Include="External\NVDXT.cs" />
-    <Compile Include="Obsolete\CELL.cs" />
+    <Compile Include="Convert\CELL.cs" />
     <Compile Include="Obsolete\check_cell_tex_count.cs" />
     <Compile Include="Obsolete\tex_fix.cs" />
     <Compile Include="Obsolete\formid_replace.cs" />

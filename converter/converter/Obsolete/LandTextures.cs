@@ -41,13 +41,6 @@ namespace Convert
         public static void test()
         {
 
-            TES5.ESM esm = new TES5.ESM("tes5/tesannwyn.esp", FileMode.Open);
-            esm.read();
-            
-            foreach (TES5.Group grp in esm.groups)
-            {
-                //foreach (TES5.Group in grp
-            }
             
         }
 

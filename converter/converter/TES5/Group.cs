@@ -40,7 +40,7 @@ namespace TES5
 
         char[] type;
         UInt32 groupSize;
-        byte[] label;
+        public byte[] label { get; private set; }
         Int32 groupType;
         UInt16 stamp;
         UInt16 unknown1;
@@ -124,7 +124,7 @@ namespace TES5
 
         public void write(BinaryWriter output)
         {
-            //recalculate_size();
+            recalculate_size();
 
             output.Write(type);
             output.Write(groupSize);
@@ -212,7 +212,15 @@ namespace TES5
             Log.info(">GRUP dump");
         }
 
+        public bool isType(TYPE t)
+        {
+            if (this.groupType == (int)t)
+            {
+                return true;
+            }
 
+            return false;
+        }
 
     }
 

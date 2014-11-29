@@ -115,11 +115,11 @@ namespace Landscape_Module
         {
             TES5.ESM esm = new TES5.ESM("tes5/land2.esp", FileMode.Open);
 
-            esm.read();
+            List<TES5.Group> groups = esm.read(); 
 
             mode = 1;
 
-            foreach (TES5.Group group in esm.groups)
+            foreach (TES5.Group group in groups)
             {
                 search_group(group);
             }
@@ -130,7 +130,7 @@ namespace Landscape_Module
 
             mode = 2;
 
-            foreach (TES5.Group group in esm.groups)
+            foreach (TES5.Group group in groups)
             {
                 search_group(group);
             }
@@ -150,7 +150,7 @@ namespace Landscape_Module
             //grps[0].write(bw);
             //grps[1].write(bw);
 
-            foreach (TES5.Group group in esm.groups)
+            foreach (TES5.Group group in groups)
             {
                 group.recalculate_size();
                 group.write(bw);

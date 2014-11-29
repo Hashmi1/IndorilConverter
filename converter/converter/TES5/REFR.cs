@@ -30,6 +30,7 @@ namespace TES5
             float xR;
             float yR;
             float zR;
+            
 
             public placement(float x, float y, float z, float xR, float yR, float zR)
             {
@@ -39,6 +40,7 @@ namespace TES5
                 this.xR = xR;
                 this.yR = yR;
                 this.zR = zR;
+                
             }
 
             public byte[] toBin()
@@ -57,12 +59,20 @@ namespace TES5
 
         }
 
-        public REFR(uint formid,float x, float y, float z, float xR, float yR, float zR) : base("REFR")
+        public REFR(uint formid,float x, float y, float z, float xR, float yR, float zR,float scale = 1f) : base("REFR")
         {
             
             Field NAME = new Field("NAME", Binary.toBin(formid));
             Field DATA = new Field("DATA",new placement(x, y, z, xR, yR, zR).toBin());
+
+            
             fields.Add(NAME);
+            if (scale != 1f)
+            {
+                Field XSCL = new Field("XSCL", Binary.toBin(scale));
+                fields.Add(XSCL);
+            }
+
             fields.Add(DATA);
         }
 
