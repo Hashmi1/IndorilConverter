@@ -8,6 +8,10 @@ using System.Text;
     {
         public class Paths
         {
+            public static string tmp = "tmp\\";
+
+            public static string tesannwyn_path = "external\\TESAnnwyn\\";
+
             public static string cell_name_replace = "config\\cell_name_replacements.txt";
             public static string morrowind_path = "tes3\\";
             public static string mw_meshes = "tes3\\data\\meshes\\";

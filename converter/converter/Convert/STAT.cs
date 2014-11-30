@@ -71,10 +71,10 @@ namespace Convert
             public string model_path;
         }
 
-        public static TES5.Group start()
+        public static TES5.Group mw_statics(string file_path)
         {
             int count = 0;
-            TES3.ESM.open(Config.Paths.mw_esm);
+            TES3.ESM.open(file_path);
             
             List<STRUCT_STAT> list_stat = new List<STRUCT_STAT>();
 
@@ -125,6 +125,7 @@ namespace Convert
                         BinaryWriter bw = new BinaryWriter(mstream);
                         bw.Write(90f);
                         bw.Write(0);
+
                 stat_tes5.addField(new TES5.Field("DNAM", mstream.ToArray()));
 
 

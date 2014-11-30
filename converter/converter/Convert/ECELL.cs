@@ -23,21 +23,18 @@ namespace Convert
 
     class Exterior_CELL
     {
-        // Call this function to blend tesannwyn landscape textures
+        
         public static void blend_landscape()
         {
             Log.error("Not Implemented Yet");
         }
-
-        void transform_coordinates(ref int cell_x, ref int cell_y)
-        {
-            cell_x = cell_x * 2;
-            cell_y = cell_y * 2;
-        }
+                
         static ReferenceGroup_Index ref_index = new ReferenceGroup_Index();
 
-        public static void add_references(TES5.ESM esm)
+        public static void add_references(TES5.ESM esm,string file2)
         {
+            Log.info("Adding Exterior References");
+
             ref_index.make(esm);
 
             TES3.ESM.open(Config.Paths.mw_esm);
@@ -53,6 +50,8 @@ namespace Convert
                     continue;
                 }
 
+                Log.info(morrowind_cell.cell_name);
+
                 count++;
 
                 foreach (TES3.REFR morrowind_reference in morrowind_cell.references)
@@ -64,12 +63,20 @@ namespace Convert
                         continue;   // Reference Base not converted, so skip
                     }
 
+                    Log.info("Adding Reference: " + refr_id);
+
                     TES5.REFR skyrim_reference = new TES5.REFR(formid, morrowind_reference.x, morrowind_reference.y, morrowind_reference.z, morrowind_reference.xR, morrowind_reference.yR, morrowind_reference.zR,morrowind_reference.scale);
                     
                     int cell_x = (int)(morrowind_reference.x / 4096f);
                     int cell_y = (int)(morrowind_reference.y / 4096f);
 
                     TES5.Group reference_group = ref_index.get_reference_group(cell_x,cell_y);
+
+                    if (reference_group == null)
+                    {
+                        continue;
+                    }
+
                     reference_group.addRecord(skyrim_reference);
 
                 }
@@ -77,12 +84,10 @@ namespace Convert
 
             Log.info(count + " Exterior Cells found");
 
-            esm.write();
+            esm.Save(file2);
         }
-
-        
-       
-
+            
+      
     }
 
     class ReferenceGroup_Index
@@ -109,6 +114,7 @@ namespace Convert
             if (!dict.ContainsKey(key))
             {
                 Log.error("Cell-Index not found: " + x + "," + y);
+                return null;
             }
 
             return dict[key];

@@ -51,6 +51,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Convert.cs" />
     <Compile Include="Convert\ECELL.cs" />
+    <Compile Include="Convert\LAND.cs" />
     <Compile Include="Obsolete\ACTI.cs" />
     <Compile Include="Obsolete\Copy of tex_fix.cs" />
     <Compile Include="Obsolete\Copy of VTEX_HELPER.cs" />
@@ -67,7 +68,7 @@
     <Compile Include="Obsolete\check_cell_tex_count.cs" />
     <Compile Include="Obsolete\tex_fix.cs" />
     <Compile Include="Obsolete\formid_replace.cs" />
-    <Compile Include="Obsolete\LandTextures.cs" />
+    <Compile Include="Convert\LTEX.cs" />
     <Compile Include="Obsolete\Locations.cs" />
     <Compile Include="External\TESAnnwyn.cs" />
     <Compile Include="Landscape Module\CONSTANTS.cs" />

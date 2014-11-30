@@ -29,9 +29,11 @@ namespace External
             this.name = name;
         }
 
-        protected void run(string command)
+        protected string[] run(string command)
         {
-            
+
+            List<string> output = new List<string>();
+
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
             startInfo.FileName = exec_path;
@@ -45,7 +47,8 @@ namespace External
             while (!process.StandardOutput.EndOfStream)
             {
                 string line = process.StandardOutput.ReadLine();
-                Log.info(line);
+                output.Add(line);
+                Log.infoX(line);
             }
 
 
@@ -74,7 +77,7 @@ namespace External
                 Log.error(name + " returned error or could not complete." + '\n' + command);
             }
 
-
+            return output.ToArray();
         }
     }
 }
