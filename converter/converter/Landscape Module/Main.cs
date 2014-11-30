@@ -113,6 +113,8 @@ namespace Landscape_Module
 
         public static void start()
         {
+            Log.error("Needs Updating");
+            /*
             TES5.ESM esm = new TES5.ESM("tes5/land2.esp", FileMode.Open);
 
             List<TES5.Group> groups = esm.read(); 
@@ -145,7 +147,7 @@ namespace Landscape_Module
             // TES5.Group[] grps = Convert.LandTextures.start();
 
 
-            TES5.Record.TES4(1).write(bw);
+            //TES5.Record.TES4(1).write(bw);
 
             //grps[0].write(bw);
             //grps[1].write(bw);
@@ -158,7 +160,7 @@ namespace Landscape_Module
 
             esm2.close();
 
-
+            */
         }
 
     }

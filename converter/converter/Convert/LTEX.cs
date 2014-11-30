@@ -19,32 +19,10 @@ using System.IO;
 
 namespace Convert
 {
-    class LandTextures
+    class LTEX
     {
         
-        private static void grab_files()
-        {
-            string tes3_path = "tes3/data/textures/";
-            string tes5_path = "tes5/morrowind/";
 
-            foreach (string texture in Stored.land_texture_list)
-            {
-                string f_source = tes3_path + texture;
-                string f_destin = tes5_path + texture;
-
-                if (!File.Exists(f_source))
-                {
-                    Log.info("Not found: " +f_source);
-                    continue;
-                }
-
-                File.Copy(f_source, f_destin,true);
-            }
-
-            //Stored.land_texture_list
-            //File.Copy();
-        }
-        
         public static TES5.Group[] convert()
         {   
             TES5.Group grup_txst = new TES5.Group("TXST");

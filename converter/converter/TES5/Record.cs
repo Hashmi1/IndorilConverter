@@ -49,25 +49,7 @@ namespace TES5
         //byte[] compressed_data;
         // END Data
 
-        public static Record TES4(int num_records)
-        {
-            Record tes4 = new Record();
-            ESM file = new ESM("tes5/template01.esp",FileMode.Open);
-            tes4.read(file.getReader());
-
-            Field hedr = tes4.fields[0];
-            hedr.data = new MemoryStream();
-            BinaryWriter b_writer = new BinaryWriter(hedr.data);
-
-            b_writer.Write(1.7f);
-            b_writer.Write(num_records);
-            b_writer.Write(FormID.getHEDRObj());
-
-            hedr.data.Position = 0;
-            
-            return tes4;
-
-        }
+        
 
         public Record()
         {

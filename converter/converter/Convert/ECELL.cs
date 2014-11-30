@@ -31,13 +31,13 @@ namespace Convert
                 
         static ReferenceGroup_Index ref_index = new ReferenceGroup_Index();
 
-        public static void add_references(TES5.ESM esm,string file2)
+        public static void add_references(List<TES5.Group> grps_, string file_mw)
         {
             Log.info("Adding Exterior References");
 
-            ref_index.make(esm);
+            ref_index.make(grps_);
 
-            TES3.ESM.open(Config.Paths.mw_esm);
+            TES3.ESM.open(file_mw);
             int count = 0;
             while (TES3.ESM.find("CELL"))
             {
@@ -71,20 +71,14 @@ namespace Convert
                     int cell_y = (int)(morrowind_reference.y / 4096f);
 
                     TES5.Group reference_group = ref_index.get_reference_group(cell_x,cell_y);
-
-                    if (reference_group == null)
-                    {
-                        continue;
-                    }
-
+                
                     reference_group.addRecord(skyrim_reference);
 
                 }
             }
 
             Log.info(count + " Exterior Cells found");
-
-            esm.Save(file2);
+            TES3.ESM.close();
         }
             
       
@@ -119,21 +113,16 @@ namespace Convert
 
             return dict[key];
         }
-        
-        public void make(TES5.ESM esm_)
+
+        public void make(List<TES5.Group> groups)
         {
             made = true;
-
-            TES5.ESM f = esm_;
-
-            List<TES5.Group> groups = esm_.read();
-                        
+                                    
             foreach (TES5.Group g in groups)
             {
                 search_group(g);                
             }
-
-            f.close();            
+                        
         }
                 
         private void search_group(TES5.Group grup)

@@ -16,15 +16,32 @@ using System.Linq;
 using System.Text;
 using TES5;
 using Utility;
+using System.IO;
 
 namespace Convert
 {
     class LAND
     {
-        public List<Group> convert(string file)
+
+        public static List<Group> convert(string file)
         {
+            Group[] ltexes = LTEX.convert();
+
+            
             External.TESAnnwyn tesannwyn = new External.TESAnnwyn();
-             return null;
+
+            tesannwyn.convert(file, Config.Paths.tmp + "tmp.esp");
+
+            ESM esm = ESM.read_from_file(Config.Paths.tmp + "tmp.esp");
+            List<Group> grps = esm.groups;
+            
+            new LAND().renumber_formids(grps);
+
+
+            grps.Insert(0, ltexes[1]);
+            grps.Insert(1, ltexes[0]);
+            
+            return grps;
         }
 
         // TESAnnwyn has assumed our given texture formids in tes3ltex.txt to be from skyrim.esm, making skyrim.esm a master 

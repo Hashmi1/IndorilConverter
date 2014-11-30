@@ -20,142 +20,81 @@ namespace TES5
 {
     class ESM
     {
-        
-        public long length
+
+        public List<Group> groups { get; private set; }
+        private Record tes4;
+
+
+        public ESM()
         {
-            get { return fstream.Length; }
-            //private set;
-        }
-
-        public long pointer
-        {
-            get { return fstream.Position; }
-            //private set;
-        }
-
-        private string file_name;
-
-        private Record tes4 = new Record();
-        private bool read_ = false;
-        private FileStream fstream;
-        private List<Group> groups = new List<Group>();
-
-        private BinaryReader reader = null;
-        private BinaryWriter writer = null;
-                
-        private FileMode my_mode;
-
-        public ESM(string file,FileMode mode)
-        {
-            this.my_mode = mode;
-            this.file_name = file;
-            fstream = new FileStream(file, mode);
-        }
-
-        private int get_num_records()
-        {
-            return 0;
-        }
-        
-        public BinaryReader getReader()
-        {
-            if (my_mode != FileMode.Open)
-            {
-                Utility.Log.error("Can not read from this file, was opened for writing.");
-            }
-
-            if (reader == null)
-            {
-                reader = new BinaryReader(fstream);
-            }
-            return reader;
-        }
-
-        public BinaryWriter getWriter()
-        {
-            if (my_mode != FileMode.Create)
-            {
-                Utility.Log.error("Can not write to this file, was opened for writing.");
-            }
-
-            if (writer == null)
-            {
-                writer = new BinaryWriter(fstream);
-            }
-
-            return writer;
-        }
-
-        public void close()
-        {
-            fstream.Flush();
-            fstream.Close();
-        }
-
-        public void add_Top_Group(Group g)
-        {
-            // TODO: Order matters
-            groups.Insert(0, g);
-            
-        }
-
-        public void Save(string file)
-        {
-            if (groups.Count == 0)
-            {
-                Utility.Log.error("ESM has no data.");
-            }
-
-            file_name = file;
-
-            fstream = new FileStream(file, FileMode.Create);
-            my_mode = FileMode.Create;
-
-            BinaryWriter bw = getWriter();
-
-            tes4.write(bw);
-
-            foreach (Group g in groups)
-            {
-                g.write(bw);
-            }
-
-
-        }
-
-        public List<Group> read()
-        {
-            if (my_mode != FileMode.Open)
-            {
-                Utility.Log.error("ESM can not be read, is opened in write mode");
-            }
-
-            if (read_)
-            {
-                return groups;
-            }
-            
-            long size = fstream.Length;
-            
-            BinaryReader input = getReader();
-
+            groups = new List<Group>();
             tes4 = new Record();
-            tes4.read(input);
+        }
+
+        public ESM(List<Group> grps_)
+        {
+            groups = grps_;
+            tes4 = new Record();
+        }
+
+        public void add_top_group(Group g)
+        {
+            groups.Insert(0, g);
+        }
+
+        public static ESM read_from_file(string filename)
+        {
+            ESM esm = new ESM();
+
+            FileStream fstream = new FileStream(filename,FileMode.Open);
+            BinaryReader reader = new BinaryReader(fstream);
+
+            esm.tes4.read(reader);
 
             while (fstream.Position < fstream.Length)
             {
-                Group grup = new Group();
-                grup.read(input);
-                groups.Add(grup);
+                Group g = new Group();
+                g.read(reader);
+                esm.groups.Add(g);
             }
 
-            read_ = true;
-            return (groups);
+            return esm;
         }
 
+        public void write_to_file(string filename)
+        {
+            FileStream fstream = new FileStream(filename,FileMode.Create);
+            BinaryWriter writer = new BinaryWriter(fstream);
 
-              
+            tes4 = get_tes4_template(1);
+            tes4.write(writer);
 
-    } 
- 
+            foreach (Group g in groups)
+            {
+                g.write(writer);
+            }
+        }
+
+        private Record get_tes4_template(int num_records)
+        {
+         
+            Record tes4;
+            ESM file = ESM.read_from_file("tes5\\template01.esp");
+            tes4 = file.tes4;
+
+            Field hedr = tes4.fields[0];
+            hedr.data = new MemoryStream();
+            BinaryWriter b_writer = new BinaryWriter(hedr.data);
+
+            b_writer.Write(1.7f);
+            b_writer.Write(num_records);
+            b_writer.Write(FormID.getHEDRObj());
+
+            hedr.data.Position = 0;
+            
+            return tes4;
+                    
+        }
+
+    }
 }

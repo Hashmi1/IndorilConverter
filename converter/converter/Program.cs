@@ -32,16 +32,26 @@ namespace Program
                 File.Delete("Landscape-Log.txt");
             }
 
+            List<TES5.Group> grps = Convert.LAND.convert(Config.Paths.mw_esm);
+
+            TES5.ESM esm = new TES5.ESM(grps);
+
+            esm.write_to_file("tes5\\data\\converted.esp");
+            
+            
+
+
+
             //TESAnnwyn conv = new TESAnnwyn();
             //conv.convert("tes3\\data\\morrowind.esm", "tes5\\data\\conv.esp");
 
             
-            
+            /*
             TES5.ESM esm = new TES5.ESM("tes5\\data\\conv.esp",FileMode.Open);
             TES5.Group stat_ = Convert.STAT.mw_statics(Config.Paths.mw_esm);
             esm.add_Top_Group(stat_);
             Convert.Exterior_CELL.add_references(esm,"ecells.esp");
-            
+            */
 
 
             Log.info("DONE");            
