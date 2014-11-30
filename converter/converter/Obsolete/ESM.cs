@@ -23,7 +23,7 @@ namespace Convert
     {
         public static void start()
         {
-            TES5.Group stat_grup = STAT.start();
+            TES5.Group stat_grup = STAT.mw_statics(Config.Paths.mw_esm);
             TES5.Group cell_grup = CELL.start();
 
             TES5.ESM esm = new TES5.ESM("interiors.esp", FileMode.Create);

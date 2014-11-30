@@ -23,7 +23,7 @@ namespace TES5
         static Dictionary<string, uint> dict = new Dictionary<string, uint>();
         static Dictionary<string, uint> dict_replacements = new Dictionary<string, uint>();
 
-        static uint current = 0x802 + 0x1000000;
+        static uint current = 0x802;// + 0x1000000;
         static uint first = 0x802;
 
         public static void init_replacements()

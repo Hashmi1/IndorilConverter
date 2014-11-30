@@ -21,31 +21,8 @@ namespace Convert
 {
     class LandTextures
     {
-        static void search(TES5.Group group)
-        {
-            foreach (TES5.Record record in group.records)
-            {
-                if (record.isType("LAND"))
-                {
-                    foreach (TES5.Field field in record.fields)
-                    {
-                        if (field.isType("ATXT"))
-                        {
-
-                        }
-                    }
-                }
-            }
-        }
-
-        public static void test()
-        {
-
-            
-        }
-
-
-        public static void grab_files()
+        
+        private static void grab_files()
         {
             string tes3_path = "tes3/data/textures/";
             string tes5_path = "tes5/morrowind/";
@@ -67,9 +44,8 @@ namespace Convert
             //Stored.land_texture_list
             //File.Copy();
         }
-
-
-        public static TES5.Group[] start()
+        
+        public static TES5.Group[] convert()
         {   
             TES5.Group grup_txst = new TES5.Group("TXST");
             TES5.Group grup_ltex = new TES5.Group("LTEX");

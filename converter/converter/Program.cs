@@ -32,16 +32,18 @@ namespace Program
                 File.Delete("Landscape-Log.txt");
             }
 
-            //Convert.Exterior_CELL.thiser();
+            //TESAnnwyn conv = new TESAnnwyn();
+            //conv.convert("tes3\\data\\morrowind.esm", "tes5\\data\\conv.esp");
+
+            
+            
+            TES5.ESM esm = new TES5.ESM("tes5\\data\\conv.esp",FileMode.Open);
+            TES5.Group stat_ = Convert.STAT.mw_statics(Config.Paths.mw_esm);
+            esm.add_Top_Group(stat_);
+            Convert.Exterior_CELL.add_references(esm,"ecells.esp");
+            
 
 
-            //TESAnnwyn tn = new TESAnnwyn();
-            //tn.convert();
-
-            //Landscape_Module.fixer.start();
-
-            //Landscape_Module.Main.start();
-            //Landscape_Module.comparer.main();
             Log.info("DONE");            
             Console.Read();
         }

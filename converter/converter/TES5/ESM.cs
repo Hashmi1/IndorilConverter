@@ -95,17 +95,20 @@ namespace TES5
         public void add_Top_Group(Group g)
         {
             // TODO: Order matters
-            groups.Add(g);
+            groups.Insert(0, g);
+            
         }
 
-        public void write()
+        public void Save(string file)
         {
             if (groups.Count == 0)
             {
                 Utility.Log.error("ESM has no data.");
             }
-                        
-            fstream = new FileStream(file_name, FileMode.Create);
+
+            file_name = file;
+
+            fstream = new FileStream(file, FileMode.Create);
             my_mode = FileMode.Create;
 
             BinaryWriter bw = getWriter();
