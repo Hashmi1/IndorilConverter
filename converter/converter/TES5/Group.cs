@@ -40,7 +40,7 @@ namespace TES5
 
         char[] type;
         UInt32 groupSize;
-        public byte[] label { get; set; }
+        public byte[] label { get; private set; }
         Int32 groupType;
         UInt16 stamp;
         UInt16 unknown1;
