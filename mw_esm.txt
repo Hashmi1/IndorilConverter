@@ -274,7 +274,10 @@ Number of unique main headers = 42
 	NPCS = Spell/ability (32 bytes), multiple
 	
 12: LTEX =   107 (    48,     62.84,     76)
-	Land Texture?
+	Land Texture.
+	NAME = Editor ID string
+	DATA = Texture Path string
+	INTV = Texture Index (4 byte int) 0 to 106. This number is used in LAND VTEX records
 
 13: STAT =  2788 (    39,     59.74,     79)
 	Static
