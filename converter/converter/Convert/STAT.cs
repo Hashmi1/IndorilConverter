@@ -71,7 +71,7 @@ namespace Convert
             public string model_path;
         }
 
-        public static TES5.Group mw_statics(string file_path)
+        public static TES5.Group convert(string file_path)
         {
             int count = 0;
             TES3.ESM.open(file_path);

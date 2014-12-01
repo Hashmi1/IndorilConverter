@@ -32,14 +32,32 @@ namespace Program
                 File.Delete("Landscape-Log.txt");
             }
 
+            /*
+            float op = 1880.7122f;
+            int x = (int)(-0.249709033f);
+            if (x < 0)
+            {
+                Log.info("ok now:");
+            }
+            Log.error("HEre it is: " +x);
+            */
+
             TES5.Group[] ltex = Convert.LTEX.convert(Config.Paths.mw_esm);
-            //List<TES5.Group> wrld = Convert.LAND.convert(Config.Paths.mw_esm);
+            List<TES5.Group> wrld = Convert.LAND.convert(Config.Paths.mw_esm);
+            TES5.Group stat = Convert.STAT.convert(Config.Paths.mw_esm);
+
+            Convert.REFR_EXT.add_references(wrld, Config.Paths.mw_esm);
+
 
             TES5.ESM esm = new TES5.ESM();
             
+
             esm.add_group(ltex[0]);
             esm.add_group(ltex[1]);
-            //esm.add_group(wrld);
+            esm.add_group(stat);
+            esm.add_group(wrld);
+
+
 
             esm.write_to_file(Config.Paths.skyrim_path + "test.esp");
 

@@ -81,10 +81,9 @@ namespace Convert
                         
             foreach (mw_ltex t in mw_textures)
             {
-                string texture = t.texture_path;
-
-                TES5.Record txst = make(texture);
-                TES5.Record ltex = make_ltex(txst.id,texture);
+                
+                TES5.Record txst = make_txst(t.editor_id,t.texture_path);
+                TES5.Record ltex = make_ltex(txst.id,t.editor_id);
 
                 LAND.add_texture(t.index, t.editor_id, t.texture_path, ltex.id);
 
@@ -103,26 +102,28 @@ namespace Convert
                         
         }
 
-        static TES5.Record make_ltex(uint formid,string texture)
+        static TES5.Record make_ltex(uint formid,string editor_id)
         {
             TES5.Record ltex = new TES5.Record("LTEX");
-            ltex.addField(new TES5.Field("EDID", Text.editor_id("LAND_" + texture.Replace(".dds", "").Replace(".tga",""))));
+            ltex.addField(new TES5.Field("EDID", Text.editor_id("LAND_" + editor_id)));
             ltex.addField(new TES5.Field("TNAM", Binary.toBin(formid)));
-            ltex.addField(new TES5.Field("HNAM", new byte[2]{30,30}));
+            ltex.addField(new TES5.Field("HNAM", new byte[2]{2,0}));
             ltex.addField(new TES5.Field("SNAM", new byte[1] { 30 }));
             
             return ltex; 
         }
 
-        static TES5.Record make(string texture)
+        static TES5.Record make_txst(string editor_id, string texture)
         {
-            string path = "morrowind/";
+            texture = texture.Replace(".tga", ".dds");
+
+            string path = "morrowind\\";
 
             TES5.Record txset = new TES5.Record("TXST");
-            txset.addField(new TES5.Field("EDID", Text.editor_id(texture.Replace(".dds","").Replace(".tga",""))));
+            txset.addField(new TES5.Field("EDID", Text.editor_id(editor_id)));
             txset.addField(new TES5.Field("OBND", new byte[12]));
             txset.addField(new TES5.Field("TX00", Text.zstring(path+texture)));
-            txset.addField(new TES5.Field("TX01", Text.zstring(path + "/normal/" +texture.Replace(".dds","_.dds"))));
+            txset.addField(new TES5.Field("TX01", Text.zstring(path + texture.Replace(".dds","_n.dds"))));
 
             ushort flag = (ushort)BinaryFlag.set(0, 0x01);
             txset.addField(new TES5.Field("DNAM", Binary.toBin(flag)));

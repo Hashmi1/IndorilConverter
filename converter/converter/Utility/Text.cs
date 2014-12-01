@@ -60,11 +60,40 @@ namespace Utility
             txt = trim(txt);
             txt = "mw_" + txt;
             txt = txt.ToLower();
-            txt = txt.Replace("'", "");
-            txt = txt.Replace(",", "");
-            txt = txt.Replace(":", "");
-            txt = txt.Replace(" ", "_");
-            txt = txt.Replace("-", "");
+            
+            txt = txt.Replace("`", "_");
+            txt = txt.Replace("~", "_");
+            txt = txt.Replace("!", "_");
+            txt = txt.Replace("@", "_");
+            txt = txt.Replace("#", "_");
+            txt = txt.Replace("$", "_");
+            txt = txt.Replace("%", "_");
+            txt = txt.Replace("^", "_");
+            txt = txt.Replace("&", "_");
+            txt = txt.Replace("*", "_");
+            txt = txt.Replace("(", "_");
+            txt = txt.Replace(")", "_");
+            txt = txt.Replace("-", "_");
+            txt = txt.Replace("_", "_");
+            txt = txt.Replace("+", "_");
+            txt = txt.Replace("=", "_");
+            txt = txt.Replace("[", "_");
+            txt = txt.Replace("{", "_");
+            txt = txt.Replace("}", "_");
+            txt = txt.Replace("]", "_");
+            txt = txt.Replace("\\", "_");
+            txt = txt.Replace("|", "_");
+            txt = txt.Replace(":", "_");
+            txt = txt.Replace(";", "_");
+            txt = txt.Replace("\"", "_");
+            txt = txt.Replace("'", "_");
+            txt = txt.Replace(",", "_");
+            txt = txt.Replace("<", "_");
+            txt = txt.Replace(">", "_");
+            txt = txt.Replace(".", "_");
+            txt = txt.Replace("?", "_");
+            txt = txt.Replace("/", "_");
+
             return zstring(txt);
         }
     }

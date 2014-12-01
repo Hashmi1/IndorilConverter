@@ -21,19 +21,13 @@ namespace Convert
 {
     // We use TESAnnwyn to get deal with the messy landscape data for us. Now we need to place objects within it
 
-    class Exterior_CELL
-    {
-        
-        public static void blend_landscape()
-        {
-            Log.error("Not Implemented Yet");
-        }
-                
+    class REFR_EXT
+    {    
         static ReferenceGroup_Index ref_index = new ReferenceGroup_Index();
 
         public static void add_references(List<TES5.Group> grps_, string file_mw)
         {
-            Log.info("Adding Exterior References");
+            Log.info("Adding Exterior CELL References");
 
             ref_index.make(grps_);
 
@@ -47,7 +41,7 @@ namespace Convert
 
                 if (morrowind_cell.interior)
                 {
-                    continue;
+                    continue; 
                 }
 
                 Log.info(morrowind_cell.cell_name);
@@ -66,9 +60,20 @@ namespace Convert
                     Log.info("Adding Reference: " + refr_id);
 
                     TES5.REFR skyrim_reference = new TES5.REFR(formid, morrowind_reference.x, morrowind_reference.y, morrowind_reference.z, morrowind_reference.xR, morrowind_reference.yR, morrowind_reference.zR,morrowind_reference.scale);
-                    
+                                        
                     int cell_x = (int)(morrowind_reference.x / 4096f);
                     int cell_y = (int)(morrowind_reference.y / 4096f);
+
+                    if (morrowind_reference.x < 0f)
+                    {
+                        cell_x--;
+                    }
+
+                    if (morrowind_reference.y < 0)
+                    {
+                        cell_y--;
+                    }
+
 
                     TES5.Group reference_group = ref_index.get_reference_group(cell_x,cell_y);
                 
@@ -77,7 +82,7 @@ namespace Convert
                 }
             }
 
-            Log.info(count + " Exterior Cells found");
+            //Log.info(count + " Exterior Cells found");
             TES3.ESM.close();
         }
             
@@ -187,5 +192,6 @@ namespace Convert
         }
        
     }
+
 
 }

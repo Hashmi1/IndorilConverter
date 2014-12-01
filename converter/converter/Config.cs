@@ -32,6 +32,7 @@ using System.Text;
 
             public static string skyrim_path = "tes5\\";
             public static string sk_meshes = "tes5\\data\\meshes\\morrowind\\";
+            public static string sk_textures = "tes5\\data\\meshes\\morrowind\\";
 
             public static string nif_batch_file = "misc\\nifbatch.txt"; // Do not change unless mirrored in nifconvert
         }
