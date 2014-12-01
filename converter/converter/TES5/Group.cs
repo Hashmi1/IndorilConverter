@@ -1,5 +1,5 @@
 ﻿/*
-Copyright 2014 Hashmi1
+Copyright(c) 2014 Hashmi1
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -95,6 +95,7 @@ namespace TES5
 
         public void recalculate_size()
         {
+            
             Log.info("Recalculating GRUP size");
             long old_size = groupSize;
 
@@ -124,7 +125,12 @@ namespace TES5
 
         public void write(BinaryWriter output)
         {
-            recalculate_size();
+            if (isType(TYPE.TOP))
+            {
+                recalculate_size(); // Don;t re-recalculate when writing doing child groups, that would mean recalculating the same
+                                    // size when writing each subsequent sub-group
+            }
+            
 
             output.Write(type);
             output.Write(groupSize);

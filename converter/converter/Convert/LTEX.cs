@@ -1,5 +1,5 @@
 ﻿/*
-Copyright 2014 Hashmi1
+Copyright(c) 2014 Hashmi1
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,18 +21,72 @@ namespace Convert
 {
     class LTEX
     {
-        
+        public static bool done = false;
 
-        public static TES5.Group[] convert()
-        {   
+        private struct mw_ltex
+        {
+            public string editor_id;
+            public int index;
+            public string texture_path;
+        }
+
+        private static List<mw_ltex> get_mw_land_textures(string file)
+        {
+            List<mw_ltex> lst = new List<mw_ltex>();
+
+            TES3.ESM.open(file);
+            
+            while (TES3.ESM.find("LTEX"))
+            {
+
+                TES3.Record ltex = new TES3.Record();
+                ltex.read();
+
+                mw_ltex mw_ltex_ = new mw_ltex();
+
+
+                foreach (TES3.SubRecord sr in ltex.subRecords)
+                {
+                    if (sr.isType("NAME"))
+                    {
+                        mw_ltex_.editor_id = Text.trim(new string(sr.getData().ReadChars(sr.size)));
+                    }
+
+                    else if (sr.isType("DATA"))
+                    {
+                        mw_ltex_.texture_path = Text.trim(new string (sr.getData().ReadChars(sr.size)));
+                    }
+
+                    else if (sr.isType("INTV"))
+                    {
+                        mw_ltex_.index = sr.getData().ReadInt32();
+                    }
+                }
+
+                lst.Add(mw_ltex_);
+
+            }
+
+            TES3.ESM.close();
+            return lst;
+        }
+
+        
+        public static TES5.Group[] convert(string file)
+        {
+            List<mw_ltex> mw_textures = get_mw_land_textures(file);
+
             TES5.Group grup_txst = new TES5.Group("TXST");
             TES5.Group grup_ltex = new TES5.Group("LTEX");
                         
-            foreach (string texture in Stored.land_texture_list)
+            foreach (mw_ltex t in mw_textures)
             {
+                string texture = t.texture_path;
 
                 TES5.Record txst = make(texture);
                 TES5.Record ltex = make_ltex(txst.id,texture);
+
+                LAND.add_texture(t.index, t.editor_id, t.texture_path, ltex.id);
 
                 grup_txst.addRecord(txst);
                 grup_ltex.addRecord(ltex);
@@ -43,6 +97,8 @@ namespace Convert
             grps[0] = grup_txst;
             grps[1] = grup_ltex;
 
+            done = true;
+
             return grps;
                         
         }
@@ -50,7 +106,7 @@ namespace Convert
         static TES5.Record make_ltex(uint formid,string texture)
         {
             TES5.Record ltex = new TES5.Record("LTEX");
-            ltex.addField(new TES5.Field("EDID", Text.editor_id("LAND_" + texture.Replace(".dds", ""))));
+            ltex.addField(new TES5.Field("EDID", Text.editor_id("LAND_" + texture.Replace(".dds", "").Replace(".tga",""))));
             ltex.addField(new TES5.Field("TNAM", Binary.toBin(formid)));
             ltex.addField(new TES5.Field("HNAM", new byte[2]{30,30}));
             ltex.addField(new TES5.Field("SNAM", new byte[1] { 30 }));
@@ -63,7 +119,7 @@ namespace Convert
             string path = "morrowind/";
 
             TES5.Record txset = new TES5.Record("TXST");
-            txset.addField(new TES5.Field("EDID", Text.editor_id(texture.Replace(".dds",""))));
+            txset.addField(new TES5.Field("EDID", Text.editor_id(texture.Replace(".dds","").Replace(".tga",""))));
             txset.addField(new TES5.Field("OBND", new byte[12]));
             txset.addField(new TES5.Field("TX00", Text.zstring(path+texture)));
             txset.addField(new TES5.Field("TX01", Text.zstring(path + "/normal/" +texture.Replace(".dds","_.dds"))));

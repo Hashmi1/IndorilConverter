@@ -1,5 +1,5 @@
 ﻿/*
-Copyright 2014 Hashmi1
+Copyright(c) 2014 Hashmi1
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,26 +32,16 @@ namespace Program
                 File.Delete("Landscape-Log.txt");
             }
 
-            List<TES5.Group> grps = Convert.LAND.convert(Config.Paths.mw_esm);
+            TES5.Group[] ltex = Convert.LTEX.convert(Config.Paths.mw_esm);
+            //List<TES5.Group> wrld = Convert.LAND.convert(Config.Paths.mw_esm);
 
-            TES5.ESM esm = new TES5.ESM(grps);
-
-            esm.write_to_file("tes5\\data\\converted.esp");
+            TES5.ESM esm = new TES5.ESM();
             
-            
+            esm.add_group(ltex[0]);
+            esm.add_group(ltex[1]);
+            //esm.add_group(wrld);
 
-
-
-            //TESAnnwyn conv = new TESAnnwyn();
-            //conv.convert("tes3\\data\\morrowind.esm", "tes5\\data\\conv.esp");
-
-            
-            /*
-            TES5.ESM esm = new TES5.ESM("tes5\\data\\conv.esp",FileMode.Open);
-            TES5.Group stat_ = Convert.STAT.mw_statics(Config.Paths.mw_esm);
-            esm.add_Top_Group(stat_);
-            Convert.Exterior_CELL.add_references(esm,"ecells.esp");
-            */
+            esm.write_to_file(Config.Paths.skyrim_path + "test.esp");
 
 
             Log.info("DONE");            

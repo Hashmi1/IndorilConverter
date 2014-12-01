@@ -55,13 +55,14 @@
     <Compile Include="Convert\DOOR.cs" />
     <Compile Include="Convert\REPLACE.cs" />
     <Compile Include="Convert\STAT.cs" />
-    <Compile Include="Convert\Stored.cs" />
     <Compile Include="External\External_Program.cs" />
     <Compile Include="External\NifConvert.cs" />
+    <Compile Include="External\Notepad.cs" />
     <Compile Include="External\NVDXT.cs" />
     <Compile Include="Convert\CELL.cs" />
     <Compile Include="Convert\LTEX.cs" />
     <Compile Include="External\TESAnnwyn.cs" />
+    <Compile Include="Init.cs" />
     <Compile Include="Landscape Module\CONSTANTS.cs" />
     <Compile Include="Landscape Module\Main.cs" />
     <Compile Include="Landscape Module\OpacityMap.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Landscape Module\World.cs" />
     <Compile Include="TES3\CELL.cs" />
     <Compile Include="TES3\Record.cs" />
+    <Compile Include="TES3\Analyzer.cs" />
     <Compile Include="TES3\REGN.cs" />
     <Compile Include="TES3\SubRecord.cs" />
     <Compile Include="TES5\ESM.cs" />

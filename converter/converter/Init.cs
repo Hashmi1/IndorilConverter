@@ -15,9 +15,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace External
+class Init
 {
-    class NifConvert
+    public static void init()
     {
+
+        // Remove files that should be overwritten
+
     }
+
 }

@@ -1,5 +1,5 @@
 ﻿/*
-Copyright 2014 Hashmi1
+Copyright(c) 2014 Hashmi1
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,12 +22,30 @@ namespace Convert
 {
     class LAND
     {
+        static LAND()
+        {
+            if (File.Exists(Config.Paths.tesannwyn_path_ltex))
+            {
+                File.Delete(Config.Paths.tesannwyn_path_ltex);
+            }
+        }
+        
+        public static void add_texture(int index, string editor_id, string path, uint formid)
+        {
+            TextWriter w = File.AppendText(Config.Paths.tesannwyn_path_ltex);
+            w.WriteLine((index + 1) + "," + editor_id + "," + path + "," + Text.toHex(formid));
+            w.Flush();
+            w.Close();
+        }
+
 
         public static List<Group> convert(string file)
         {
-            Group[] ltexes = LTEX.convert();
-
-            
+            if (!LTEX.done)
+            {
+                Log.error("Must convert LTEX before converting LAND.");
+            }
+                        
             External.TESAnnwyn tesannwyn = new External.TESAnnwyn();
 
             tesannwyn.convert(file, Config.Paths.tmp + "tmp.esp");
@@ -36,10 +54,6 @@ namespace Convert
             List<Group> grps = esm.groups;
             
             new LAND().renumber_formids(grps);
-
-
-            grps.Insert(0, ltexes[1]);
-            grps.Insert(1, ltexes[0]);
             
             return grps;
         }
@@ -86,11 +100,28 @@ namespace Convert
 
         }
 
+        
+
         private void search_record(Record r)
-        {            
+        {          
+         
             if (r.id >= 0x1000000)
             {
                 r.id -= 0x1000000;
+            }
+
+            foreach (Field f in r.fields)
+            {
+                search_field(f);
+            }
+        }
+
+        
+        private void search_field(Field f)
+        {
+            if (f.isType("BTXT"))
+            {
+                Log.error("BTXT Record found");
             }
         }
                 

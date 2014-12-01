@@ -1,5 +1,5 @@
 ﻿/*
-Copyright 2014 Hashmi1
+Copyright(c) 2014 Hashmi1
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ namespace External
             {
                 string line = process.StandardOutput.ReadLine();
                 output.Add(line);
-                Log.infoX(line);
+                Log.info(line);
             }
 
 

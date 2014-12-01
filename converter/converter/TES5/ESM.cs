@@ -1,5 +1,5 @@
 ﻿/*
-Copyright 2014 Hashmi1
+Copyright(c) 2014 Hashmi1
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -37,9 +37,17 @@ namespace TES5
             tes4 = new Record();
         }
 
-        public void add_top_group(Group g)
+        public void add_group(Group g)
         {
-            groups.Insert(0, g);
+            groups.Add( g);
+        }
+
+        public void add_group(List<Group> grps)
+        {
+            foreach (Group g in grps)
+            {
+                groups.Add(g);
+            }            
         }
 
         public static ESM read_from_file(string filename)

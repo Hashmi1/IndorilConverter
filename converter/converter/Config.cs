@@ -1,5 +1,5 @@
 ﻿/*
-Copyright 2014 Hashmi1
+Copyright(c) 2014 Hashmi1
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ using System.Text;
             public static string tmp = "tmp\\";
 
             public static string tesannwyn_path = "external\\TESAnnwyn\\";
+            public static string tesannwyn_path_ltex = "external\\TESAnnwyn\\tes3ltex.txt";
 
             public static string cell_name_replace = "config\\cell_name_replacements.txt";
             public static string morrowind_path = "tes3\\";
