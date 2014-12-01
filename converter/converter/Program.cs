@@ -32,16 +32,9 @@ namespace Program
                 File.Delete("Landscape-Log.txt");
             }
 
-            /*
-            float op = 1880.7122f;
-            int x = (int)(-0.249709033f);
-            if (x < 0)
-            {
-                Log.info("ok now:");
-            }
-            Log.error("HEre it is: " +x);
-            */
-
+            
+            
+            
             TES5.Group[] ltex = Convert.LTEX.convert(Config.Paths.mw_esm);
             List<TES5.Group> wrld = Convert.LAND.convert(Config.Paths.mw_esm);
             TES5.Group stat = Convert.STAT.convert(Config.Paths.mw_esm);

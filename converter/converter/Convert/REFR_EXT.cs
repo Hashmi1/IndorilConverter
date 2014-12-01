@@ -69,7 +69,7 @@ namespace Convert
                         cell_x--;
                     }
 
-                    if (morrowind_reference.y < 0)
+                    if (morrowind_reference.y < 0f)
                     {
                         cell_y--;
                     }
