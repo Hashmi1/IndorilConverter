@@ -51,11 +51,9 @@
     <Compile Include="Config.cs" />
     <Compile Include="Convert.cs" />
     <Compile Include="Convert\ModelPipeline.cs" />
-    <Compile Include="Convert\Object_Register.cs" />
     <Compile Include="Convert\REFERENCE\Exterior_ReferenceGroup_Index.cs" />
     <Compile Include="Convert\REFERENCE\REFR.cs" />
     <Compile Include="Convert\REFERENCE\Interior_ReferenceGroup_Index.cs" />
-    <Compile Include="Convert\REFR_EXT.cs" />
     <Compile Include="Convert\LAND.cs" />
     <Compile Include="Convert\DOOR.cs" />
     <Compile Include="Convert\REPLACE.cs" />

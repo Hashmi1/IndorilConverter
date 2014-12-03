@@ -17,7 +17,6 @@ using System.Text;
 using System.IO;
 using Utility;
 
-// TODO: Fix DODT, DNAM order
 namespace TES3
 {
     class REFR : Record
@@ -93,16 +92,14 @@ namespace TES3
                 }
                 else if (subrec.isType("DNAM"))
                 {
-                    isPortal = true;
-                    editor_id = editor_id + "_load"; 
+                    isPortal = true;                    
                     portal.destination_cell = Text.trim(new string (srec_data.ReadChars(subrec.size)));
                     lg.log(portal.destination_cell);
                     
                 }
                 else if (subrec.isType("DODT"))
                 {
-
-
+                    editor_id = editor_id + "_load"; 
                     isPortal = true;
                     portal.x = srec_data.ReadSingle();
                     portal.y = srec_data.ReadSingle();

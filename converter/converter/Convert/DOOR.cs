@@ -30,6 +30,7 @@ namespace Convert
             //public string close_sound;
         }
 
+        static public UInt32 marker_id{get; private set;}
 
         static public TES5.Group convert(string file)
         {
@@ -88,6 +89,12 @@ namespace Convert
             
             TES5.Group grup = new TES5.Group("DOOR");
 
+            TES5.Record marker = new TES5.Record("DOOR");
+            marker.addField(new TES5.Field("EDID", Text.editor_id("teleport_marker")));
+
+            marker_id = marker.id;
+            grup.addRecord(marker);
+
             foreach (door_ d in lst)
             {
                 // Make Normal version
@@ -102,9 +109,6 @@ namespace Convert
                 r_load.addField(new TES5.Field("FULL", Text.zstring(d.full_name)));
                 r_load.addField(new TES5.Field("MODL", Text.modelPath(d.model_path.Replace(".nif", "_load.nif"))));
                 
-                Object_Register.getInstance().set_type(r.id,Object_Register.TYPE.DOOR);
-                Object_Register.getInstance().set_type(r.id, Object_Register.TYPE.PORTAL);
-
                 grup.addRecord(r);
                 grup.addRecord(r_load);
             }
@@ -119,6 +123,6 @@ namespace Convert
  
         }
 
-
+        
     }
 }

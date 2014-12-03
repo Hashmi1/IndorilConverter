@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+Copyright(c) 2014 Hashmi1. All Rights Reserved
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +22,7 @@ namespace Convert.REFERENCE
         static Interior_ReferenceGroup_Index int_index = new Interior_ReferenceGroup_Index();
         static Exterior_ReferenceGroup_Index ext_index = new Exterior_ReferenceGroup_Index();
 
-        public static void make_indices(List<TES5.Group> interior_cells, List<TES5.Group> exterior_cells)
+        private static void make_indices(List<TES5.Group> interior_cells, List<TES5.Group> exterior_cells)
         {
             int_index.make(interior_cells);
             ext_index.make(exterior_cells);
@@ -97,8 +108,7 @@ namespace Convert.REFERENCE
         private static TES5.REFR make_exit(TES3.REFR refr, uint formid)
         {
             // Place the exit marker in the world
-            // TODO: reference for generic marker
-            TES5.REFR exit_marker = new TES5.REFR(0, refr.portal.x, refr.portal.y, refr.portal.z, refr.portal.xR, refr.portal.yR, refr.portal.zR, 1);
+            TES5.REFR exit_marker = new TES5.REFR(DOOR.marker_id, refr.portal.x, refr.portal.y, refr.portal.z, refr.portal.xR, refr.portal.yR, refr.portal.zR, 1);
 
             if (String.IsNullOrEmpty(refr.portal.destination_cell)) // teleports to exterior
             {

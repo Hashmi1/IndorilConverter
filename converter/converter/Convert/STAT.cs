@@ -17,55 +17,12 @@ using System.Text;
 using System.IO;
 using Utility;
 
-// TODO: Fix Model Path in convert. Use consistent method
+
 namespace Convert
 {
     class STAT
     {
-        public static void get_unique_models()
-        {
-            
-            string mesh_path_mor = "d:\\data\\meshes\\";
-            string mesh_path_sky = "d:\\data\\morrowind";
-
-            HashSet<string> model_list = new HashSet<string>();
-            TextWriter tx = File.CreateText("stats.txt");
-            
-            int count = 0;
-            TES3.ESM.open("tes3/morrowind.esm");
-            
-
-            while (TES3.ESM.find("STAT"))
-            {
-                count++;
-                TES3.Record stat = new TES3.Record();
-                stat.read();
-
-
-                foreach (TES3.SubRecord srec in stat.subRecords)
-                {
-                    if (srec.isType("MODL"))
-                    {                        
-                        string model = new string(srec.getData().ReadChars(srec.size));
-                        model_list.Add(model);                        
-                    }
-                }
-
-
-            }
-
-            List<string> modl_lst = model_list.ToList<string>();
-            foreach (string modl in modl_lst)
-            {
-                tx.WriteLine(mesh_path_mor+modl);
-                tx.WriteLine(mesh_path_sky + "\\" + modl.Split('\\')[modl.Split('\\').Length-1]);
-                
-            }
-
-            tx.Close();
-            Log.info(count + " STAT found");
-        }
-
+        
         struct STRUCT_STAT
         {
             public string editor_id;

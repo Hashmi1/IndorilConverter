@@ -19,20 +19,18 @@ using System.IO;
 
 namespace Convert
 {
-    // TODO: ownership / scale / exterior cell / door /lock etc.
+    // TODO: ownership/water/light
     class CELL
     {
         
-        public static TES5.Group start()
+        public static TES5.Group convert(string file)
         {
-            int count = 2; // TES4 header and CELL TOP Group
-
-            TES3.ESM.open(Config.Paths.mw_esm);
+            
+            TES3.ESM.open(file);
             TES5.Group cell_grup = new TES5.Group("CELL");
 
             while (TES3.ESM.find("CELL"))
-            {
-                //Log.info("CELL found");
+            {                
                 TES3.CELL morrowind_cell = new TES3.CELL();
                 morrowind_cell.read();
 
@@ -45,10 +43,7 @@ namespace Convert
                 {
                     continue;
                 }
-
-                count++;
-
-                
+                                
                 Log.info(morrowind_cell.cell_name);
 
                 TES5.Record cell5 = new TES5.Record("CELL");
@@ -59,26 +54,10 @@ namespace Convert
                 cell_grup.addRecord(cell5);
 
                 TES5.Group cell_references = new TES5.Group(cell5.id, TES5.Group.TYPE.TEMP_REFR);
-
-                foreach (TES3.REFR morrowind_reference in morrowind_cell.references)
-                {
-                    
-                    string refr_id = morrowind_reference.editor_id;
-                    uint formid = TES5.FormID.get(refr_id);
-                    if (formid == 0)
-                    {
-                        continue;   // Reference Base not converted, so skip
-                    }
-
-                    TES5.REFR skyrim_reference = new TES5.REFR(formid, morrowind_reference.x, morrowind_reference.y, morrowind_reference.z, morrowind_reference.xR, morrowind_reference.yR, morrowind_reference.zR);
-                    cell_references.addRecord(skyrim_reference);    
-                }
-
                 cell_grup.addSubGroup(cell_references);
             }
 
-            TES3.ESM.close();
-            Log.info(count);
+            TES3.ESM.close();            
             return cell_grup;
 
         }
@@ -119,7 +98,7 @@ namespace Convert
              
         }
 
-        public static string shorten_name(string cell_name)
+        static string shorten_name(string cell_name)
         {
             string backup = cell_name;
 
