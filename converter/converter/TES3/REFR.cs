@@ -17,10 +17,33 @@ using System.Text;
 using System.IO;
 using Utility;
 
+// TODO: Fix DODT, DNAM order
 namespace TES3
 {
     class REFR : Record
     {
+        static Log lg = new Log("ref_data.txt");
+
+        public struct Door_Data
+        {
+            public string destination_cell;
+
+            public float x;
+            public float y;
+            public float z;
+
+            public float xR;
+            public float yR;
+            public float zR;
+
+            public bool hasDNAM;
+            public bool hasDODT;
+
+        }
+
+        public bool isTelePorter = false;
+
+        public Door_Data door_data = new Door_Data();
 
         public string editor_id = null;
 
@@ -33,6 +56,8 @@ namespace TES3
         public float xR = 0;
         public float yR = 0;
         public float zR = 0;
+
+        
                 
         public int read(int readable_size)
         {
@@ -52,8 +77,7 @@ namespace TES3
                 }
                 else if (subrec.isType("NAME"))
                 {
-                    editor_id = new string(srec_data.ReadChars(subrec.size));
-                    //Log.info(editor_id);
+                    editor_id = new string(srec_data.ReadChars(subrec.size));                    
                 }
                 else if (subrec.isType("XSCL"))
                 {
@@ -67,6 +91,31 @@ namespace TES3
                     xR = srec_data.ReadSingle();
                     yR = srec_data.ReadSingle();
                     zR = srec_data.ReadSingle();
+                }
+                else if (subrec.isType("DNAM"))
+                {
+                    isTelePorter = true;
+                    editor_id = editor_id + "_load"; 
+                    door_data.destination_cell = Text.trim(new string (srec_data.ReadChars(subrec.size)));
+                    lg.log(door_data.destination_cell);
+                    door_data.hasDNAM = true;
+                }
+                else if (subrec.isType("DODT"))
+                {
+                    door_data.hasDODT = true;
+
+                    if (!isTelePorter)
+                    {
+                      //  Log.error("TES3-REFR: DODT encountered before DNAM ... possible bug.");
+                    }
+                    door_data.x = srec_data.ReadSingle();
+                    door_data.y = srec_data.ReadSingle();
+                    door_data.z = srec_data.ReadSingle();
+
+                    door_data.xR = srec_data.ReadSingle();
+                    door_data.yR = srec_data.ReadSingle();
+                    door_data.zR = srec_data.ReadSingle();
+
                 }
 
 

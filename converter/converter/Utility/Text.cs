@@ -30,7 +30,14 @@ namespace Utility
 
             return st;
         }
-        
+
+        public static char[] modelPath(string txt)
+        {
+            txt = trim(txt);
+            txt = Config.Prefixes.morrowind_meshes + txt;
+            return zstring(txt);
+        }
+
         public static char[] zstring(string txt)
         {
             txt = trim(txt);

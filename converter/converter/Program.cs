@@ -32,8 +32,9 @@ namespace Program
                 File.Delete("Landscape-Log.txt");
             }
 
-            
-            
+
+            Convert.TEST.doit();
+            Log.error(-1);
             
             TES5.Group[] ltex = Convert.LTEX.convert(Config.Paths.mw_esm);
             List<TES5.Group> wrld = Convert.LAND.convert(Config.Paths.mw_esm);

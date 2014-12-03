@@ -18,6 +18,12 @@ using System.Text;
 
     class Config
     {
+        public class Prefixes
+        {
+            public static string morrowind_meshes = "morrowind\\";
+            public static string morrowind_textures = "morrowind\\";
+        }
+
         public class Paths
         {
             public static string tmp = "tmp\\";

@@ -73,6 +73,16 @@ namespace TES5
             this.unknown = 0;
         }
 
+        public Record(string type, string editor_id)
+        {
+            this.type = type.ToCharArray(0, 4);
+            this.flags = 0;
+
+            this.id = FormID.set(editor_id);
+            this.revision = 5906;
+            this.version = 43;
+            this.unknown = 0;
+        }
         
         public Record(string type, string editor_id ,UInt32 flags)
         {

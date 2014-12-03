@@ -57,10 +57,23 @@ namespace TES5
                 
             }
 
+            struct teleport_data
+            {
+                float x;
+                float y;
+                float z;
+                float xR;
+                float yR;
+                float zR;
+
+                UInt32 destination_formid;
+            }
+
         }
 
         public REFR(uint formid,float x, float y, float z, float xR, float yR, float zR,float scale = 1f) : base("REFR")
         {
+            //TES3.REFR refr;
             
             Field NAME = new Field("NAME", Binary.toBin(formid));
             Field DATA = new Field("DATA",new placement(x, y, z, xR, yR, zR).toBin());

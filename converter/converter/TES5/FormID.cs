@@ -31,6 +31,7 @@ namespace TES5
 
         }
 
+        // Only TES5.Record() should call this.
         public static uint set(string editor_id)
         {
             editor_id = Text.trim(editor_id);
@@ -51,6 +52,7 @@ namespace TES5
             return form_id;
         }
         
+        // The editor_id should be the original morrowind editor id
         public static uint get(string editor_id)
         {
             editor_id = Text.trim(editor_id);

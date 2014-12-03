@@ -19,17 +19,17 @@ using System.IO;
 
 namespace Convert
 {
-    // We use TESAnnwyn to get deal with the messy landscape data for us. Now we need to place objects within it
+    // We used TESAnnwyn to deal with the messy landscape data for us. Now we need to place objects within it
 
     class REFR_EXT
     {    
         static ReferenceGroup_Index ref_index = new ReferenceGroup_Index();
 
-        public static void add_references(List<TES5.Group> grps_, string file_mw)
+        public static void add_references(List<TES5.Group> exterior_cell_grps, string file_mw)
         {
             Log.info("Adding Exterior CELL References");
 
-            ref_index.make(grps_);
+            ref_index.make(exterior_cell_grps);
 
             TES3.ESM.open(file_mw);
             int count = 0;
@@ -58,7 +58,7 @@ namespace Convert
                     }
 
                     Log.info("Adding Reference: " + refr_id);
-
+                    
                     TES5.REFR skyrim_reference = new TES5.REFR(formid, morrowind_reference.x, morrowind_reference.y, morrowind_reference.z, morrowind_reference.xR, morrowind_reference.yR, morrowind_reference.zR,morrowind_reference.scale);
                                         
                     int cell_x = (int)(morrowind_reference.x / 4096f);

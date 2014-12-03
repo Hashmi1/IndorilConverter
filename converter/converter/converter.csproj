@@ -50,11 +50,14 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="Convert.cs" />
+    <Compile Include="Convert\ModelPipeline.cs" />
+    <Compile Include="Convert\Object_Register.cs" />
     <Compile Include="Convert\REFR_EXT.cs" />
     <Compile Include="Convert\LAND.cs" />
     <Compile Include="Convert\DOOR.cs" />
     <Compile Include="Convert\REPLACE.cs" />
     <Compile Include="Convert\STAT.cs" />
+    <Compile Include="Convert\TEST.cs" />
     <Compile Include="External\External_Program.cs" />
     <Compile Include="External\NifConvert.cs" />
     <Compile Include="External\Notepad.cs" />
@@ -91,7 +94,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TES3\ESM.cs" />
-    <Compile Include="TES3\CELL_REFR.cs" />
+    <Compile Include="TES3\REFR.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

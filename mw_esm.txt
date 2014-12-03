@@ -913,14 +913,16 @@ Number of unique main headers = 42
 		NAME = Object ID string
 		XSCL = Scale (4 bytes, float) Static
 		DELE = (4 byte long) Indicates that the reference is deleted.
-		DODT = XYZ Pos, XYZ Rotation of exit (24 bytes, Door objects)
+		DODT = XYZ Pos, XYZ Rotation of exit (24 bytes, Door objects) Present on Teleporting Doors. The placement
+					Data is the position to which the player will be teleported to.
 			float XPos
 			float YPos
 			float ZPos
 			float XRotate
 			float YRotate
 			float ZRotate
-		DNAM = Door exit name (Door objects)
+		DNAM = Door exit CELL ID. Present only if the object is a teleporting door and leads to an interior cell. 
+			  If a reference has a DODT record but no DNAM record that means that the exit is in the exterior world-space.
 		FLTV = Follows the DNAM optionally, lock level (long)
 		KNAM = Door key
 		TNAM = Trap name
@@ -1539,4 +1541,5 @@ ifexpr		=	(byte) length, ifval [mathcomp ifval]
 
 		; Like the calculator if there is only one term a <00> byte is
 appended
+
 
