@@ -77,7 +77,7 @@ namespace Convert
                 TES5.Record stat_tes5 = new TES5.Record("STAT", stat.editor_id ,0);
                 stat_tes5.addField(new TES5.Field("EDID",Text.editor_id(stat.editor_id)));
                 //stat_tes5.addField(new TES5.Field("OBND", new byte[12]));
-                stat_tes5.addField(new TES5.Field("MODL", Text.modelPath(stat.model_path)));
+                stat_tes5.addField(new TES5.Field("MODL", Text.model_path(stat.model_path)));
                 
                         MemoryStream mstream = new MemoryStream();
                         BinaryWriter bw = new BinaryWriter(mstream);

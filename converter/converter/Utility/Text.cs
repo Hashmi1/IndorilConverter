@@ -31,8 +31,9 @@ namespace Utility
             return st;
         }
 
-        public static char[] modelPath(string txt)
+        public static char[] model_path(string txt)
         {
+            txt = txt.Split('\\')[txt.Split('\\').Length - 1];
             txt = trim(txt);
             txt = Config.Prefixes.morrowind_meshes + txt;
             return zstring(txt);

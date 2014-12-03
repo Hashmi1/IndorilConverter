@@ -101,13 +101,13 @@ namespace Convert
                 TES5.Record r = new TES5.Record("DOOR",d.id);
                 r.addField(new TES5.Field("EDID",Text.editor_id(d.id)));
                 r.addField(new TES5.Field("FULL",Text.zstring(d.full_name)));
-                r.addField(new TES5.Field("MODL",Text.modelPath(d.model_path)));
+                r.addField(new TES5.Field("MODL",Text.model_path(d.model_path)));
 
                 // Make Portal version
                 TES5.Record r_load = new TES5.Record("DOOR",d.id+"_load");
                 r_load.addField(new TES5.Field("EDID", Text.editor_id(d.id+"_load")));
                 r_load.addField(new TES5.Field("FULL", Text.zstring(d.full_name)));
-                r_load.addField(new TES5.Field("MODL", Text.modelPath(d.model_path.Replace(".nif", "_load.nif"))));
+                r_load.addField(new TES5.Field("MODL", Text.model_path(d.model_path.Replace(".nif", "_load.nif"))));
                 
                 grup.addRecord(r);
                 grup.addRecord(r_load);

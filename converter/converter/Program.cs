@@ -33,7 +33,7 @@ namespace Program
             }
                         
             TES5.Group[] ltex = Convert.LTEX.convert(Config.Paths.mw_esm);
-            TES5.Group door = Convert.DOOR.convert(Config.Paths.mw_esm);
+            //TES5.Group door = Convert.DOOR.convert(Config.Paths.mw_esm);
             TES5.Group stat = Convert.STAT.convert(Config.Paths.mw_esm);
             TES5.Group cell = Convert.CELL.convert(Config.Paths.mw_esm);
             List<TES5.Group> wrld = Convert.LAND.convert(Config.Paths.mw_esm);
@@ -48,9 +48,10 @@ namespace Program
             esm.add_group(ltex[0]);
             esm.add_group(ltex[1]);
             esm.add_group(stat);
+            esm.add_group(cell);
             esm.add_group(wrld);
             
-            esm.write_to_file(Config.Paths.skyrim_path + "test.esp");
+            esm.write_to_file(Config.Paths.skyrim_path + "final.esp");
             
             Log.info("DONE");            
             Console.Read();

@@ -32,7 +32,7 @@ using System.Text;
             public static string tesannwyn_path = "external\\TESAnnwyn\\";
             public static string tesannwyn_path_ltex = "external\\TESAnnwyn\\tes3ltex.txt";
 
-            public static string cell_name_replace = "config\\cell_name_replacements.txt";
+            public static string cell_name_replace = "config\\cell_name_replacement.txt";
             public static string morrowind_path = "tes3\\";
             public static string mw_meshes = "tes3\\data\\meshes\\";
             public static string mw_esm = "tes3\\data\\morrowind.esm";
