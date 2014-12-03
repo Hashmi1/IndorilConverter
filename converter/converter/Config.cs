@@ -22,6 +22,7 @@ using System.Text;
         {
             public static string morrowind_meshes = "morrowind\\";
             public static string morrowind_textures = "morrowind\\";
+            public static string morrowind_editor_ids = "mw_";
         }
 
         public class Paths

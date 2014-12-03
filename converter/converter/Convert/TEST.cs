@@ -23,15 +23,7 @@ namespace Convert
                 //Utility.Log.info(morrowind_cell.cell_name);
                 foreach (TES3.REFR morrowind_reference in morrowind_cell.references)
                 {
-                    if (morrowind_reference.door_data.hasDNAM && !morrowind_reference.door_data.hasDODT)
-                    {
-                        Log.info("Has DNAM but no DODT");
-                    }
-                    if (!morrowind_reference.door_data.hasDNAM && morrowind_reference.door_data.hasDODT)
-                    {
-                        Log.info("Has DODT but no DNAM");
-                    }
-
+                    
                 }
 
             }

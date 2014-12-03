@@ -91,8 +91,8 @@ namespace Convert
                     if (srec.isType("MODL"))
                     {
                         stat_.model_path = Text.trim(new string(srec.getData().ReadChars(srec.size)));
-                        stat_.model_path = stat_.model_path.Split('\\')[stat_.model_path.Split('\\').Length - 1];
-                        stat_.model_path = "morrowind\\" + stat_.model_path;
+                        //stat_.model_path = stat_.model_path.Split('\\')[stat_.model_path.Split('\\').Length - 1];
+                        //stat_.model_path = "morrowind\\" + stat_.model_path;
                         Log.info(stat_.model_path);
                     }
 
@@ -120,7 +120,7 @@ namespace Convert
                 TES5.Record stat_tes5 = new TES5.Record("STAT", stat.editor_id ,0);
                 stat_tes5.addField(new TES5.Field("EDID",Text.editor_id(stat.editor_id)));
                 //stat_tes5.addField(new TES5.Field("OBND", new byte[12]));
-                stat_tes5.addField(new TES5.Field("MODL", Text.zstring(stat.model_path)));
+                stat_tes5.addField(new TES5.Field("MODL", Text.modelPath(stat.model_path)));
                 
                         MemoryStream mstream = new MemoryStream();
                         BinaryWriter bw = new BinaryWriter(mstream);

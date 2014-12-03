@@ -62,10 +62,15 @@ namespace Utility
             return txt;
         }
 
+        public static string editor_id_string(string txt)
+        {
+            return Text.trim(new string(editor_id(txt)));
+        }
+
         public static char[] editor_id(string txt)
         {
             txt = trim(txt);
-            txt = "mw_" + txt;
+            txt = Config.Prefixes.morrowind_editor_ids + txt;
             txt = txt.ToLower();
             
             txt = txt.Replace("`", "_");

@@ -22,14 +22,14 @@ namespace TES5
     // TODO: ownership / scale / exterior cell / door /lock etc.
     class REFR : Record
     {
-        struct placement
+        public class placement
         {
-            float x;
-            float y;
-            float z;
-            float xR;
-            float yR;
-            float zR;
+            public float x { get; private set; }
+            public float y { get; private set; }
+            public float z { get; private set; }
+            public float xR { get; private set; }
+            public float yR { get; private set; }
+            public float zR { get; private set; }
             
 
             public placement(float x, float y, float z, float xR, float yR, float zR)
@@ -55,28 +55,88 @@ namespace TES5
                 br.Write(zR);
                 return mstream.ToArray();
                 
-            }
+            }           
+            
+            
+        }
 
-            struct teleport_data
+        class portal_data
+        {
+            float x;
+            float y;
+            float z;
+            float xR;
+            float yR;
+            float zR;
+            UInt32 destination_formid;
+
+            public portal_data(float x, float y, float z, float xR, float yR, float zR, UInt32 destination_formid)
             {
-                float x;
-                float y;
-                float z;
-                float xR;
-                float yR;
-                float zR;
+                this.x = x;
+                this.y = y;
+                this.z = z;
+                this.xR = xR;
+                this.yR = yR;
+                this.zR = zR;
+                this.destination_formid = destination_formid;
 
-                UInt32 destination_formid;
             }
 
+            public byte[] toBin()
+            {
+                MemoryStream mstream = new MemoryStream();
+                BinaryWriter br = new BinaryWriter(mstream);
+                br.Write(destination_formid);
+                br.Write(x);
+                br.Write(y);
+                br.Write(z);
+                br.Write(xR);
+                br.Write(yR);
+                br.Write(zR);
+                br.Write((UInt32)0);
+                return mstream.ToArray();
+
+            }
+
+
+        }
+
+        public placement placement_;
+
+        public REFR(uint formid, uint destination_formid ,TES3.REFR refr)
+        {
+
+            placement_ = new placement(refr.x,refr.y,refr.z,refr.xR,refr.yR,refr.zR);
+            Field NAME = new Field("NAME", Binary.toBin(formid));
+            Field DATA = new Field("DATA", placement_.toBin());
+
+            fields.Add(NAME);
+            if (refr.scale != 1f)
+            {
+                Field XSCL = new Field("XSCL", Binary.toBin(refr.scale));
+                fields.Add(XSCL);
+            }
+
+            if (refr.isPortal)
+            {
+                portal_data portal_positioning = new portal_data(0, 0, 0, 0, 0, 0,destination_formid);
+                Field XTEL = new Field("XTEL", portal_positioning.toBin());
+                fields.Add(XTEL);
+            }
+            
+            fields.Add(DATA);
+
+            
         }
 
         public REFR(uint formid,float x, float y, float z, float xR, float yR, float zR,float scale = 1f) : base("REFR")
         {
-            //TES3.REFR refr;
             
+            placement_ = new placement(x, y, z, xR, yR, zR);
+            
+
             Field NAME = new Field("NAME", Binary.toBin(formid));
-            Field DATA = new Field("DATA",new placement(x, y, z, xR, yR, zR).toBin());
+            Field DATA = new Field("DATA",placement_.toBin());
 
             
             fields.Add(NAME);

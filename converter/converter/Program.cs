@@ -33,14 +33,12 @@ namespace Program
             }
 
 
-            Convert.TEST.doit();
-            Log.error(-1);
             
             TES5.Group[] ltex = Convert.LTEX.convert(Config.Paths.mw_esm);
             List<TES5.Group> wrld = Convert.LAND.convert(Config.Paths.mw_esm);
             TES5.Group stat = Convert.STAT.convert(Config.Paths.mw_esm);
 
-            Convert.REFR_EXT.add_references(wrld, Config.Paths.mw_esm);
+            Convert.REFERENCE.REFR.add_references(Config.Paths.mw_esm,wrld,wrld);
 
 
             TES5.ESM esm = new TES5.ESM();

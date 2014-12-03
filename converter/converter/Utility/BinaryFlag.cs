@@ -53,6 +53,16 @@ namespace Utility
             return false;
         }
 
+        public static bool isSet(UInt16 flag, UInt16 option)
+        {
+            if ((flag & option) > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static bool isSet(int flag, int option)
         {
             if ((flag & option) > 0)

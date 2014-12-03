@@ -23,7 +23,7 @@ namespace Convert
 
     class REFR_EXT
     {    
-        static ReferenceGroup_Index ref_index = new ReferenceGroup_Index();
+        static Exterior_ReferenceGroup_Index ref_index = new Exterior_ReferenceGroup_Index();
 
         public static void add_references(List<TES5.Group> exterior_cell_grps, string file_mw)
         {
@@ -89,7 +89,7 @@ namespace Convert
       
     }
 
-    class ReferenceGroup_Index
+    class Exterior_ReferenceGroup_Index
     {
         Dictionary<Tuple<int, int>, TES5.Group> dict = new Dictionary<Tuple<int, int>, TES5.Group>();
         Dictionary<uint, Tuple<int, int>> formid_index = new Dictionary<uint, Tuple<int, int>>();
