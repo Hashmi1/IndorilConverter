@@ -50,10 +50,48 @@ namespace Convert
                     
                 cell5.addField(new TES5.Field("EDID", Text.editor_id(morrowind_cell.cell_name)));                
                 cell5.addField(new TES5.Field("FULL", Text.zstring(shorten_name(morrowind_cell.cell_name))));
+
+                ushort flags = (ushort)0x0001; // interior
+
+                if (morrowind_cell.water)
+                {
+                   flags = BinaryFlag.set((ushort)flags, (ushort)0x0002);
+                   cell5.addField(new TES5.Field("XCLW", Binary.toBin(morrowind_cell.water_height)));
+                }
+
+                TES5.CELL.XCLL xcll = new TES5.CELL.XCLL();
+
+                int r = 0;
+                int g = 1;
+                int b = 2;
+
+                xcll.Ambient[r] = 128;
+                xcll.Ambient[g] = 128;
+                xcll.Ambient[b] = 128;
+
+                xcll.Directional[r] = morrowind_cell.sun_col[1];
+                xcll.Directional[g] = morrowind_cell.sun_col[2];
+                xcll.Directional[b] = morrowind_cell.sun_col[3];
+
+
+                cell5.addField(new TES5.Field("XCLL",xcll.toBin()));
+                cell5.addField(new TES5.Field("LTMP", Binary.toBin((UInt32) 0)));
+
+                //morrowind_cell.amb_col[0];
+
                 cell5.addField(new TES5.Field("DATA", Binary.toBin(BinaryFlag.set((ushort)0, (ushort)0x0001))));
+
+
+
                 cell_grup.addRecord(cell5);
 
-                TES5.Group cell_references = new TES5.Group(cell5.id, TES5.Group.TYPE.TEMP_REFR);
+
+                TES5.Group cell_references = new TES5.Group(cell5.id, TES5.Group.TYPE.CELL_CHILD);
+                TES5.Group temp_references = new TES5.Group(cell5.id, TES5.Group.TYPE.TEMP_REFR);
+
+                cell_references.addSubGroup(temp_references);
+
+                //cell_references.label = Binary.toBin(cell5.id);
                 cell_grup.addSubGroup(cell_references);
             }
 

@@ -33,6 +33,13 @@ namespace TES3
         }
 
         public bool interior = false;
+        public bool water = false;
+        public bool NoSleep = false;
+
+        public float water_height;
+
+        public byte[] amb_col;
+        public byte[] sun_col;
 
         public int data_flags;
         public int grid_x;
@@ -100,12 +107,22 @@ namespace TES3
                             cell_name = new string(srec_data.ReadChars(srec.size));
                         }
                         break;
+                    case ("WHGT"):
+                        water_height = srec_data.ReadSingle();
+                        break;
+                    case ("AMBI"):
+                        amb_col = srec_data.ReadBytes(4);
+                        sun_col = srec_data.ReadBytes(4);
+                        break;
                     case ("DATA"):
                         data_flags = srec_data.ReadInt32();
                         grid_x = srec_data.ReadInt32();
                         grid_y = srec_data.ReadInt32();
 
                         interior = BinaryFlag.isSet(data_flags,(int)CELL_FLAGS.Interior);
+                        water = BinaryFlag.isSet(data_flags, (int)CELL_FLAGS.Water);
+                        NoSleep = BinaryFlag.isSet(data_flags, (int)CELL_FLAGS.NoSleep);
+
                         break;
 
                 }

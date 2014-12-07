@@ -21,8 +21,7 @@ namespace TES3
 {
     class REFR : Record
     {
-        static Log lg = new Log("ref_data.txt");
-
+        
         public struct Portal_Data
         {
             public string destination_cell;
@@ -75,7 +74,7 @@ namespace TES3
                 }
                 else if (subrec.isType("NAME"))
                 {
-                    editor_id = new string(srec_data.ReadChars(subrec.size));                    
+                    editor_id = Text.trim(new string(srec_data.ReadChars(subrec.size)));                    
                 }
                 else if (subrec.isType("XSCL"))
                 {
@@ -94,12 +93,12 @@ namespace TES3
                 {
                     isPortal = true;                    
                     portal.destination_cell = Text.trim(new string (srec_data.ReadChars(subrec.size)));
-                    lg.log(portal.destination_cell);
+                    
                     
                 }
                 else if (subrec.isType("DODT"))
                 {
-                    editor_id = editor_id + "_load"; 
+                    editor_id = editor_id + "_zload"; 
                     isPortal = true;
                     portal.x = srec_data.ReadSingle();
                     portal.y = srec_data.ReadSingle();

@@ -103,31 +103,14 @@ namespace TES5
 
         public placement placement_;
 
-        public REFR(uint formid, uint destination_formid ,TES3.REFR refr)
+        public void attach_portal(REFR other_end)
         {
-
-            placement_ = new placement(refr.x,refr.y,refr.z,refr.xR,refr.yR,refr.zR);
-            Field NAME = new Field("NAME", Binary.toBin(formid));
-            Field DATA = new Field("DATA", placement_.toBin());
-
-            fields.Add(NAME);
-            if (refr.scale != 1f)
-            {
-                Field XSCL = new Field("XSCL", Binary.toBin(refr.scale));
-                fields.Add(XSCL);
-            }
-
-            if (refr.isPortal)
-            {
-                portal_data portal_positioning = new portal_data(0, 0, 0, 0, 0, 0,destination_formid);
-                Field XTEL = new Field("XTEL", portal_positioning.toBin());
-                fields.Add(XTEL);
-            }
-            
-            fields.Add(DATA);
-
-            
+            portal_data portal_positioning = new portal_data(other_end.placement_.x, other_end.placement_.y, other_end.placement_.z, other_end.placement_.xR, other_end.placement_.yR, other_end.placement_.zR, other_end.id);
+            Field XTEL = new Field("XTEL", portal_positioning.toBin());
+            fields.Add(XTEL);
         }
+
+       
 
         public REFR(uint formid,float x, float y, float z, float xR, float yR, float zR,float scale = 1f) : base("REFR")
         {

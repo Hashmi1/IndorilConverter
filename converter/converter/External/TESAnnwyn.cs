@@ -27,7 +27,7 @@ namespace External
         //private static string default_esm = "convertable.esm";
 
         public TESAnnwyn()
-            : base("TESAnnwyn", Config.Paths.tesannwyn_path+"tesannwyn.exe")
+            : base("TESAnnwyn", Config.Paths.tesannwyn_path + "tesannwyn.exe", true ,int.MaxValue/* TESAnnwyn can take a long time */)
         {
         }
 
@@ -94,11 +94,12 @@ namespace External
             
             string command_1 = "-p 2 -b 32 -c -T 3 " + filename_in;
             
+                        
+            base.run(command_1);
 
-            string[] output = base.run(command_1);
             int bottom_x = 0;
             int bottom_y = 0;
-            get_bottom_left(output, ref bottom_x, ref bottom_y);
+            get_bottom_left(output.ToArray(), ref bottom_x, ref bottom_y);
             bottom_x *= 2;
             bottom_y *= 2;
             string command_2 = "-i Skyrim -p 2 -b 32 -c -T 3 -x " +bottom_x + " -y " + bottom_y  + " tesannwyn.bmp";

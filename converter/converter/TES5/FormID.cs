@@ -45,7 +45,7 @@ namespace TES5
 
             if (dict.ContainsKey(editor_id))
             {
-                Log.error("Editor ID already assigned" + editor_id);
+                Log.error("Editor ID already assigned: " + editor_id);
             }
             uint form_id = getNew();
             dict.Add(editor_id, form_id);
@@ -66,6 +66,10 @@ namespace TES5
 
             if (!dict.ContainsKey(editor_id))
             {
+                if (editor_id.Contains("_zload"))
+                {
+                  //  Log.error("Oh no");
+                }
                 return 0;
             }
             return  dict[editor_id];

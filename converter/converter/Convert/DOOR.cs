@@ -46,17 +46,26 @@ namespace Convert
 
             while (TES3.ESM.find("DOOR"))
             {
-                door_ d = new door_();
+                
 
                 TES3.Record door = new TES3.Record();
                 door.read();
 
+                if (!new string(door.Name).Equals("DOOR"))
+                {
+                    Log.error("Read non-door record");
+                }
+
+                door_ d = new door_();
+
                 foreach (TES3.SubRecord srec in door.subRecords)
                 {
+                    
 
                     if (srec.isType("NAME"))
                     {
                         d.id = Text.trim(new string(srec.getData().ReadChars(srec.size)));
+                        
                     }
                     
                     if (srec.isType("FNAM"))
@@ -66,21 +75,22 @@ namespace Convert
 
                     if (srec.isType("MODL"))
                     {
-                        d.model_path = Text.trim(new string(srec.getData().ReadChars(srec.size)));
+                        d.model_path = Text.trim(new string(srec.getData().ReadChars(srec.size)));                                              
                     }
-
-                    if (srec.isType("NAME"))
-                    {
-                        d.id = Text.trim(new string(srec.getData().ReadChars(srec.size)));
-                    }
-
                     
+                    
+                }
+
+                if (String.IsNullOrEmpty(d.full_name))
+                {
+                    d.full_name = "Door";
                 }
 
                 door_list.Add(d);
             
             }
 
+            TES3.ESM.close();
             return door_list;
         }
         
@@ -104,24 +114,24 @@ namespace Convert
                 r.addField(new TES5.Field("MODL",Text.model_path(d.model_path)));
 
                 // Make Portal version
-                TES5.Record r_load = new TES5.Record("DOOR",d.id+"_load");
-                r_load.addField(new TES5.Field("EDID", Text.editor_id(d.id+"_load")));
+                TES5.Record r_load = new TES5.Record("DOOR",d.id+"_zload");
+                r_load.addField(new TES5.Field("EDID", Text.editor_id(d.id+"_zload")));
                 r_load.addField(new TES5.Field("FULL", Text.zstring(d.full_name)));
-                r_load.addField(new TES5.Field("MODL", Text.model_path(d.model_path.Replace(".nif", "_load.nif"))));
+                r_load.addField(new TES5.Field("MODL", Text.model_path(d.model_path.ToLower().Replace(".nif", "_zload.nif"))));
                 
                 grup.addRecord(r);
                 grup.addRecord(r_load);
+
+                ModelConverter.convert(d.model_path, "door_load");
+                ModelConverter.convert(d.model_path, "door_anim");
+
             }
 
             return grup;
 
         }
 
-        static void convert_models(List<door_> lst, string input_path, string output_path)
-        {
-            //Config.Paths.mw_meshes +
- 
-        }
+        
 
         
     }

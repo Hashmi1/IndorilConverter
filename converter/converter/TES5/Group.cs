@@ -122,7 +122,7 @@ namespace TES5
                // Log.error("NOOO");
             }
         }
-
+        // TODO: Fix this recalculate size
         public void write(BinaryWriter output)
         {
             if (isType(TYPE.TOP))
@@ -152,8 +152,7 @@ namespace TES5
                 }
                 else if (trn == 2)
                 {
-                    subgrps.Dequeue().write(output);
-                    
+                    subgrps.Dequeue().write(output);                    
                 }
             }
 

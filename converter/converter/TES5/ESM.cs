@@ -79,6 +79,7 @@ namespace TES5
 
             foreach (Group g in groups)
             {
+                g.recalculate_size();
                 g.write(writer);
             }
         }

@@ -83,7 +83,7 @@ namespace External
         {
             file_in = "\"" + file_in + "\"";
             string file_out = file_in.Replace(".dds", "_n.dds");
-            string command = " -file " + file_in + " -output " + file_out +" -n4";
+            string command = " -file " + file_in + " -output " + file_out +" -n4 -aclear";
             run(command);
         }
         

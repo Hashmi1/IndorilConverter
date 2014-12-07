@@ -18,13 +18,14 @@ namespace External
 {
     class Notepad : External_Program
     {
-        public Notepad() : base("notepad","notepad.exe")
+        public Notepad() : base("Notepad","notepad.exe")
         {
         }
 
         public void open(string file)
         {
             string command = file;
+            List<string> output = new List<string>();
             base.run(command);
         }
 

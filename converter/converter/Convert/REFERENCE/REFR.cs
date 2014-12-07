@@ -25,7 +25,7 @@ namespace Convert.REFERENCE
         private static void make_indices(List<TES5.Group> interior_cells, List<TES5.Group> exterior_cells)
         {
             int_index.make(interior_cells);
-            ext_index.make(exterior_cells);
+            //ext_index.make(exterior_cells); // TODO: Remove comment after testing
         }
 
         public static void add_references(string filename, List<TES5.Group> interiors,List<TES5.Group> exteriors)
@@ -39,6 +39,13 @@ namespace Convert.REFERENCE
                 TES3.CELL cell = new TES3.CELL();
                 cell.read();
 
+                // TODO: Remove after testing
+                if (!cell.interior)
+                {
+                    continue;
+                }
+
+
                 foreach (TES3.REFR refr in cell.references)
                 {
                     string refr_id = refr.editor_id;
@@ -47,14 +54,19 @@ namespace Convert.REFERENCE
                     {
                         continue;   // Reference Base not converted, so skip
                     }
+
+                    
                     Log.info("Adding Reference: " + refr_id);
 
                     TES5.REFR skyrim_reference;
 
                     if (refr.isPortal)
                     {
-                        TES5.REFR exit = make_exit(refr, formid);
-                        skyrim_reference = new TES5.REFR(formid, exit.id, refr);
+                        TES5.REFR exit = make_exit(refr);
+                        skyrim_reference = new TES5.REFR(formid, refr.x, refr.y, refr.z, refr.xR, refr.yR, refr.zR, refr.scale);
+                        
+                        exit.attach_portal(skyrim_reference);
+                        skyrim_reference.attach_portal(exit);
                     }
                     else
                     {
@@ -105,14 +117,15 @@ namespace Convert.REFERENCE
                                         
         }
 
-        private static TES5.REFR make_exit(TES3.REFR refr, uint formid)
+        private static TES5.REFR make_exit(TES3.REFR refr)
         {
             // Place the exit marker in the world
             TES5.REFR exit_marker = new TES5.REFR(DOOR.marker_id, refr.portal.x, refr.portal.y, refr.portal.z, refr.portal.xR, refr.portal.yR, refr.portal.zR, 1);
 
             if (String.IsNullOrEmpty(refr.portal.destination_cell)) // teleports to exterior
             {
-                add_exterior_references(exit_marker);
+                // TODO: Remove after testing
+                //add_exterior_references(exit_marker);
             }
 
             else // teleports to interior

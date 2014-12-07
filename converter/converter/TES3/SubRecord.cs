@@ -47,8 +47,10 @@ namespace TES3
         public BinaryReader getData()
         {
             MemoryStream mstream = new MemoryStream();
+            data.BaseStream.Position = 0;
             data.BaseStream.CopyTo(mstream);
             mstream.Position = 0;
+            data.BaseStream.Position = 0;
             return new BinaryReader(mstream);
         }
 

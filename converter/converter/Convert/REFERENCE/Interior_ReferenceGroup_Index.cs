@@ -27,7 +27,7 @@ namespace Convert.REFERENCE
 
         private void put(string cell_id,TES5.Group group)
         {
-            if (!cell_id.StartsWith(Config.Prefixes.morrowind_editor_ids))
+            if (!cell_id.StartsWith(Config.Prefixes.converted_editor_ids))
             {
                 Log.error("Given Editor ID is not in skyrim format. Potential Logical Bug");
             }
@@ -37,7 +37,7 @@ namespace Convert.REFERENCE
 
         public TES5.Group get_reference_group(string cell_id)
         {
-            if (!cell_id.StartsWith(Config.Prefixes.morrowind_editor_ids))
+            if (!cell_id.StartsWith(Config.Prefixes.converted_editor_ids))
             {
                 Log.error("Given Editor ID is not in skyrim format. Potential Logical Bug");
             }

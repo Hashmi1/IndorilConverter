@@ -22,18 +22,20 @@ namespace External
     {
         string exec_path;
         string name;
+        protected List<string> output;
+        int timeout;
 
-        protected External_Program(string name, string exec_path)
+        protected External_Program(string name, string exec_path, bool crash_on_failure = true ,int timeout = 30000)
         {
             this.exec_path = exec_path;
             this.name = name;
+            this.output = new List<string>();
+            this.timeout = timeout;
         }
 
-        protected string[] run(string command)
+        protected bool run(string command)
         {
-
-            List<string> output = new List<string>();
-
+                        
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
             startInfo.FileName = exec_path;
@@ -52,7 +54,7 @@ namespace External
             }
 
 
-            bool success = process.WaitForExit(300000000);
+            bool success = process.WaitForExit(timeout);
 
             int count = 0;
             while (!success)
@@ -65,7 +67,7 @@ namespace External
                     process.Kill();
                 }
                 process.Start();
-                success = process.WaitForExit(30000);
+                success = process.WaitForExit(timeout);
                 if (count > 3)
                 {
                     break;
@@ -75,9 +77,10 @@ namespace External
             if (process.ExitCode != 0 || success == false)
             {
                 Log.error(name + " returned error or could not complete." + '\n' + command);
+                return false;
             }
 
-            return output.ToArray();
+            return true;
         }
     }
 }

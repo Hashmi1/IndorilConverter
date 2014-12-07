@@ -89,6 +89,8 @@ namespace Convert
 
                 stat_grup.addRecord(stat_tes5);
                 count = +1;
+
+                ModelConverter.convert(stat.model_path,"stat");
             }
 
             

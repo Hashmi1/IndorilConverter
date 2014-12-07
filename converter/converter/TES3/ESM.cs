@@ -36,6 +36,9 @@ namespace TES3
             {
                 Log.error("File Not Found: " + file);
             }
+
+            
+
             input = new BinaryReader(new FileStream(file,FileMode.Open));
         }
 

@@ -31,11 +31,25 @@ namespace Utility
             return st;
         }
 
+        public static string flatten_path(string txt)
+        {
+            txt = trim(txt);
+            txt = txt.Split('\\')[txt.Split('\\').Length - 1];
+            return txt;
+        }
+
+        public static string model_path_string(string txt)
+        {
+            return Text.trim(new string(model_path(txt)));
+        }
+
         public static char[] model_path(string txt)
         {
             txt = txt.Split('\\')[txt.Split('\\').Length - 1];
             txt = trim(txt);
-            txt = Config.Prefixes.morrowind_meshes + txt;
+            txt = txt.ToLower();
+            txt.Replace(" ", "_");
+            txt = Config.Prefixes.converted_meshes + txt;
             return zstring(txt);
         }
 
@@ -55,6 +69,7 @@ namespace Utility
         public static string trim(string txt)
         {
             txt = txt.Trim();
+            
             while (txt[txt.Length - 1] == '\0')
             {
                 txt = txt.Substring(0, txt.Length - 1);
@@ -69,11 +84,8 @@ namespace Utility
         }
 
         public static char[] editor_id(string txt)
-        {
-            txt = trim(txt);
-            txt = Config.Prefixes.morrowind_editor_ids + txt;
-            txt = txt.ToLower();
-            
+        {            
+            txt = txt.Replace(" ", "_");
             txt = txt.Replace("`", "_");
             txt = txt.Replace("~", "_");
             txt = txt.Replace("!", "_");
@@ -106,6 +118,10 @@ namespace Utility
             txt = txt.Replace(".", "_");
             txt = txt.Replace("?", "_");
             txt = txt.Replace("/", "_");
+
+            txt = trim(txt);
+            txt = Config.Prefixes.converted_editor_ids + txt;
+            txt = txt.ToLower();
 
             return zstring(txt);
         }

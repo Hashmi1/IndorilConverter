@@ -65,7 +65,7 @@ namespace Utility
         public static void error(Object obj)
         {
 
-            Console.WriteLine("Fatal Error Encountered:");
+            Console.WriteLine("\nFatal Error Encountered:");
             Console.WriteLine("-------------------------");
             Console.WriteLine(obj);
             Console.Write("Can not continue. Press ENTER to exit ...");

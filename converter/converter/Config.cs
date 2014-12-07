@@ -18,28 +18,33 @@ using System.Text;
 
     class Config
     {
+        public static HashSet<string> ignored_editor_ids = new HashSet<string>();
+        
         public class Prefixes
         {
-            public static string morrowind_meshes = "morrowind\\";
-            public static string morrowind_textures = "morrowind\\";
-            public static string morrowind_editor_ids = "mw_";
+            public static string converted_meshes = "morrowind\\";
+            public static string converted_textures = "textures\\morrowind\\";
+            public static string converted_editor_ids = "mw_";
         }
 
         public class Paths
         {
             public static string tmp = "tmp\\";
 
+            public static string nifconvert_path = "D:\\code\\NifUtilsSuite-master\\NifUtilsSuite-master\\Release\\NifConvert.exe";
+
             public static string tesannwyn_path = "external\\TESAnnwyn\\";
             public static string tesannwyn_path_ltex = "external\\TESAnnwyn\\tes3ltex.txt";
 
             public static string cell_name_replace = "config\\cell_name_replacement.txt";
-            public static string morrowind_path = "tes3\\";
-            public static string mw_meshes = "tes3\\data\\meshes\\";
-            public static string mw_esm = "tes3\\data\\morrowind.esm";
 
-            public static string skyrim_path = "tes5\\";
-            public static string sk_meshes = "tes5\\data\\meshes\\morrowind\\";
-            public static string sk_textures = "tes5\\data\\meshes\\morrowind\\";
+            public static string morrowind_path = "D:\\gms\\morrowind\\data\\";
+            public static string mw_meshes = morrowind_path + "meshes\\";
+            public static string mw_esm = morrowind_path + "morrowind.esm";
+
+            public static string skyrim_path = "D:\\gms\\skyrim\\data\\";
+            public static string sk_meshes =  skyrim_path + "meshes\\";
+            
 
             public static string nif_batch_file = "misc\\nifbatch.txt"; // Do not change unless mirrored in nifconvert
         }
