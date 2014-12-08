@@ -22,8 +22,66 @@ namespace Convert
     // TODO: ownership/water/light
     class CELL
     {
-        
         public static TES5.Group convert(string file)
+        {            
+            TES3.ESM.open(file);
+            TES5.Group cell_grup = new TES5.Group("CELL");
+
+            while (TES3.ESM.find("CELL"))
+            {
+                TES3.CELL cell3 = new TES3.CELL();
+                cell3.read();
+
+                if (!cell3.interior)
+                {
+                    continue;
+                }
+
+                if (cell3.references.Count == 0)
+                {
+                    continue;
+                }
+
+                Log.info(cell3.cell_name);
+
+                TES5.CELL cell5 = new TES5.CELL(cell3.cell_name);
+                
+                cell5.editor_id = cell3.cell_name;
+                cell5.full_name = cell3.cell_name;
+
+                cell5.Interior = true;
+                if (cell3.HasWater)
+                {
+                    // Calculate cell bounds
+                    foreach (TES3.REFR mw_ref in cell3.references)
+                    {
+                        cell5.update_bounds(mw_ref.x, mw_ref.y);
+                    }
+                    // add water planes
+                    cell5.addWater(cell3.water_height);
+                }
+
+                int r = 0;
+                int g = 1;
+                int b = 2;
+
+                cell5.lighting.Ambient[r] = cell3.amb_col[r];
+                cell5.lighting.Ambient[g] = cell3.amb_col[g];
+                cell5.lighting.Ambient[b] = cell3.amb_col[b];
+
+                cell5.lighting.Directional[r] = cell3.sun_col[1];
+                cell5.lighting.Directional[g] = cell3.sun_col[2];
+                cell5.lighting.Directional[b] = cell3.sun_col[3];
+
+                cell5.addToGroup(cell_grup);
+                cell5.pack();
+            }
+
+            TES3.ESM.close();
+            return cell_grup;
+        }
+        
+        public static TES5.Group convert_depreciated(string file)
         {
             
             TES3.ESM.open(file);
@@ -54,7 +112,7 @@ namespace Convert
 
                 ushort flags = (ushort)0x0001; // interior
 
-                if (morrowind_cell.water)
+                if (morrowind_cell.HasWater)
                 {
                    flags = BinaryFlag.set((ushort)flags, (ushort)0x0002);
                    //cell5.addField(new TES5.Field("XCLW", Binary.toBin(morrowind_cell.water_height)));

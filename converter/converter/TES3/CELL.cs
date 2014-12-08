@@ -33,7 +33,7 @@ namespace TES3
         }
 
         public bool interior = false;
-        public bool water = false;
+        public bool HasWater = false;
         public bool NoSleep = false;
 
         public float water_height;
@@ -112,8 +112,7 @@ namespace TES3
                         // corresponds to the float z-axis position of the water plane in the
                         // cell world
                         water_height = (float)srec_data.ReadInt32(); 
-
-                        
+                                                
                         break;
                     case ("AMBI"):
                         amb_col = srec_data.ReadBytes(4);
@@ -125,7 +124,7 @@ namespace TES3
                         grid_y = srec_data.ReadInt32();
 
                         interior = BinaryFlag.isSet(data_flags,(int)CELL_FLAGS.Interior);
-                        water = BinaryFlag.isSet(data_flags, (int)CELL_FLAGS.Water);
+                        HasWater = BinaryFlag.isSet(data_flags, (int)CELL_FLAGS.Water);
                         NoSleep = BinaryFlag.isSet(data_flags, (int)CELL_FLAGS.NoSleep);
 
                         break;

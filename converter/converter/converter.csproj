@@ -81,6 +81,7 @@
     <Compile Include="TES3\Analyzer.cs" />
     <Compile Include="TES3\REGN.cs" />
     <Compile Include="TES3\SubRecord.cs" />
+    <Compile Include="TES5\ACTI.cs" />
     <Compile Include="TES5\CELL.cs" />
     <Compile Include="TES5\ESM.cs" />
     <Compile Include="TES5\Field.cs" />

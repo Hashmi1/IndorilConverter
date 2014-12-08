@@ -33,10 +33,12 @@ namespace Program
             }
 
 
-            
             TES5.Group[] ltex = Convert.LTEX.convert(Config.Paths.mw_esm);
             //TES5.Group door = Convert.DOOR.convert(Config.Paths.mw_esm);
             TES5.Group stat = Convert.STAT.convert(Config.Paths.mw_esm);
+            TES5.Group acti = new TES5.Group("ACTI");
+            acti.addRecord(TES5.ACTI.get_water_instance());
+
             TES5.Group light = Convert.LIGH.convert(Config.Paths.mw_esm);
             
             TES5.Group cell = Convert.CELL.convert(Config.Paths.mw_esm);
@@ -52,7 +54,9 @@ namespace Program
             esm.add_group(ltex[0]);
             esm.add_group(ltex[1]);
             esm.add_group(stat);
+            esm.add_group(acti);
             esm.add_group(light);
+
             //esm.add_group(door);
             esm.add_group(cell);
             //esm.add_group(wrld);

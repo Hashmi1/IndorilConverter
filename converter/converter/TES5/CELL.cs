@@ -1,4 +1,16 @@
-﻿using System;
+﻿/*
+Copyright(c) 2014 Hashmi1
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,13 +26,13 @@ namespace TES5
         {
             this.editor_id = editor_id;
 
-            cell_references = new TES5.Group(id, TES5.Group.TYPE.CELL_CHILD);
-            temp_references = new TES5.Group(id, TES5.Group.TYPE.TEMP_REFR);
+            cell_references = new Group(id, Group.TYPE.CELL_CHILD);
+            temp_references = new Group(id, Group.TYPE.TEMP_REFR);
             cell_references.addSubGroup(temp_references);
         }
         
         
-        public enum FLAGS :ushort
+        private enum FLAGS_CELL :ushort
         {
             Interior = 0x0001,
             HasWater = 0x0002
@@ -133,99 +145,97 @@ namespace TES5
         public string editor_id;
         public string full_name;
 
-        public TES5.Group cell_references;
-        public TES5.Group temp_references;
-        
-        public List<TES5.REFR> references;
-        public XCLL lighting;
+        public Group cell_references;
+        public Group temp_references;
+                
+        public XCLL lighting = new XCLL();
 
         private void pack_flags()
         {
             data_flags = 0;
-            if (Interior) { data_flags = BinaryFlag.set((ushort)data_flags, (ushort)FLAGS.Interior); }
-            if (HasWater) { data_flags = BinaryFlag.set((ushort)data_flags, (ushort)FLAGS.HasWater); }
+            if (Interior) { data_flags = BinaryFlag.set((ushort)data_flags, (ushort)FLAGS_CELL.Interior); }
+            if (HasWater) { data_flags = BinaryFlag.set((ushort)data_flags, (ushort)FLAGS_CELL.HasWater); }
         }
         
         public void addWater(float height)
         {
             HasWater = true;
-            addField(new Field("XCLW", Binary.toBin((float)0)));
 
-            TES5.REFR water_mesh = new REFR(0, 0, 0, height, 0, 0, 0, 10);
+            for (float x = min_x; x <= max_x; x = x + 20480)
+            {
+                for (float y = min_y; y <= max_y; y = y + 20480)
+                {
+                    REFR water_mesh = new REFR(ACTI.get_water_instance().id, x, y, height, 0, 0, 0, 10);
+                    temp_references.addRecord(water_mesh);
+                }
+            }
 
         }
 
-        public void get_bounds()
+
+        float min_x = float.NaN;
+        float min_y = float.NaN;
+
+        float max_x = float.NaN;
+        float max_y = float.NaN;
+                
+        public void update_bounds(float x, float y)
         {
-            float min_x = float.NaN;
-            float min_y = float.NaN;
-
-            float max_x = float.NaN;
-            float max_y = float.NaN;
-
-
-            foreach (TES5.REFR refr in references)
-            {
+            
                 # region initialize
-                if (min_x == float.NaN)
+                if (float.IsNaN(min_x))
                 {
-                    min_x = refr.placement_.x;
+                    min_x = x;
                 }
 
-                if (max_x == float.NaN)
+                if (float.IsNaN(max_x))
                 {
-                    max_x = refr.placement_.x;
+                    max_x = x;
                 }
                 
-                if (min_y == float.NaN)
+                if (float.IsNaN(min_y))
                 {
-                    min_y = refr.placement_.y;
+                    min_y = y;
                 }
 
-                if (max_y == float.NaN)
+                if (float.IsNaN(max_y))
                 {
-                    max_y = refr.placement_.y;
+                    max_y = y;
                 }
                 # endregion
 
                 # region assign min/max
-                if (refr.placement_.x < min_x)
+                if (x < min_x)
                 {
-                    min_x = refr.placement_.x;
+                    min_x = x;
                 }
 
-                if (refr.placement_.x > max_x)
+                if (x > max_x)
                 {
-                    max_x = refr.placement_.x;
+                    max_x = x;
                 }
 
-                if (refr.placement_.y < min_y)
+                if (y < min_y)
                 {
-                    min_y = refr.placement_.y;
+                    min_y = y;
                 }
 
-                if (refr.placement_.y > max_y)
+                if (y > max_y)
                 {
-                    max_y = refr.placement_.y;
+                    max_y = y;
                 }
                 # endregion
-
-            }
-
-            min_x = min_x - 1024;
-            min_y = min_y - 1024;
-
-            max_x = max_x + 1024;
-            max_y = max_y + 1024;
+        
         }
-
-        public void finalize()
+        public void pack()
         {
-            addField(new TES5.Field("EDID", Text.editor_id(editor_id)));
-            addField(new TES5.Field("FULL", Text.zstring(shorten_name(full_name))));
-            addField(new TES5.Field("XCLL", lighting.toBin()));
-            addField(new TES5.Field("LTMP", Binary.toBin((UInt32)0)));
-            addField(new TES5.Field("DATA", Binary.toBin(data_flags)));
+            pack_flags();
+            addField(new Field("EDID", Text.editor_id(editor_id)));
+            addField(new Field("FULL", Text.zstring(shorten_name(full_name))));
+            addField(new Field("DATA", Binary.toBin(data_flags)));
+            addField(new Field("XCLL", lighting.toBin()));
+            addField(new Field("LTMP", Binary.toBin((UInt32)0)));
+            addField(new Field("XCLW", Binary.toBin((float)0)));
         }
         
         public void addToGroup(Group g)
