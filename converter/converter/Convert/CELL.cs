@@ -69,9 +69,10 @@ namespace Convert
                 cell5.lighting.Ambient[g] = cell3.amb_col[g];
                 cell5.lighting.Ambient[b] = cell3.amb_col[b];
 
-                cell5.lighting.Directional[r] = cell3.sun_col[1];
-                cell5.lighting.Directional[g] = cell3.sun_col[2];
-                cell5.lighting.Directional[b] = cell3.sun_col[3];
+                cell5.lighting.Directional[r] = cell3.sun_col[r];
+                cell5.lighting.Directional[g] = cell3.sun_col[g];
+                cell5.lighting.Directional[b] = cell3.sun_col[b];
+
 
                 cell5.addToGroup(cell_grup);
                 cell5.pack();

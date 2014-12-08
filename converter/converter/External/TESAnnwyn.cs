@@ -24,8 +24,6 @@ namespace External
         // TESAnnwyn.exe -p 2 -b 32 -c -T 3 morrowind.esm
         // TESAnnwyn.exe -i Skyrim -p 2 -b 32 -c -T 3 tesannwyn.bmp
 
-        //private static string default_esm = "convertable.esm";
-
         public TESAnnwyn()
             : base("TESAnnwyn", Config.Paths.tesannwyn_path + "tesannwyn.exe", true ,int.MaxValue/* TESAnnwyn can take a long time */)
         {

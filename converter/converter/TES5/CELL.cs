@@ -136,7 +136,15 @@ namespace TES5
 
             }
 
-
+            public void set_ambient(byte r, byte g, byte b)
+            {
+                AmbientX_plus = new byte[4] { r, g, b, 0 };
+                AmbientY_plus = new byte[4] { r, g, b, 0 };
+                AmbientZ_plus = new byte[4] { r, g, b, 0 };
+                AmbientX_minus = new byte[4] { r, g, b, 0 };
+                AmbientY_minus = new byte[4] { r, g, b, 0 };
+                AmbientZ_minus = new byte[4] { r, g, b, 0 };
+            }
         }
 
         public bool Interior;

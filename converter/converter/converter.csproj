@@ -91,7 +91,6 @@
     <Compile Include="TES5\LIGH.cs" />
     <Compile Include="TES5\Record.cs" />
     <Compile Include="TES5\REFR.cs" />
-    <Compile Include="TES5\TXST.cs" />
     <Compile Include="Utility\Binary.cs" />
     <Compile Include="Utility\BinaryFlag.cs" />
     <Compile Include="Utility\Log.cs" />

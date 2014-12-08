@@ -25,3 +25,15 @@ class Init
     }
 
 }
+
+
+/*
+
+ * TODO:
+ * 
+ * Add Lighting templates
+ * Make Lights non-fading
+ * Convert Activators - Animated TextureTranslate
+ * Convert Furniture
+ * 
+*/
