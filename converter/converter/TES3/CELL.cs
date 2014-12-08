@@ -107,8 +107,13 @@ namespace TES3
                             cell_name = new string(srec_data.ReadChars(srec.size));
                         }
                         break;
-                    case ("WHGT"):
-                        water_height = srec_data.ReadSingle();
+                    case ("INTV"):
+                        // water height is stored as a signed int, but the value
+                        // corresponds to the float z-axis position of the water plane in the
+                        // cell world
+                        water_height = (float)srec_data.ReadInt32(); 
+
+                        
                         break;
                     case ("AMBI"):
                         amb_col = srec_data.ReadBytes(4);

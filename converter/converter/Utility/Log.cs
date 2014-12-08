@@ -61,7 +61,11 @@ namespace Utility
             }
             Console.Write('\n');
         }
-        
+
+        public static void pause(Object obj)
+        {
+        }
+
         public static void error(Object obj)
         {
 

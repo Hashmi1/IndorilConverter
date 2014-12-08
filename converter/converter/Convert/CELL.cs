@@ -50,14 +50,17 @@ namespace Convert
                     
                 cell5.addField(new TES5.Field("EDID", Text.editor_id(morrowind_cell.cell_name)));                
                 cell5.addField(new TES5.Field("FULL", Text.zstring(shorten_name(morrowind_cell.cell_name))));
+                cell5.addField(new TES5.Field("DATA", Binary.toBin(BinaryFlag.set((ushort)0, (ushort)0x0001))));
 
                 ushort flags = (ushort)0x0001; // interior
 
                 if (morrowind_cell.water)
                 {
                    flags = BinaryFlag.set((ushort)flags, (ushort)0x0002);
-                   cell5.addField(new TES5.Field("XCLW", Binary.toBin(morrowind_cell.water_height)));
+                   //cell5.addField(new TES5.Field("XCLW", Binary.toBin(morrowind_cell.water_height)));
                 }
+
+                
 
                 TES5.CELL.XCLL xcll = new TES5.CELL.XCLL();
 
@@ -65,9 +68,9 @@ namespace Convert
                 int g = 1;
                 int b = 2;
 
-                xcll.Ambient[r] = 128;
-                xcll.Ambient[g] = 128;
-                xcll.Ambient[b] = 128;
+                xcll.Ambient[r] = morrowind_cell.amb_col[r];
+                xcll.Ambient[g] = morrowind_cell.amb_col[g];
+                xcll.Ambient[b] = morrowind_cell.amb_col[b];
 
                 xcll.Directional[r] = morrowind_cell.sun_col[1];
                 xcll.Directional[g] = morrowind_cell.sun_col[2];
@@ -76,10 +79,10 @@ namespace Convert
 
                 cell5.addField(new TES5.Field("XCLL",xcll.toBin()));
                 cell5.addField(new TES5.Field("LTMP", Binary.toBin((UInt32) 0)));
-
+                cell5.addField(new TES5.Field("XCLW", Binary.toBin(0.0f)));
                 //morrowind_cell.amb_col[0];
 
-                cell5.addField(new TES5.Field("DATA", Binary.toBin(BinaryFlag.set((ushort)0, (ushort)0x0001))));
+                
 
 
 

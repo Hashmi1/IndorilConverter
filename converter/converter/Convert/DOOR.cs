@@ -122,8 +122,8 @@ namespace Convert
                 grup.addRecord(r);
                 grup.addRecord(r_load);
 
-                ModelConverter.convert(d.model_path, "door_load");
-                ModelConverter.convert(d.model_path, "door_anim");
+                ModelConverter.convert(d.model_path, "door_load",true);
+                ModelConverter.convert(d.model_path, "door_anim",true);
 
             }
 

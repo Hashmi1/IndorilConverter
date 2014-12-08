@@ -24,9 +24,10 @@ namespace Convert
 
                 l5.editor_id = l3.editor_id;
                 l5.model = l3.model;
-                l5.icon = l3.icon;
+                //l5.icon = l3.icon; // ditch the icons
 
-                l5.Radius = l3.radius;
+                l5.Radius = l3.radius/2;
+
                 l5.Time = (int)l3.time;
                 l5.Value = l3.value;
                 l5.r = l3.red;
@@ -36,8 +37,9 @@ namespace Convert
 
                 l5.Dynamic = l3.Dynamic;
                 l5.carried = l3.Can_Carry;
+                
                 l5.Flicker = l3.Flicker;
-                l5.FlickerSlow = l3.Flicker_Slow;
+                //l5.FlickerSlow = l3.Flicker_Slow;
                 l5.Pulse = l3.Pulse;
 
                 if (l3.model == null)
@@ -46,8 +48,8 @@ namespace Convert
                 }
                 else
                 {
-                    l5.Omnidirectional = true; // if model present make it omni-directinal
-                    ModelConverter.convert(l3.model, "stat"); // and convert model
+                    l5.Omnidirectional = true; // if model present make it shadow casting omni-directinal
+                    ModelConverter.convert(l3.model, "stat",true); // and convert model
                 }
 
                 l5.pack();

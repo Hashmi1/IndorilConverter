@@ -32,9 +32,7 @@ namespace Program
                 File.Delete("Landscape-Log.txt");
             }
 
-            NVDXT nv = NVDXT.use();
-           // nv.compute_normal_maps("C:\\Program Files (x86)\\The Elder Scrolls V Skyrim\\Data\\Textures\\morrowind\\",false);
-            Log.error(-1);
+
             
             TES5.Group[] ltex = Convert.LTEX.convert(Config.Paths.mw_esm);
             //TES5.Group door = Convert.DOOR.convert(Config.Paths.mw_esm);

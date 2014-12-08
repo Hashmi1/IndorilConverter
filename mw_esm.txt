@@ -12,11 +12,11 @@ The ESM/ESP/ESS files are composed entirely of records with the following format
   Record
 	4 bytes: char Name[4]
 		4-byte record name string (not null-terminated)
-	4 bytes: long Size    
+	4 bytes: int Size    
 		Size of the record not including the 16 bytes of header data.
-	4 bytes: long Header1
+	4 bytes: int Header1
 		Unknown value, usually 0 (deleted/ignored flag?).
-	4 bytes: long Flags
+	4 bytes: int Flags
 		Record flags.
 			 0x00002000 = Blocked
 			 0x00000400 = Persistant
@@ -31,7 +31,7 @@ sub-records with a similar format, as given below:
  Sub-Record
 	4 bytes: char Name[4]
 		4-byte sub-record name string (not null-terminated)
-	4 bytes: long Size    
+	4 bytes: int Size    
 		Size of the sub-record not including the 8 bytes of header data.
 	? bytes: Sub-Record data.
 		Format depends on the sub-record type (see below).
@@ -48,15 +48,15 @@ Number of unique main headers = 42
 
 	HEDR (300 bytes)
 		4 bytes, float Version (1.2)
-		4 bytes, long Unknown (1)
+		4 bytes, int Unknown (1)
 		32 Bytes, Company Name string
 		256 Bytes, ESM file description?
-		4 bytes, long NumRecords (48227)
+		4 bytes, int NumRecords (48227)
 	MAST = string, variable length
 		Only found in ESP plugins and specifies a master file that the plugin
 		requires.  Can occur multiple times.  Usually found just after the TES3
 		record.
-	DATA = 8 Bytes	long64 MasterSize
+	DATA = 8 Bytes	int64 MasterSize
 		Size of the previous master file in bytes (used for version tracking of plugin).
 		The MAST and DATA records are always found together, the DATA following the MAST record
 		that it refers to.
@@ -75,7 +75,7 @@ Number of unique main headers = 42
 	NAME = Global ID
 	FNAM = Type of global (1 byte)
 		's' = short
-		'l' = long
+		'l' = int
 		'f' = float
 	FLTV = Float data (4 bytes)
 
@@ -84,25 +84,25 @@ Number of unique main headers = 42
 	NAME = Class ID string
 	FNAM = Class name string
 	CLDT = Class Data (60 bytes)
-		long AttributeID1
-		long AttributeID2
-		long Specialization?
+		int AttributeID1
+		int AttributeID2
+		int Specialization?
 			0 = Combat
 			1 = Magic
 			2 = Stealth
-		long MinorID1
-		long MajorID1
-		long MinorID2
-		long MajorID2
-		long MinorID3
-		long MajorID3
-		long MinorID4
-		long MajorID4
-		long MinorID5
-		long MajorID5
-		long Flags
+		int MinorID1
+		int MajorID1
+		int MinorID2
+		int MajorID2
+		int MinorID3
+		int MajorID3
+		int MinorID4
+		int MajorID4
+		int MinorID5
+		int MajorID5
+		int Flags
 			0x0001 = Playable
-		long AutoCalcFlags
+		int AutoCalcFlags
 			0x00001 = Weapon
 			0x00002 = Armor
 			0x00004 = Clothing
@@ -130,20 +130,20 @@ Number of unique main headers = 42
 	RNAM = Rank Name (32 bytes)
 		Occurs 10 times for each rank in order
 	FADT = Faction data (240 bytes)
-		long AttributeID1
-		long AttributeID2
+		int AttributeID1
+		int AttributeID2
 		RankData[10]
-			long Attribute1
-			long Attribute2
-			long FirstSkill
-			long SecondSkill
-			long Faction
-		long SkillID[6]
-		long Unknown1 (-1)?
-		long Flags
+			int Attribute1
+			int Attribute2
+			int FirstSkill
+			int SecondSkill
+			int Faction
+		int SkillID[6]
+		int Unknown1 (-1)?
+		int Flags
 			1 = Hidden from Player
 	ANAM = Faction name string
-	INTV = Faction reaction value (4 bytes, long)
+	INTV = Faction reaction value (4 bytes, int)
 		The ANAM/INTV occur in pairs for each faction with
 		a reaction adjustment (usually -4 to +4)
 
@@ -153,19 +153,19 @@ Number of unique main headers = 42
 	FNAM = Race name string
 	RADT = Race data (140 bytes)
 		SkillBonuses[7]
-			long SkillID
-			long Bonus
-		long Strength[2]	(Male/Female)
-		long Intelligence[2]
-		long Willpower[2]
-		long Agility[2]
-		long Speed[2]
-		long Endurance[2]
-		long Personality[2]
-		long Luck[2]
+			int SkillID
+			int Bonus
+		int Strength[2]	(Male/Female)
+		int Intelligence[2]
+		int Willpower[2]
+		int Agility[2]
+		int Speed[2]
+		int Endurance[2]
+		int Personality[2]
+		int Luck[2]
 		float Height[2]
 		float Weight[2]
-		long Flags
+		int Flags
 			1 = Playable
 			2 = Beast Race
 	NPCS = Special power/ability name string (32 bytes), multiple		
@@ -182,11 +182,11 @@ Number of unique main headers = 42
 
 7: SKIL =    27 (   144,    247.44,    330)
 	Skill
-	INDX = Skill ID (4 bytes, long)
+	INDX = Skill ID (4 bytes, int)
 		The Skill ID (0 to 26) since skills are hardcoded in the game
 	SKDT = Skill Data (24 bytes)
-		long Attribute
-		long Specialization
+		int Attribute
+		int Specialization
 			0 = Combat
 			1 = Magic
 			2 = Stealth
@@ -196,9 +196,9 @@ Number of unique main headers = 42
 
 8: MGEF =   137 (   113,    432.65,    665)
 	Magic Effect
-	INDX = The Effect ID (0 to 137) (4 bytes, long)
+	INDX = The Effect ID (0 to 137) (4 bytes, int)
 	MEDT = Effect Data (36 bytes)
-		long  SpellSchool
+		int  SpellSchool
 			0 = Alteration
 			1 = Conjuration
 			2 = Destruction
@@ -206,13 +206,13 @@ Number of unique main headers = 42
 			4 = Mysticism
 			5 = Restoration
 		float BaseCost
-		long  Flags
+		int  Flags
 			0x0200 = Spellmaking
 			0x0400 = Enchanting
 			0x0800 = Negative
-		long  Red
-		long  Blue 
-		long  Green
+		int  Red
+		int  Blue 
+		int  Green
 		float SpeedX
 		float SizeX
 		float SizeCap
@@ -232,11 +232,11 @@ Number of unique main headers = 42
 	Script
 	SCHD = Script Header (52 bytes)
 		char Name[32]
-		long NumShorts
-		long NumLongs
-		long NumFloats
-		long ScriptDataSize
-		long LocalVarSize
+		int NumShorts
+		int NumLongs
+		int NumFloats
+		int ScriptDataSize
+		int LocalVarSize
 	SCVR = List of all the local script variables seperated by '\0' NULL characters.
 	SCDT = The compiled script data
 	SCTX = Script text
@@ -300,8 +300,8 @@ Number of unique main headers = 42
 	FNAM = item name
 	MCDT = Weapon Data, 12 bytes binary, required
 		float Weight
-		long  Value
-		long  Unknown
+		int  Value
+		int  Unknown
 	ITEX = Iventory icon filename
 	ENAM = Enchantment ID string???
 	SCRI = script ID string
@@ -313,7 +313,7 @@ Number of unique main headers = 42
 	FNAM = item name
 	WPDT = Weapon Data, 0x20 bytes binary, required
 		float Weight
-		long  Value
+		int  Value
 		short Type? (0 to 13)
 			0 = ShortBladeOneHand
 			1 = LongBladeOneHand
@@ -339,7 +339,7 @@ Number of unique main headers = 42
 		byte  SlashMax
 		byte  ThrustMin
 		byte  ThrustMax
-		long  Flags (0 to 1)
+		int  Flags (0 to 1)
 			0 = ?
 			1 = Ignore Normal Weapon Resistance?
 	ITEX = Iventory icon filename
@@ -359,7 +359,7 @@ Number of unique main headers = 42
 		0x0002	= Respawns, organic only
 		0x0008	= Default, unknown
 	NPCO = An item record (36 bytes, 0+ times)
-		long	Count	  Number of the item
+		int	Count	  Number of the item
 		char	Name[32]  The ID of the item		
 		
 
@@ -368,15 +368,15 @@ Number of unique main headers = 42
 	NAME = Spell ID
 	FNAM = Spell Name
 	SPDT = Spell Data (12 bytes)
-		long Type
+		int Type
 			0 = Spell
 			1 = Ability
 			2 = Blight
 			3 = Disease
 			4 = Curse
 			5 = Power
-		long SpellCost
-		long Flags
+		int SpellCost
+		int Flags
 			0x0001 = AutoCalc
 			0x0002 = PC Start
 			0x0004 = Always Succeeds
@@ -388,34 +388,34 @@ Number of unique main headers = 42
 	MODL = NIF Model
 	FNAM = Creature name
 	NPDT = Creature data, 96 bytes
-		long Type	
+		int Type	
 			0 = Creature
 			1 = Daedra
 			2 = Undead
 			3 = Humanoid
-		long Level
-		long Strength
-		long Intelligence
-		long Willpower
-		long Agility
-		long Speed
-		long Endurance
-		long Personality
-		long Luck
-		long Health
-		long SpellPts
-		long Fatigue
-		long Soul
-		long Combat
-		long Magic
-		long Stealth
-		long AttackMin1
-		long AttackMax1
-		long AttackMin2
-		long AttackMax2
-		long AttackMin3
-		long AttackMax3
-		long Gold
+		int Level
+		int Strength
+		int Intelligence
+		int Willpower
+		int Agility
+		int Speed
+		int Endurance
+		int Personality
+		int Luck
+		int Health
+		int SpellPts
+		int Fatigue
+		int Soul
+		int Combat
+		int Magic
+		int Stealth
+		int AttackMin1
+		int AttackMax1
+		int AttackMin2
+		int AttackMax2
+		int AttackMin3
+		int AttackMax3
+		int Gold
 	FLAG = Creature Flags (4 bytes, bit field)
 		0x0001 = Biped
 		0x0002 = Respawn
@@ -430,7 +430,7 @@ Number of unique main headers = 42
 		0x0800 = Metal Blood
 	SCRI = Script
 	NPCO = Item record (36 bytes, 0+ times)
-		long	Count	  Number of the item
+		int	Count	  Number of the item
 		char	Name[32]  The ID of the item	
 	AIDT = AI data (12 bytes)
 	AI_W = AI Wander (14 bytes)
@@ -480,14 +480,14 @@ Number of unique main headers = 42
 	FNAM = Item name (optional)
 	LHDT = Light data (24 bytes)
 		float Weight
-		long  Value
-		long  Time
-		long  Radius
+		int  Value
+		int  Time
+		int  Radius
 		byte  Red	}
 		byte  Green	}
-		byte  Blue	} long ColorRef?
+		byte  Blue	} int ColorRef?
 		byte  Null	}
-		long  Flags
+		int  Flags
 			0x0001 = Dynamic
 			0x0002 = Can Carry
 			0x0004 = Negative
@@ -507,26 +507,26 @@ Number of unique main headers = 42
 	Enchanting Effects
 	NAME = ID string
 	ENDT = Enchant Data (16 bytes)
-		long Type
+		int Type
 			0 = Cast Once
 			1 = Cast Strikes
 			2 = Cast when Used
 			3 = Constant Effect
-		long EnchantCost
-		long Charge
-		long AutoCalc
+		int EnchantCost
+		int Charge
+		int AutoCalc
 	ENAM = Single enchantment data (24 bytes)
 		short EffectID
 		byte  SkillID		(-1 if NA)
 		byte  AttributeID	(-1 if NA)
-		long  RangeType
+		int  RangeType
 			0 = Self
 			1 = Touch
 			2 = Target
-		long  Area
-		long  Duration
-		long  MagMin
-		long  MagMax		
+		int  Area
+		int  Duration
+		int  MagMin
+		int  MagMax		
 	
 
 23: NPC_ =  2675 (   233,    619.12,   6236)
@@ -558,7 +558,7 @@ Number of unique main headers = 42
 		byte  FactionID
 		byte  Rank
 		byte  Unknown1
-		long  Gold
+		int  Gold
 
 		12 byte Version
 		short Level
@@ -568,8 +568,8 @@ Number of unique main headers = 42
 		byte  Unknown1
 		byte  Unknown2
 		byte  Unknown3
-		long  Gold?
-	FLAG = NPC Flags (4 bytes, long)
+		int  Gold?
+	FLAG = NPC Flags (4 bytes, int)
 		0x0001 = Female
 		0x0002 = Essential
 		0x0004 = Respawn
@@ -578,7 +578,7 @@ Number of unique main headers = 42
 		0x0400 = Blood Skel
 		0x0800 = Blood Metal
 	NPCO = NPC item (36 bytes, occurs 0+ times)
-		long	Count	  Number of the item
+		int	Count	  Number of the item
 		char	Name[32]  The ID of the item	
 	NPCS = NPC spell (32 bytes, occurs 0+ times)
 		char	Name[32]  The ID of the item	
@@ -591,7 +591,7 @@ Number of unique main headers = 42
 		byte Unknown2
 		byte Unknown3
 		byte Unknown4
-		long Flags
+		int Flags
 			0x00001 = Weapon
 			0x00002 = Armor
 			0x00004 = Clothing
@@ -620,7 +620,7 @@ Number of unique main headers = 42
 		float X
 		float Y
 		float Z
-		long  Unknown (1?)
+		int  Unknown (1?)
 	AI_F = AI Follow (48 bytes)
 		float X
 		float Y
@@ -656,7 +656,7 @@ Number of unique main headers = 42
 	MODL = Model Filename, required
 	FNAM = Item Name, required
 	AODT = Armour Data, required (24 bytes)
-		long  Type
+		int  Type
 			0 = Helmet
 			1 = Cuirass
 			2 = L. Pauldron
@@ -669,10 +669,10 @@ Number of unique main headers = 42
 			9 = L. Bracer
 			10 = R. Bracer
 		float Weight
-		long  Value
-		long  Health
-		long  EnchantPts
-		long  Armour
+		int  Value
+		int  Health
+		int  EnchantPts
+		int  Armour
 	ITEX = Icon Filename, required
 	INDX = Body Part Index (1 byte)
 		0 = Head
@@ -717,7 +717,7 @@ Number of unique main headers = 42
 	MODL = Model Name, required
 	FNAM = Item Name, required
 	CTDT = Clothing Data (12 bytes), required
-		long  Type
+		int  Type
 			0 = Pants
 			1 = Shoes
 			2 = Shirt
@@ -749,8 +749,8 @@ Number of unique main headers = 42
 	FNAM = Item Name, required
 	RIDT = Repair Data (16 bytes), required
 		float	Weight
-		long	Value
-		long	Uses
+		int	Value
+		int	Uses
 		float	Quality
 	ITEX = Inventory Icon
 	SCRI = Script Name
@@ -768,14 +768,14 @@ Number of unique main headers = 42
 	MODL = Model Name, required
 	FNAM = Item Name, required
 	AADT = Alchemy Data (16 bytes), required
-		long    Type
+		int    Type
 			0 = Mortar and Pestle
 			1 = Albemic
 			2 = Calcinator
 			3 = Retort
 		float	Quality
 		float	Weight
-		long	Value
+		int	Value
 	ITEX = Inventory Icon
 	SCRI = Script Name
 
@@ -786,9 +786,9 @@ Number of unique main headers = 42
 	FNAM = Item Name, required
 	LKDT = Lock Data (16 bytes), required
 		float	Weight
-		long	Value
+		int	Value
 		float	Quality
-		long 	Uses
+		int 	Uses
 	ITEX = Inventory Icon
 	SCRI = Script Name
 
@@ -799,9 +799,9 @@ Number of unique main headers = 42
 	FNAM = Item Name, required
 	PBDT = Probe Data (16 bytes), required
 		float	Weight
-		long	Value
+		int	Value
 		float	Quality
-		long 	Uses
+		int 	Uses
 	ITEX = Inventory Icon
 	SCRI = Script Name
 
@@ -812,10 +812,10 @@ Number of unique main headers = 42
 	FNAM = Item Name, required
 	IRDT = Ingrediant Data (56 bytes), required
 		float  Weight
-		long   Value
-		long   EffectID[4]	0 or -1 means no effect
-		long   SkillID[4]	only for Skill related effects, 0 or -1 otherwise
-		long   AttributeID[4]  only for Attribute related effects, 0 or -1 otherwise
+		int   Value
+		int   EffectID[4]	0 or -1 means no effect
+		int   SkillID[4]	only for Skill related effects, 0 or -1 otherwise
+		int   AttributeID[4]  only for Attribute related effects, 0 or -1 otherwise
 	ITEX = Inventory Icon
 	SCRI = Script Name
 
@@ -826,10 +826,10 @@ Number of unique main headers = 42
 	FNAM = Item Name, required
 	BKDT = Book Data (20 bytes), required
 		float  Weight
-		long   Value
-		long   Scroll	(1 is scroll, 0 not)
-		long   SkillID	(-1 is no skill)
-		long   EnchantPts		
+		int   Value
+		int   Scroll	(1 is scroll, 0 not)
+		int   SkillID	(-1 is no skill)
+		int   EnchantPts		
 	ITEX = Inventory Icon
 	SCRI = Script Name
 	TEXT = Book text
@@ -841,17 +841,17 @@ Number of unique main headers = 42
 	FNAM = Item Name, required
 	ALDT = Alchemy Data (12 bytes), required
 		float  Weight
-		long   Value
-		long   AutoCalc
+		int   Value
+		int   AutoCalc
 	ENAM = Enchantment (24 bytes) 1 to 8 per record
 		short EffectID
 		byte  SkillID		for skill related effects, -1/0 otherwise
 		byte  AttributeID	for attribute related effects, -1/0 otherwise
-		long  Unknown1
-		long  Unknown2
-		long  Duration
-		long  Magnitude
-		long  Unknown4
+		int  Unknown1
+		int  Unknown2
+		int  Duration
+		int  Magnitude
+		int  Unknown4
 	TEXT = Inventory Icon
 	SCRI = Script Name
 
@@ -859,11 +859,11 @@ Number of unique main headers = 42
 	Levelled Items
 	Levelled Creatures
 	NAME = ID of levelled list
-	DATA = List data (4 bytes, long)
+	DATA = List data (4 bytes, int)
 		1 = Calc from all levels <= PC level
 		2 = Calc for each item
 	NNAM = Chance None? (1 byte)
-	INDX = Number of items in list (4 bytes, long)
+	INDX = Number of items in list (4 bytes, int)
 	INAM = ID string of list item
 	INTV = PC level for previous INAM (2 bytes, short)
 		The INAM/INTV can occur many times in pairs
@@ -871,10 +871,10 @@ Number of unique main headers = 42
 35: LEVC =   116 (    97,    326.54,   1105)
 	Levelled Creatures
 	NAME = ID of levelled list
-	DATA = List data (4 bytes, long)
+	DATA = List data (4 bytes, int)
 		1 = Calc from all levels <= PC level
 	NNAM = Chance None? (1 byte)
-	INDX = Number of items in list (4 bytes, long)
+	INDX = Number of items in list (4 bytes, int)
 	CNAM = ID string of list item
 	INTV = PC level for previous CNAM (2 bytes, short)
 		The CNAM/INTV can occur many times in pairs
@@ -884,35 +884,35 @@ Number of unique main headers = 42
 	NAME = Cell ID string. Can be an empty string for exterior cells in which case
 		the region name is used instead.
 	DATA = Cell Data
-		long Flags
+		int Flags
 			0x01 = Interior?
 			0x02 = Has Water
 			0x04 = Illegal to Sleep here
 			0x80 = Behave like exterior (Tribunal)
-		long GridX
-		long GridY
+		int GridX
+		int GridY
 	RGNN = Region name string
-	NAM0 = Number of objects in cell in current file? (4 byte, long), Optional
+	NAM0 = Number of objects in cell in current file? (4 byte, int), Optional
 
 	Exterior Cell Sub-Records
-		NAM5 = Map Color (4 bytes, long, COLORREF)
+		NAM5 = Map Color (4 bytes, int, COLORREF)
 
 	Interior Cell Sub-Records
-		WHGT = Water Height (4 bytes, float)
+		INTV = Water Height (4 bytes, int)
 		AMBI = Ambient Light Level (16 bytes)
-			long AmbientColor
-			long SunlightColor
-			long FogColor
+			int AmbientColor
+			int SunlightColor
+			int FogColor
 			float FogDensity			
 		
 	Referenced Object Data Grouping
-		FRMR = Object Index (starts at 1) (4 bytes, long)
+		FRMR = Object Index (starts at 1) (4 bytes, int)
 			This is used to uniquely identify objects in the cell.  For new files the
 			index starts at 1 and is incremented for each new object added.  For modified
 			objects the index is kept the same.			
 		NAME = Object ID string
 		XSCL = Scale (4 bytes, float) Static
-		DELE = (4 byte long) Indicates that the reference is deleted.
+		DELE = (4 byte int) Indicates that the reference is deleted.
 		DODT = XYZ Pos, XYZ Rotation of exit (24 bytes, Door objects) Present on Teleporting Doors. The placement
 					Data is the position to which the player will be teleported to.
 			float XPos
@@ -923,14 +923,14 @@ Number of unique main headers = 42
 			float ZRotate
 		DNAM = Door exit CELL ID. Present only if the object is a teleporting door and leads to an interior cell. 
 			  If a reference has a DODT record but no DNAM record that means that the exit is in the exterior world-space.
-		FLTV = Follows the DNAM optionally, lock level (long)
+		FLTV = Follows the DNAM optionally, lock level (int)
 		KNAM = Door key
 		TNAM = Trap name
 		UNAM = Reference Blocked (1 byte, 00?), only occurs once in MORROWIND.ESM
 		ANAM = Owner ID string
 		BNAM = Global variable/rank ID string
-		INTV = Number of uses ( 4 bytes, long, 1 default), occurs even for objects that don't use it
-		NAM9 = ? (4 bytes, long, 0x00000001)
+		INTV = Number of uses ( 4 bytes, int, 1 default), occurs even for objects that don't use it
+		NAM9 = ? (4 bytes, int, 0x00000001)
 		XSOL = Soul Extra Data (ID string of creature)
 		DATA = Ref Position Data (24 bytes)
 			float XPos
@@ -943,11 +943,11 @@ Number of unique main headers = 42
 37: LAND =  1390 (    28,  27374.14,  30243)
 	Landscape
 	INTV (8 bytes)
-		long CellX
-		long CellY
+		int CellX
+		int CellY
 			The cell coordinates of the cell.
 	DATA (4 bytes)
-		long Unknown (default of 0x09)
+		int Unknown (default of 0x09)
 			Changing this value makes the land 'disappear' in the editor.			
 	VNML (12675 bytes)
 		struct {
@@ -984,7 +984,7 @@ Number of unique main headers = 42
 39: SNDG =   168 (    50,     75.86,     94)
 	Sound Generator
 	NAME = Name? (DEFAULT0001, ALIT0001, etc...)
-	DATA = Sound Type Data (4 bytes, long)
+	DATA = Sound Type Data (4 bytes, int)
 		0 = Left Foot
 		1 = Right Foot
 		2 = Swim Left
@@ -1015,8 +1015,8 @@ Number of unique main headers = 42
 	NNAM = Next info ID (form a linked list of INFOs for the DIAL). First
 		INFO has an empty PNAM, last has an empty NNAM.
 	DATA = Info data (12 bytes)
-		long Unknown1
-		long Disposition
+		int Unknown1
+		int Disposition
 		byte Rank (0-10)
 		byte Gender
 			0xFF = None
@@ -1092,7 +1092,7 @@ ESS Save Game Format Differences
 		float Unknown
 		char CharacterName[32]
 	SCRD (20 bytes)
-		unknown combination of short/longs? Related to SCRD?
+		unknown combination of short/ints? Related to SCRD?
 	SCRS (65536 bytes)
 		Looks like an array of byte data. Possible the save game screenshot.
 	SCPT
@@ -1114,11 +1114,11 @@ ESS Save Game Format Differences
 		Kill stats?
 		KNAM - Creature/NPC ID string
 		CNAM - Occurs just after the KNAM sub-record
-			long Value
+			int Value
 	FMAP - Map data?
 		MAPH - (8 bytes) Map header?
-			long Size
-			long Value
+			int Size
+			int Value
 		MAPD - (786432 bytes) Map data? Size corresponds to an RGB 512x512 image.
 	PCDT 
 		DNAM - Dialogue topic
