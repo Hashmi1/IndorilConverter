@@ -23,6 +23,8 @@ namespace TES3
     class CELL : Record
     {
 
+        
+
         public enum CELL_FLAGS : int
         {
             Interior = 0x01,

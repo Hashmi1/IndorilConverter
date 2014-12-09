@@ -71,6 +71,11 @@ namespace Convert.REFERENCE
                     else
                     {
                         skyrim_reference = new TES5.REFR(formid, refr.x, refr.y, refr.z, refr.xR, refr.yR, refr.zR, refr.scale);
+
+                        if (TES3.TypeIndex.getInstance().get(refr.editor_id) == TES3.TypeIndex.TYPE.LIGH)
+                        {
+                            skyrim_reference.configure_light();
+                        }
                     }
 
                     if (cell.interior)
@@ -89,15 +94,15 @@ namespace Convert.REFERENCE
 
         private static void add_exterior_references(TES5.REFR refr)
         {            
-            int cell_x = (int)(refr.placement_.x / 4096f);
-            int cell_y = (int)(refr.placement_.y / 4096f);
+            int cell_x = (int)(refr.loc.x / 4096f);
+            int cell_y = (int)(refr.loc.y / 4096f);
 
-            if (refr.placement_.x < 0f)
+            if (refr.loc.x < 0f)
             {
                 cell_x--;
             }
 
-            if (refr.placement_.y < 0f)
+            if (refr.loc.y < 0f)
             {
                 cell_y--;
             }

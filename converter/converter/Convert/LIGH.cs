@@ -36,9 +36,9 @@ namespace Convert
 
                 l5.editor_id = l3.editor_id;
                 l5.model = l3.model;
-                //l5.icon = l3.icon; // ditch the icons
+                //l5.icon = l3.icon; // ditch the icon
 
-                l5.Radius = l3.radius/2;
+                l5.Radius = l3.radius/2; // half radius for skyrim TODO: Better Replacement?
 
                 l5.Time = (int)l3.time;
                 l5.Value = l3.value;
@@ -47,11 +47,11 @@ namespace Convert
                 l5.b = l3.blue;
                 l5.Weight = l3.weight;
 
-                l5.Dynamic = l3.Dynamic;
+                // l5.Dynamic = l3.Dynamic; // Not in CK?
                 l5.carried = l3.Can_Carry;
                 
                 l5.Flicker = l3.Flicker;
-                //l5.FlickerSlow = l3.Flicker_Slow;
+                //l5.FlickerSlow = l3.Flicker_Slow; // FlickerSlow not in CK
                 l5.Pulse = l3.Pulse;
 
                 if (l3.model == null)

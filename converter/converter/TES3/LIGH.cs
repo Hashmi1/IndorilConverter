@@ -95,6 +95,8 @@ namespace TES3
 
 
                 }
+
+                TypeIndex.getInstance().put(this.editor_id, TypeIndex.TYPE.LIGH); // Mark self as LIGH
             }
 
             private void read_flags()

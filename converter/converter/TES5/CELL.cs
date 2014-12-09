@@ -40,7 +40,7 @@ namespace TES5
         
         ushort data_flags;
 
-        public class XCLL
+        private class XCLL
         {
             public byte[] Ambient;
             public byte[] Directional;
@@ -85,8 +85,8 @@ namespace TES5
                 Inheritflags_minuscontrols = (uint)BinaryFlag.set(Inheritflags_minuscontrols, 0x0004);
                 Inheritflags_minuscontrols = (uint)BinaryFlag.set(Inheritflags_minuscontrols, 0x0008);
                 Inheritflags_minuscontrols = (uint)BinaryFlag.set(Inheritflags_minuscontrols, 0x0010);
-                //Inheritflags_minuscontrols = (uint)BinaryFlag.set(Inheritflags_minuscontrols, 0x0020);
-                //Inheritflags_minuscontrols = (uint)BinaryFlag.set(Inheritflags_minuscontrols, 0x0040);
+                Inheritflags_minuscontrols = (uint)BinaryFlag.set(Inheritflags_minuscontrols, 0x0020);
+                Inheritflags_minuscontrols = (uint)BinaryFlag.set(Inheritflags_minuscontrols, 0x0040);
                 Inheritflags_minuscontrols = (uint)BinaryFlag.set(Inheritflags_minuscontrols, 0x0080);
                 Inheritflags_minuscontrols = (uint)BinaryFlag.set(Inheritflags_minuscontrols, 0x0100);
                 Inheritflags_minuscontrols = (uint)BinaryFlag.set(Inheritflags_minuscontrols, 0x0200);
@@ -136,27 +136,20 @@ namespace TES5
 
             }
 
-            public void set_ambient(byte r, byte g, byte b)
-            {
-                AmbientX_plus = new byte[4] { r, g, b, 0 };
-                AmbientY_plus = new byte[4] { r, g, b, 0 };
-                AmbientZ_plus = new byte[4] { r, g, b, 0 };
-                AmbientX_minus = new byte[4] { r, g, b, 0 };
-                AmbientY_minus = new byte[4] { r, g, b, 0 };
-                AmbientZ_minus = new byte[4] { r, g, b, 0 };
-            }
         }
 
         public bool Interior;
-        public bool HasWater;
+        private bool HasWater;
 
         public string editor_id;
         public string full_name;
 
         public Group cell_references;
         public Group temp_references;
-                
-        public XCLL lighting = new XCLL();
+
+        private Record LTMP = null;
+
+        private XCLL lighting = new XCLL();
 
         private void pack_flags()
         {
@@ -169,17 +162,47 @@ namespace TES5
         {
             HasWater = true;
 
-            for (float x = min_x; x <= max_x; x = x + 20480)
+            float padding = 1024;
+
+            max_x = max_x + padding;
+            min_x = min_x - padding;
+
+            max_y += padding;
+            min_y -= padding;
+
+            float size_x = Math.Abs(max_x - min_x);
+            float size_y = Math.Abs(max_y - min_y);
+            float size = Math.Max(size_x, size_y);
+
+            // TODO: Boundaries/padding
+            if (size / 2048f <= 10.0f)
             {
-                for (float y = min_y; y <= max_y; y = y + 20480)
-                {
-                    REFR water_mesh = new REFR(ACTI.get_water_instance().id, x, y, height, 0, 0, 0, 10);
-                    temp_references.addRecord(water_mesh);
-                }
+                REFR water_mesh = new REFR(ACTI.get_water_instance().id, min_x, min_y, height, 0, 0, 0, size / 2048f);
+                temp_references.addRecord(water_mesh);
             }
 
+            else
+            {
+
+                for (float x = min_x; x <= max_x; x = x + 20480)
+                {
+                    for (float y = min_y; y <= max_y; y = y + 20480)
+                    {
+                        REFR water_mesh = new REFR(ACTI.get_water_instance().id, x, y, height, 0, 0, 0, 10);
+                        temp_references.addRecord(water_mesh);
+                    }
+                }
+            }
         }
 
+        public void add_ambient_light(Record ltmp)
+        {
+            if (ltmp == null)
+            {
+                Log.error("NULL ltmp assigned to TES5:CELL");
+            }
+            this.LTMP = ltmp;
+        }
 
         float min_x = float.NaN;
         float min_y = float.NaN;
@@ -237,12 +260,17 @@ namespace TES5
         }
         public void pack()
         {
+            if (LTMP == null)
+            {
+                Log.error("TES5:CELL No lighting template specified");
+            }
+
             pack_flags();
             addField(new Field("EDID", Text.editor_id(editor_id)));
             addField(new Field("FULL", Text.zstring(shorten_name(full_name))));
             addField(new Field("DATA", Binary.toBin(data_flags)));
             addField(new Field("XCLL", lighting.toBin()));
-            addField(new Field("LTMP", Binary.toBin((UInt32)0)));
+            addField(new Field("LTMP", Binary.toBin((UInt32)LTMP.id)));
             addField(new Field("XCLW", Binary.toBin((float)0)));
         }
         

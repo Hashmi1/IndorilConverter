@@ -27,15 +27,14 @@ namespace Program
         
         static void Main(string[] args)
         {
-            if (File.Exists("Landscape-Log.txt"))
-            {
-                File.Delete("Landscape-Log.txt");
-            }
-
-
+           
+            
             TES5.Group[] ltex = Convert.LTEX.convert(Config.Paths.mw_esm);
             //TES5.Group door = Convert.DOOR.convert(Config.Paths.mw_esm);
             TES5.Group stat = Convert.STAT.convert(Config.Paths.mw_esm);
+
+            TES5.Group lgtm = Convert.LGTM.convert();
+             
             TES5.Group acti = new TES5.Group("ACTI");
             acti.addRecord(TES5.ACTI.get_water_instance());
 
@@ -54,6 +53,7 @@ namespace Program
             esm.add_group(ltex[0]);
             esm.add_group(ltex[1]);
             esm.add_group(stat);
+            esm.add_group(lgtm);
             esm.add_group(acti);
             esm.add_group(light);
 
@@ -63,8 +63,8 @@ namespace Program
             
             esm.write_to_file(Config.Paths.skyrim_path + "final.esp");
             
-            Log.info("DONE");            
-            Console.Read();
+            Log.exit("DONE");            
+            
         }
     }
 }

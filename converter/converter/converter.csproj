@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="Convert.cs" />
+    <Compile Include="Convert\CellClass.cs" />
     <Compile Include="Convert\LIGH.cs" />
     <Compile Include="Convert\ModelConverter.cs" />
     <Compile Include="Convert\REFERENCE\Exterior_ReferenceGroup_Index.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="TES3\Analyzer.cs" />
     <Compile Include="TES3\REGN.cs" />
     <Compile Include="TES3\SubRecord.cs" />
+    <Compile Include="TES3\TypeIndex.cs" />
     <Compile Include="TES5\ACTI.cs" />
     <Compile Include="TES5\CELL.cs" />
     <Compile Include="TES5\ESM.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="TES5\Group.cs" />
     <Compile Include="TES5\LAND.cs" />
     <Compile Include="TES5\LIGH.cs" />
+    <Compile Include="Convert\LGTM.cs" />
     <Compile Include="TES5\Record.cs" />
     <Compile Include="TES5\REFR.cs" />
     <Compile Include="Utility\Binary.cs" />

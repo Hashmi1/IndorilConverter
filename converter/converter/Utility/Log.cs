@@ -62,8 +62,10 @@ namespace Utility
             Console.Write('\n');
         }
 
-        public static void pause(Object obj)
+        public static void confirm(Object obj)
         {
+            Console.WriteLine(obj);
+            Console.ReadLine();
         }
 
         public static void error(Object obj)
@@ -76,6 +78,17 @@ namespace Utility
             Console.Read();
             System.Environment.Exit(-1);
         }
+
+        public static void exit(Object obj)
+        {         
+            Console.WriteLine(obj);
+            Console.Write("Press ENTER to exit ...");
+            Console.Read();
+            System.Environment.Exit(0);
+        }
+
+
+
 
     }
 

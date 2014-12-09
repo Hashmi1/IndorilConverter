@@ -84,7 +84,9 @@ namespace Utility
         }
 
         public static char[] editor_id(string txt)
-        {            
+        {
+            txt = txt.Replace("_", "__"); // DOUBLE: Prevent editor_id conflicts when converting for example x_y and x.y 
+         
             txt = txt.Replace(" ", "_");
             txt = txt.Replace("`", "_");
             txt = txt.Replace("~", "_");
@@ -98,8 +100,7 @@ namespace Utility
             txt = txt.Replace("*", "_");
             txt = txt.Replace("(", "_");
             txt = txt.Replace(")", "_");
-            txt = txt.Replace("-", "_");
-            txt = txt.Replace("_", "_");
+            txt = txt.Replace("-", "_");            
             txt = txt.Replace("+", "_");
             txt = txt.Replace("=", "_");
             txt = txt.Replace("[", "_");

@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Utility;
 
 namespace TES5 
 {
@@ -52,6 +53,11 @@ namespace TES5
 
         public static ESM read_from_file(string filename)
         {
+            if (!File.Exists(filename))
+            {
+                Log.error("TES5.ESM asked to open non-existing file: " +filename);
+            }
+
             ESM esm = new ESM();
 
             FileStream fstream = new FileStream(filename,FileMode.Open);

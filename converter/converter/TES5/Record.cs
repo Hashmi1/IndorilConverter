@@ -49,17 +49,20 @@ namespace TES5
         //byte[] compressed_data;
         // END Data
 
-        
+        // Call to assign new formid. LGTM calls this
+        public void reset_formid(string editor_id)
+        {
+            this.id = FormID.set(editor_id);
+        }
 
         public Record()
         {
         }
 
-        
+                
         public Record(string type,bool compressed=false)
         {
             
-
             this.type = type.ToCharArray(0, 4);
             //this.flags = flags;
             if (compressed)

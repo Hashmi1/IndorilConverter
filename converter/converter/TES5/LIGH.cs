@@ -23,7 +23,7 @@ namespace TES5
 {
     class LIGH : Record
     {
-
+        
         public Int32 Time;
         public UInt32 Radius;
         public byte r;
@@ -32,10 +32,10 @@ namespace TES5
         public UInt32 Flags;
         public float Falloff_Exponent;
         public float FOV;
-        public float Near_Clip;
-        public float Period;
-        public float Intensity_Amplitude;
-        public float Movement_Amplitude;
+        public float Near_Clip = 1.0f;
+        public float Period = 3.0f;
+        public float Intensity_Amplitude=0.4f;
+        public float Movement_Amplitude=16.0f;
         public UInt32 Value;
         public float Weight;
 

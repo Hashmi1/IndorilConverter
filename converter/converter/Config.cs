@@ -37,6 +37,7 @@ using System.Text;
             public static string tesannwyn_path_ltex = "external\\TESAnnwyn\\tes3ltex.txt";
 
             public static string cell_name_replace = "config\\cell_name_replacement.txt";
+            public static string cell_class = "config\\cell_classification.txt";
 
             public static string morrowind_path = "D:\\gms\\morrowind\\data\\";
             public static string mw_meshes = morrowind_path + "meshes\\";
@@ -44,9 +45,10 @@ using System.Text;
 
             public static string skyrim_path = "D:\\gms\\skyrim\\data\\";
             public static string sk_meshes =  skyrim_path + "meshes\\";
-            
 
-            public static string nif_batch_file = "misc\\nifbatch.txt"; // Do not change unless mirrored in nifconvert
+            
+            public static string light_templates = "templates\\ltmp.esp";
+            
         }
 
     }

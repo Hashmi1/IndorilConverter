@@ -22,7 +22,7 @@ namespace TES5
     // TODO: ownership / scale / exterior cell / door /lock etc.
     class REFR : Record
     {
-        public class placement
+        public class Placement
         {
             public float x { get; private set; }
             public float y { get; private set; }
@@ -32,7 +32,7 @@ namespace TES5
             public float zR { get; private set; }
             
 
-            public placement(float x, float y, float z, float xR, float yR, float zR)
+            public Placement(float x, float y, float z, float xR, float yR, float zR)
             {
                 this.x = x;
                 this.y = y;
@@ -60,7 +60,7 @@ namespace TES5
             
         }
 
-        class portal_data
+        class Portal_Data
         {
             float x;
             float y;
@@ -70,7 +70,7 @@ namespace TES5
             float zR;
             UInt32 destination_formid;
 
-            public portal_data(float x, float y, float z, float xR, float yR, float zR, UInt32 destination_formid)
+            public Portal_Data(float x, float y, float z, float xR, float yR, float zR, UInt32 destination_formid)
             {
                 this.x = x;
                 this.y = y;
@@ -101,25 +101,43 @@ namespace TES5
 
         }
 
-        public placement placement_;
+        public Placement loc;
 
         public void attach_portal(REFR other_end)
         {
-            portal_data portal_positioning = new portal_data(other_end.placement_.x, other_end.placement_.y, other_end.placement_.z, other_end.placement_.xR, other_end.placement_.yR, other_end.placement_.zR, other_end.id);
+            Portal_Data portal_positioning = new Portal_Data(other_end.loc.x, other_end.loc.y, other_end.loc.z, other_end.loc.xR, other_end.loc.yR, other_end.loc.zR, other_end.id);
             Field XTEL = new Field("XTEL", portal_positioning.toBin());
             fields.Add(XTEL);
         }
+        
+        public void configure_light()
+        {
+            MemoryStream mstream = new MemoryStream();
+            BinaryWriter bw = new BinaryWriter(mstream);
 
-       
+            float  FOV_Offset = 0f;
+            float  Fade_Offset = 102.50f;
+            float  End_Distance_Cap = 0;
+            float Shadow_Depth_Bias = 50f;
+            uint flags = 0;
+
+            bw.Write((float)FOV_Offset);            
+            bw.Write((float)Fade_Offset);
+            bw.Write((float)End_Distance_Cap);
+            bw.Write((float)Shadow_Depth_Bias);
+            bw.Write((uint)flags);
+
+            addField(new Field("XLIG",mstream.ToArray()));
+        }
 
         public REFR(uint formid,float x, float y, float z, float xR, float yR, float zR,float scale = 1f) : base("REFR")
         {
             
-            placement_ = new placement(x, y, z, xR, yR, zR);
+            loc = new Placement(x, y, z, xR, yR, zR);
             
 
             Field NAME = new Field("NAME", Binary.toBin(formid));
-            Field DATA = new Field("DATA",placement_.toBin());
+            Field DATA = new Field("DATA",loc.toBin());
 
             
             fields.Add(NAME);

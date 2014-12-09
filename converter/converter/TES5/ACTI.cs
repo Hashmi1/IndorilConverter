@@ -42,8 +42,12 @@ namespace TES5
             {
                 water_mesh = new ACTI("mw_water_default");
                 water_mesh.isWater = true;
-                water_mesh.model = "Water\\Water2048.nif";
-                water_mesh.pack();
+                string model_ = "Water\\Water2048.nif";
+
+                water_mesh.addField(new Field("EDID", Text.editor_id(water_mesh.editor_id)));
+                water_mesh.addField(new Field("MODL", Text.zstring(model_)));
+                water_mesh.addField(new Field("WNAM", Binary.toBin((uint)water_mesh.water)));                
+                
             }
             return water_mesh;
         }
@@ -60,7 +64,7 @@ namespace TES5
             }
             if (model != null)
             {
-                addField(new Field("MODL", Text.zstring(model))); // TODO: Change to modelpath() for MW
+                addField(new Field("MODL", Text.model_path(model))); 
             }
             
             if (isWater)
