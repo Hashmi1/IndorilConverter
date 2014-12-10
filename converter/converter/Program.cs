@@ -27,7 +27,7 @@ namespace Program
         
         static void Main(string[] args)
         {
-           
+
             
             TES5.Group[] ltex = Convert.LTEX.convert(Config.Paths.mw_esm);
             //TES5.Group door = Convert.DOOR.convert(Config.Paths.mw_esm);

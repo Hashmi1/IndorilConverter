@@ -32,45 +32,56 @@ namespace Convert
                 TES3.LIGH l3 = new TES3.LIGH();
                 l3.read();
 
-                TES5.LIGH l5 = new TES5.LIGH(l3.editor_id);
-
-                l5.editor_id = l3.editor_id;
-                l5.model = l3.model;
-                //l5.icon = l3.icon; // ditch the icon
-
-                l5.Radius = l3.radius/2; // half radius for skyrim TODO: Better Replacement?
-
-                l5.Time = (int)l3.time;
-                l5.Value = l3.value;
-                l5.r = l3.red;
-                l5.g = l3.green;
-                l5.b = l3.blue;
-                l5.Weight = l3.weight;
-
-                // l5.Dynamic = l3.Dynamic; // Not in CK?
-                l5.carried = l3.Can_Carry;
+                TES5.LIGH l = new TES5.LIGH(l3.editor_id);
+                TES5.LIGH l_shadow = new TES5.LIGH(l3.editor_id + "_shadow");
                 
-                l5.Flicker = l3.Flicker;
-                //l5.FlickerSlow = l3.Flicker_Slow; // FlickerSlow not in CK
-                l5.Pulse = l3.Pulse;
+                TES5.LIGH[] ls = new TES5.LIGH[2]{l,l_shadow};
 
-                if (l3.model == null)
+                for (int i = 0; i < 2; i++)
                 {
-                    // if no model then make it shadow-less
-                }
-                else
-                {
-                    l5.Omnidirectional = true; // if model present make it shadow casting omni-directinal
-                    ModelConverter.convert(l3.model, "stat",true); // and convert model
-                }
+                    TES5.LIGH l5 = ls[i];
+                                    
+                    l5.model = l3.model;
 
-                l5.pack();
-                
-                LIGH_GRP.addRecord(l5);
+                    l5.Radius = l3.radius; // TODO: Better Replacement?
+
+                    l5.Time = (int)l3.time;
+                    l5.Value = l3.value;
+                    l5.r = l3.red;
+                    l5.g = l3.green;
+                    l5.b = l3.blue;
+                    l5.Weight = l3.weight;
+
+                    // l5.Dynamic = l3.Dynamic; // Not in CK?
+                    l5.carried = l3.Can_Carry;
+
+                    l5.Flicker = l3.Flicker;
+                    //l5.FlickerSlow = l3.Flicker_Slow; // FlickerSlow not in CK
+                    l5.Pulse = l3.Pulse;
+
+                    if (l3.model == null)
+                    {
+                        // if no model then make it shadow-less
+                    }
+                    else
+                    {
+                        //l5.Omnidirectional = true; // if model present make it shadow casting omni-directinal
+
+                        if (i == 1)
+                        {
+                            l5.Omnidirectional = true;
+                        }
+
+                        ModelConverter.convert(l3.model, "stat",true); // and convert model
+                    }
+
+                    l5.pack();
+                    LIGH_GRP.addRecord(l5);
+                    TypeIndex.getInstance().put(l5.editor_id, TypeIndex.TYPE.LIGH); // Mark self as LIGH
+                }
             }
 
             TES3.ESM.close();
-
             return LIGH_GRP;
         }
     }

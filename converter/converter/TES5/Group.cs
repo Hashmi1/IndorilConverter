@@ -96,7 +96,7 @@ namespace TES5
         public void recalculate_size()
         {
             
-            Log.info("Recalculating GRUP size");
+            //Log.info("Recalculating GRUP size");
             long old_size = groupSize;
 
             uint size = 0;
@@ -171,7 +171,7 @@ namespace TES5
             version = input.ReadUInt16();
             unknown2 = input.ReadUInt16();
 
-            Log.info("Reading Group: " + new string(type) + "....." + (label));
+            //Log.info("Reading Group: " + new string(type) + "....." + (label));
 
             uint read_data = 0;
             while (read_data < (groupSize - 24))

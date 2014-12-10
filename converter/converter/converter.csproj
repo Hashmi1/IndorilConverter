@@ -51,6 +51,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Convert.cs" />
     <Compile Include="Convert\CellClass.cs" />
+    <Compile Include="Convert\FURN.cs" />
     <Compile Include="Convert\LIGH.cs" />
     <Compile Include="Convert\ModelConverter.cs" />
     <Compile Include="Convert\REFERENCE\Exterior_ReferenceGroup_Index.cs" />
@@ -76,13 +77,14 @@
     <Compile Include="Landscape Module\SparseArray.cs" />
     <Compile Include="Landscape Module\Texturiser.cs" />
     <Compile Include="Landscape Module\World.cs" />
+    <Compile Include="Lighting Module\Shadow.cs" />
     <Compile Include="TES3\CELL.cs" />
     <Compile Include="TES3\LIGH.cs" />
     <Compile Include="TES3\Record.cs" />
     <Compile Include="TES3\Analyzer.cs" />
     <Compile Include="TES3\REGN.cs" />
     <Compile Include="TES3\SubRecord.cs" />
-    <Compile Include="TES3\TypeIndex.cs" />
+    <Compile Include="Convert\TypeIndex.cs" />
     <Compile Include="TES5\ACTI.cs" />
     <Compile Include="TES5\CELL.cs" />
     <Compile Include="TES5\ESM.cs" />

@@ -28,7 +28,10 @@ namespace TES5
 
             cell_references = new Group(id, Group.TYPE.CELL_CHILD);
             temp_references = new Group(id, Group.TYPE.TEMP_REFR);
+            persistent_references = new Group(id, Group.TYPE.PERSIS_REFR);
+            cell_references.addSubGroup(persistent_references);
             cell_references.addSubGroup(temp_references);
+
         }
         
         
@@ -146,6 +149,7 @@ namespace TES5
 
         public Group cell_references;
         public Group temp_references;
+        public Group persistent_references;
 
         private Record LTMP = null;
 
@@ -174,11 +178,11 @@ namespace TES5
             float size_y = Math.Abs(max_y - min_y);
             float size = Math.Max(size_x, size_y);
 
-            // TODO: Boundaries/padding
+            
             if (size / 2048f <= 10.0f)
             {
-                REFR water_mesh = new REFR(ACTI.get_water_instance().id, min_x, min_y, height, 0, 0, 0, size / 2048f);
-                temp_references.addRecord(water_mesh);
+                REFR water_mesh = new REFR(ACTI.get_water_instance().id, max_x-min_x, max_y-min_y, height, 0, 0, 0, size / 2048f);
+                persistent_references.addRecord(water_mesh);
             }
 
             else
@@ -188,8 +192,9 @@ namespace TES5
                 {
                     for (float y = min_y; y <= max_y; y = y + 20480)
                     {
+                        Log.confirm("TES5.CELL addwater() FULL-SIZE: This functionality is untested. Are you sure you want to continue?");
                         REFR water_mesh = new REFR(ACTI.get_water_instance().id, x, y, height, 0, 0, 0, 10);
-                        temp_references.addRecord(water_mesh);
+                        persistent_references.addRecord(water_mesh);
                     }
                 }
             }

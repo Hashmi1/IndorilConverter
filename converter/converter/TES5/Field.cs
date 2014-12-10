@@ -82,7 +82,7 @@ namespace TES5
 
             if (isType("XXXX"))
             {
-                Log.error("Field XXXX encountered");
+                Log.error("Field XXXX encountered. Handling for this has not been implemented yet.");
             }
 
             dataSize = input.ReadUInt16();

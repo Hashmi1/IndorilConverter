@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Utility;
 
-namespace TES3
+namespace Convert
 {
     class TypeIndex
     {

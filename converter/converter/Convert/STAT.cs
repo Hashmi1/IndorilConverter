@@ -23,7 +23,7 @@ namespace Convert
     class STAT
     {
         
-        struct STRUCT_STAT
+        public struct STRUCT_STAT
         {
             public string editor_id;
             public string model_path;
@@ -60,6 +60,8 @@ namespace Convert
 
                     
                 }
+
+                
 
                 list_stat.Add(stat_);
 

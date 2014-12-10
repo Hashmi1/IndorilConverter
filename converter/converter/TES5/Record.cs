@@ -49,6 +49,11 @@ namespace TES5
         //byte[] compressed_data;
         // END Data
 
+        public void setFlag(uint option)
+        {
+            flags = BinaryFlag.set(flags, option);
+        }
+
         // Call to assign new formid. LGTM calls this
         public void reset_formid(string editor_id)
         {
@@ -105,7 +110,7 @@ namespace TES5
                         
         public void recalculate_size()
         {
-            Log.info("Recalculating RECORD size");
+            //Log.info("Recalculating RECORD size");
 
             //compressed = BinaryFlag.isSet
 
@@ -171,7 +176,7 @@ namespace TES5
 
             long reading_size = dataSize;
 
-            Log.info("     Reading Record: " + new string(type) + " " +id.ToString("X") + " >>> " + uint.MaxValue.ToString("X"));
+            //Log.info("     Reading Record: " + new string(type) + " " +id.ToString("X") + " >>> " + uint.MaxValue.ToString("X"));
 
             // If compressed flag is set then uncompress the data
             if (BinaryFlag.isSet(flags,0x00040000))

@@ -1,5 +1,5 @@
 ﻿/*
-Copyright(c) 2014 Hashmi1. All Rights Reserved
+Copyright(c) 2014 Hashmi1. 
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -45,9 +45,12 @@ namespace Convert.REFERENCE
                     continue;
                 }
 
-
+                Lighting_Module.Shadow shadower = new Lighting_Module.Shadow();
+                shadower.mark_shadow_lights(cell.references);
+                
                 foreach (TES3.REFR refr in cell.references)
                 {
+                
                     string refr_id = refr.editor_id;
                     uint formid = TES5.FormID.get(refr_id);
                     if (formid == 0)
@@ -72,7 +75,7 @@ namespace Convert.REFERENCE
                     {
                         skyrim_reference = new TES5.REFR(formid, refr.x, refr.y, refr.z, refr.xR, refr.yR, refr.zR, refr.scale);
 
-                        if (TES3.TypeIndex.getInstance().get(refr.editor_id) == TES3.TypeIndex.TYPE.LIGH)
+                        if (TypeIndex.getInstance().get(refr.editor_id) == TypeIndex.TYPE.LIGH)
                         {
                             skyrim_reference.configure_light();
                         }

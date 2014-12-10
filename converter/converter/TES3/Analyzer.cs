@@ -18,7 +18,7 @@ using Utility;
 
 namespace TES3
 {
-    // Used to dump subrecords for the given record and their size, as heu appear in morrowind.esm
+    // Used to dump subrecords for the given record and their size, as they appear in morrowind.esm
     // helpful for learning about records not documented well on the web
 
     class Analyzer

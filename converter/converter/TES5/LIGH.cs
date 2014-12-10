@@ -57,6 +57,7 @@ namespace TES5
         public LIGH(string editor_id)
             : base("LIGH",editor_id)
         {
+            this.editor_id = editor_id;
         }
 
         public void pack()

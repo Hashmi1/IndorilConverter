@@ -53,6 +53,17 @@ namespace Utility
            Console.WriteLine(obj);
         }
 
+
+        public static void non_fatal_error(Object obj)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine(obj);
+            Console.ResetColor();
+        }
+
+
+
+
         public static void info_(params Object[] objs)
         {
             foreach (object obj in objs)
@@ -64,12 +75,16 @@ namespace Utility
 
         public static void confirm(Object obj)
         {
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine(obj);
+            Console.ResetColor();
             Console.ReadLine();
+
         }
 
         public static void error(Object obj)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
 
             Console.WriteLine("\nFatal Error Encountered:");
             Console.WriteLine("-------------------------");
@@ -77,6 +92,7 @@ namespace Utility
             Console.Write("Can not continue. Press ENTER to exit ...");
             Console.Read();
             System.Environment.Exit(-1);
+            Console.ResetColor();
         }
 
         public static void exit(Object obj)

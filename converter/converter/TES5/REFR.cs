@@ -112,13 +112,15 @@ namespace TES5
         
         public void configure_light()
         {
+            this.setFlag(0x00010000); // make never fades to avoid pop-in /pop-out artifacts
+
             MemoryStream mstream = new MemoryStream();
             BinaryWriter bw = new BinaryWriter(mstream);
 
             float  FOV_Offset = 0f;
-            float  Fade_Offset = 102.50f;
+            float  Fade_Offset = 0f;
             float  End_Distance_Cap = 0;
-            float Shadow_Depth_Bias = 50f;
+            float Shadow_Depth_Bias = 50f; // increase shadow depth bias to avoid striping artifacts
             uint flags = 0;
 
             bw.Write((float)FOV_Offset);            
