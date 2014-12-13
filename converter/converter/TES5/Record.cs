@@ -28,7 +28,7 @@ namespace TES5
             compressed = 0x00040000
         }
 
-        private bool compressed;
+        protected bool compressed;
 
         public bool isCompressed()
         {
@@ -39,8 +39,8 @@ namespace TES5
 
         // START Data
         public char[] type;
-        public UInt32 dataSize { get; private set; }
-        private UInt32 flags;
+        public UInt32 dataSize { get; protected set; }
+        public UInt32 flags;
         public UInt32 id;
         public UInt32 revision;
         public UInt16 version;
@@ -52,6 +52,11 @@ namespace TES5
         public void setFlag(uint option)
         {
             flags = BinaryFlag.set(flags, option);
+        }
+
+        public bool flagSet(uint option)
+        {
+            return BinaryFlag.isSet(flags, option);
         }
 
         // Call to assign new formid. LGTM calls this
@@ -244,6 +249,11 @@ namespace TES5
 
         public void write(BinaryWriter output)
         {
+
+
+            //
+            
+            //
 
             Log.info("Writing RECORD: " + new string(type));
 

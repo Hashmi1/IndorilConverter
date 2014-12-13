@@ -74,7 +74,7 @@ namespace Convert.REFERENCE
                     else
                     {
                         skyrim_reference = new TES5.REFR(formid, refr.x, refr.y, refr.z, refr.xR, refr.yR, refr.zR, refr.scale);
-
+                        
                         if (TypeIndex.getInstance().get(refr.editor_id) == TypeIndex.TYPE.LIGH)
                         {
                             skyrim_reference.configure_light();
@@ -83,12 +83,25 @@ namespace Convert.REFERENCE
 
                     if (cell.interior)
                     {
+
+                        if (Addon_Rules.addon_defined(skyrim_reference.base_id))
+                        {
+                            TES5.REFR addon = Addon_Rules.get_addon(skyrim_reference);
+                            add_interior_references(addon, Text.editor_id_string(cell.cell_name));
+                        }
+
                         add_interior_references(skyrim_reference, Text.editor_id_string(cell.cell_name));
                     }
 
                     if (!cell.interior)
                     {
                         add_exterior_references(skyrim_reference);
+
+                        if (Addon_Rules.addon_defined(skyrim_reference.base_id))
+                        {
+                            TES5.REFR addon = Addon_Rules.get_addon(skyrim_reference);
+                            add_exterior_references(addon);
+                        }
                     }
 
                 }

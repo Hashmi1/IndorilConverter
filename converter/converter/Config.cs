@@ -38,7 +38,7 @@ using System.Text;
 
             public static string cell_name_replace = "config\\cell_name_replacement.txt";
             public static string cell_class = "config\\cell_classification.txt";
-
+            
             public static string morrowind_path = "D:\\gms\\morrowind\\data\\";
             public static string mw_meshes = morrowind_path + "meshes\\";
             public static string mw_esm = morrowind_path + "morrowind.esm";
@@ -46,9 +46,24 @@ using System.Text;
             public static string skyrim_path = "D:\\gms\\skyrim\\data\\";
             public static string sk_meshes =  skyrim_path + "meshes\\";
 
+            public static string furniture_marker_config = "config\\furn_config.txt";
             
             public static string light_templates = "templates\\ltmp.esp";
-            
+
+            public class Templates
+            {
+                public static string lighting = "templates\\ltmp.esp";
+                public static string furniture = "templates\\furn.esp";
+            }
+
+            public class Temporary
+            {
+                public static string tmp = "tmp\\";
+                public static string furn_placement_esp = tmp + "furn_config.esp";
+                public static string furn_linker = tmp + "furn_linker.txt";
+                public static string furn_formid_index = tmp + "furn_index.txt";
+            }
+
         }
 
     }

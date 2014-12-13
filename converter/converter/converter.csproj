@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Program.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ionic.Zip.Reduced">
       <HintPath>.\Ionic.Zip.Reduced.dll</HintPath>
@@ -50,10 +53,13 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="Convert.cs" />
+    <Compile Include="Convert\ACTI.cs" />
+    <Compile Include="Convert\Generic.cs" />
     <Compile Include="Convert\CellClass.cs" />
     <Compile Include="Convert\FURN.cs" />
     <Compile Include="Convert\LIGH.cs" />
     <Compile Include="Convert\ModelConverter.cs" />
+    <Compile Include="Convert\REFERENCE\Addon.cs" />
     <Compile Include="Convert\REFERENCE\Exterior_ReferenceGroup_Index.cs" />
     <Compile Include="Convert\REFERENCE\REFR.cs" />
     <Compile Include="Convert\REFERENCE\Interior_ReferenceGroup_Index.cs" />
@@ -69,6 +75,7 @@
     <Compile Include="Convert\CELL.cs" />
     <Compile Include="Convert\LTEX.cs" />
     <Compile Include="External\TESAnnwyn.cs" />
+    <Compile Include="FurnitureWorkshop.cs" />
     <Compile Include="Init.cs" />
     <Compile Include="Landscape Module\CONSTANTS.cs" />
     <Compile Include="Landscape Module\Main.cs" />
@@ -96,6 +103,7 @@
     <Compile Include="Convert\LGTM.cs" />
     <Compile Include="TES5\Record.cs" />
     <Compile Include="TES5\REFR.cs" />
+    <Compile Include="TES5\TES4.cs" />
     <Compile Include="Utility\Binary.cs" />
     <Compile Include="Utility\BinaryFlag.cs" />
     <Compile Include="Utility\Log.cs" />

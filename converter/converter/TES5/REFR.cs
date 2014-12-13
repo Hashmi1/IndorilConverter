@@ -121,20 +121,56 @@ namespace TES5
             float  Fade_Offset = 0f;
             float  End_Distance_Cap = 0;
             float Shadow_Depth_Bias = 50f; // increase shadow depth bias to avoid striping artifacts
-            uint flags = 0;
+            uint flags_light = 0;
 
             bw.Write((float)FOV_Offset);            
             bw.Write((float)Fade_Offset);
             bw.Write((float)End_Distance_Cap);
             bw.Write((float)Shadow_Depth_Bias);
-            bw.Write((uint)flags);
+            bw.Write((uint)flags_light);
 
             addField(new Field("XLIG",mstream.ToArray()));
         }
 
+        public uint base_id { get; private set; }
+        
+        public REFR(Record r)
+        {
+            if (!r.isType("REFR"))
+            {
+                Log.error("TES5.REFR.interpret() not given REFR type record");
+            }
+
+            this.compressed = r.isCompressed();
+
+            this.type = r.type;
+            this.dataSize = r.dataSize;
+            this.flags = r.flags;
+            this.id = r.id;
+            this.revision = r.revision;
+            this.version = r.version;
+            this.unknown = r.unknown;
+            this.fields = r.fields;
+            
+            Field data = r.find_field("DATA");
+            Field name = r.find_field("NAME");
+
+            if (data == null)
+            {
+                Log.error("TES5.REFR.interpret() No Placement info found in given record");
+            }
+
+            BinaryReader br = data.getData();
+            loc = new Placement(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
+
+            this.base_id = name.getData().ReadUInt32();
+        }
+
         public REFR(uint formid,float x, float y, float z, float xR, float yR, float zR,float scale = 1f) : base("REFR")
         {
-            
+
+            base_id = formid;
+
             loc = new Placement(x, y, z, xR, yR, zR);
             
 

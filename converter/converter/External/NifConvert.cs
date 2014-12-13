@@ -33,7 +33,8 @@ namespace External
 
             if (!File.Exists(model_path_in))
             {
-                Utility.Log.error("Nifconvert is being given a non-existent file for conversion.");
+                Utility.Log.confirm("Nifconvert is being given a non-existent file for conversion.\n" + model_path);
+                return;
             }
 
             if (mode.Equals("door_load"))

@@ -18,17 +18,37 @@ using Utility;
 
 namespace TES5
 {
+    // Because of the nature of FormID class implementation.
+    // A single run of the program should be used to make a single
+    // esm 
+    // TODO: Fix?
+
     class FormID
     {
+        public static void add_master_file()
+        {
+            current = current + +0x1000000;
+
+        }
+
         static Dictionary<string, uint> dict = new Dictionary<string, uint>();
         static Dictionary<string, uint> dict_replacements = new Dictionary<string, uint>();
 
         static uint current = 0x802;// + 0x1000000;
-        static uint first = 0x802;
-
-        public static void init_replacements()
+        
+        public static string find_editor_id(UInt32 formid)
         {
 
+            foreach (string key in dict.Keys)
+            {
+                if (dict[key] == formid)
+                {
+                    return key;
+                }
+            }
+
+            Log.error("FormID could not find an editor id for the given formid");
+            return null;
         }
 
         // Only TES5.Record() should call this.
@@ -82,7 +102,7 @@ namespace TES5
 
         public static uint getHEDRObj()
         {
-            return (first);
+            return (current);
         }
     }
 

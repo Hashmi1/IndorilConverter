@@ -28,14 +28,18 @@ namespace Program
         static void Main(string[] args)
         {
 
-            
+            TES5.ESM esm = new TES5.ESM();
+            esm.add_masters("Skyrim.esm");
+                        
             TES5.Group[] ltex = Convert.LTEX.convert(Config.Paths.mw_esm);
             //TES5.Group door = Convert.DOOR.convert(Config.Paths.mw_esm);
+            TES5.Group furn = Convert.FURN.convert();
+            TES5.Group acti = Convert.ACTI.getInstance().convert(Config.Paths.mw_esm);
+
             TES5.Group stat = Convert.STAT.convert(Config.Paths.mw_esm);
 
             TES5.Group lgtm = Convert.LGTM.convert();
-             
-            TES5.Group acti = new TES5.Group("ACTI");
+                        
             acti.addRecord(TES5.ACTI.get_water_instance());
 
             TES5.Group light = Convert.LIGH.convert(Config.Paths.mw_esm);
@@ -48,11 +52,12 @@ namespace Program
 
             Convert.REFERENCE.REFR.add_references(Config.Paths.mw_esm,cell_grp,null);
             
-            TES5.ESM esm = new TES5.ESM();
+            
             
             esm.add_group(ltex[0]);
             esm.add_group(ltex[1]);
             esm.add_group(stat);
+            esm.add_group(furn);
             esm.add_group(lgtm);
             esm.add_group(acti);
             esm.add_group(light);

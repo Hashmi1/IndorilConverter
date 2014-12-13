@@ -23,19 +23,17 @@ namespace TES5
     {
 
         public List<Group> groups { get; private set; }
-        private Record tes4;
-
-
+        private TES4 header = new TES4(1);
+        
         public ESM()
         {
             groups = new List<Group>();
-            tes4 = new Record();
+            header = new TES4(1);
         }
 
-        public ESM(List<Group> grps_)
+        public void add_masters(params string[] files)
         {
-            groups = grps_;
-            tes4 = new Record();
+            header.add_masters(files);
         }
 
         public void add_group(Group g)
@@ -63,7 +61,7 @@ namespace TES5
             FileStream fstream = new FileStream(filename,FileMode.Open);
             BinaryReader reader = new BinaryReader(fstream);
 
-            esm.tes4.read(reader);
+            esm.header.read(reader);
 
             while (fstream.Position < fstream.Length)
             {
@@ -79,9 +77,8 @@ namespace TES5
         {
             FileStream fstream = new FileStream(filename,FileMode.Create);
             BinaryWriter writer = new BinaryWriter(fstream);
-
-            tes4 = get_tes4_template(1);
-            tes4.write(writer);
+                                   
+            header.write(writer);
 
             foreach (Group g in groups)
             {
@@ -89,27 +86,6 @@ namespace TES5
                 g.write(writer);
             }
         }
-
-        private Record get_tes4_template(int num_records)
-        {
-         
-            Record tes4;
-            ESM file = ESM.read_from_file("tes5\\template01.esp");
-            tes4 = file.tes4;
-
-            Field hedr = tes4.fields[0];
-            hedr.data = new MemoryStream();
-            BinaryWriter b_writer = new BinaryWriter(hedr.data);
-
-            b_writer.Write(1.7f);
-            b_writer.Write(num_records);
-            b_writer.Write(FormID.getHEDRObj());
-
-            hedr.data.Position = 0;
-            
-            return tes4;
-                    
-        }
-
+        
     }
 }

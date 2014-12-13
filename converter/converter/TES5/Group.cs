@@ -227,6 +227,67 @@ namespace TES5
             return false;
         }
 
+        public bool isLabel(string type_str)
+        {
+            if (!isType(TYPE.TOP))
+            {
+                Log.error("Group is not TOP type. Can not compare CHAR label.");
+            }
+
+            string label_str = new string(ASCIIEncoding.ASCII.GetChars(label));
+
+            return (label_str.Equals(type_str));            
+
+        }
+
+        // Finds a child/descendent group that matches the given TYPE and formid
+        // depth first
+        public Group find_group(uint label_formid, TYPE type)
+        {
+            foreach (Group g in subGroups)
+            {
+                if (g.isType(type) && Binary.toUInt32(label) == label_formid) 
+                {
+                    return g;                 
+                }
+
+                Group ret = g.find_group(label_formid, type);
+                if (ret != null)
+                {
+                    return ret;
+                }
+            }
+
+            return null;
+        }
+
+        public Record find_record(string editor_id)
+        {
+            // Will not look in descendents past children
+
+            foreach (Record r in records)
+            {
+                Field EDID = r.find_field("EDID");
+
+                if (EDID == null)
+                {
+                    continue;
+                }
+
+                string rec_ed_id = Text.trim(new string(EDID.getData().ReadChars(EDID.dataSize)));
+
+                if (editor_id.Equals(rec_ed_id))
+                {
+                    return r;
+                }
+            }
+
+            return null;
+
+        }
+
+
+        ///
     }
 
 }

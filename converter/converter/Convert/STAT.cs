@@ -29,9 +29,9 @@ namespace Convert
             public string model_path;
         }
 
-        public static TES5.Group convert(string file_path)
+        public static TES5.Group convert(string file_path, bool ignoreFurniture=false)
         {
-            int count = 0;
+            
             TES3.ESM.open(file_path);
             
             List<STRUCT_STAT> list_stat = new List<STRUCT_STAT>();
@@ -71,7 +71,7 @@ namespace Convert
 
             // Make TES5
 
-            count += 1;
+            
             TES5.Group stat_grup = new TES5.Group("STAT");
 
             foreach (STRUCT_STAT stat in list_stat)
@@ -88,9 +88,12 @@ namespace Convert
 
                 stat_tes5.addField(new TES5.Field("DNAM", mstream.ToArray()));
 
-
+                if (!ignoreFurniture)
+                {
+                    Convert.FURN.consider(stat.model_path, stat_tes5);
+                }
                 stat_grup.addRecord(stat_tes5);
-                count = +1;
+                
 
                // ModelConverter.convert(stat.model_path,"stat",true);
             }

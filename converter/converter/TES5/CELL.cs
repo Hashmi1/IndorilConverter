@@ -17,6 +17,8 @@ using System.Text;
 using System.IO;
 using Utility;
 
+// TODO: Make initializations in constructor
+
 namespace TES5
 {
     class CELL : Record
@@ -25,6 +27,8 @@ namespace TES5
             : base("CELL", editor_id)
         {
             this.editor_id = editor_id;
+
+            Interior = true;
 
             cell_references = new Group(id, Group.TYPE.CELL_CHILD);
             temp_references = new Group(id, Group.TYPE.TEMP_REFR);
@@ -181,7 +185,7 @@ namespace TES5
             
             if (size / 2048f <= 10.0f)
             {
-                REFR water_mesh = new REFR(ACTI.get_water_instance().id, max_x-min_x, max_y-min_y, height, 0, 0, 0, size / 2048f);
+                REFR water_mesh = new REFR(ACTI.get_water_instance().id, (max_x+min_x)/2f, (max_y+min_y)/2f, height, 0, 0, 0, size / 2048f);
                 persistent_references.addRecord(water_mesh);
             }
 

@@ -75,7 +75,7 @@ namespace Utility
 
         public static void confirm(Object obj)
         {
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(obj);
             Console.ResetColor();
             Console.ReadLine();
