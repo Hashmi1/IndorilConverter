@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Utility;
 
 namespace TES3
 {
@@ -42,6 +43,16 @@ namespace TES3
 
 
 
+        }
+
+        public string readString()
+        {
+            return Text.toString(getData().ReadChars(size));
+        }
+
+        public UInt32 readUInt32()
+        {
+            return getData().ReadUInt32();
         }
 
         public BinaryReader getData()

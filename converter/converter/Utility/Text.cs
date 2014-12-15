@@ -19,6 +19,11 @@ namespace Utility
 
     class Text
     {
+        public static string toString(char[] zstring)
+        {
+            return trim(new string(zstring));
+        }
+
         public static string toHex(uint id)
         {
             string st = id.ToString("X");
@@ -40,10 +45,11 @@ namespace Utility
 
         public static string model_path_string(string txt)
         {
-            return Text.trim(new string(model_path(txt)));
+            //Encoding.ASCII.GetString(
+            return Text.trim(Encoding.ASCII.GetString(model_path(txt)));
         }
 
-        public static char[] model_path(string txt)
+        public static byte[] model_path(string txt)
         {
             txt = txt.Split('\\')[txt.Split('\\').Length - 1];
             txt = trim(txt);
@@ -53,7 +59,7 @@ namespace Utility
             return zstring(txt);
         }
 
-        public static char[] zstring(string txt)
+        public static byte[] zstring(string txt)
         {
             txt = trim(txt);
 
@@ -62,8 +68,9 @@ namespace Utility
                 txt = txt + '\0';
             }
 
-            return txt.ToCharArray();
+            
 
+            return Encoding.ASCII.GetBytes(txt.ToCharArray());
         }
 
         public static string trim(string txt)
@@ -80,10 +87,10 @@ namespace Utility
 
         public static string editor_id_string(string txt)
         {
-            return Text.trim(new string(editor_id(txt)));
+            return Text.trim(Encoding.ASCII.GetString(editor_id(txt)));
         }
 
-        public static char[] editor_id(string txt)
+        public static byte[] editor_id(string txt)
         {
             txt = txt.Replace("_", "__"); // DOUBLE: Prevent editor_id conflicts when converting for example x_y and x.y 
          

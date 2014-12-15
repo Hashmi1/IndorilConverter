@@ -102,7 +102,7 @@ namespace Convert.REFERENCE
 
                     if (r.isType("CELL"))
                     {
-                        TES5.Field DATA = r.find_field("DATA");
+                        TES5.Field DATA = r.try_find_field("DATA");
 
                         if (DATA == null)
                         {
@@ -121,7 +121,7 @@ namespace Convert.REFERENCE
                             continue;
                         }
 
-                        TES5.Field EDID = r.find_field("EDID");
+                        TES5.Field EDID = r.try_find_field("EDID");
 
                         if (EDID != null)
                         {

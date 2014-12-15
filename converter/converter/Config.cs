@@ -52,6 +52,7 @@ using System.Text;
 
             public class Templates
             {
+                public static string characters = "templates\\faces.esp";
                 public static string lighting = "templates\\ltmp.esp";
                 public static string furniture = "templates\\furn.esp";
             }

@@ -98,7 +98,7 @@ namespace Convert.REFERENCE
 
                     if (r.isType("CELL"))
                     {
-                        TES5.Field xclc = r.find_field("XCLC");
+                        TES5.Field xclc = r.try_find_field("XCLC");
 
                         if (xclc != null)
                         {

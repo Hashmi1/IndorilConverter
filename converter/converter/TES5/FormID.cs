@@ -96,7 +96,11 @@ namespace TES5
         }
 
         public static uint getNew()
-        {                 
+        {            
+            if (current == 0x10036C9)
+            {
+                Log.info("Here");
+            }
             return (current++);
         }
 

@@ -35,7 +35,31 @@ namespace TES5
             return compressed;
         }
 
-       
+
+        public void clone(Record r, string editor_id)
+        {
+            this.compressed = r.isCompressed();
+            this.type = r.type;
+            this.dataSize = r.dataSize;
+            this.flags = r.flags;
+
+            Field EDID = r.find_field_OR_FAIL("EDID", "To Be Cloned Record has no Editor_ID, is it a REFR?");
+            EDID.replaceData(Text.editor_id(editor_id));
+
+            this.id = FormID.set(editor_id);
+
+            this.revision = r.revision;
+            this.version = r.version;
+            this.unknown = r.unknown;
+            this.fields = new List<Field>();// r.fields;
+
+            foreach (Field f in r.fields)
+            {
+                this.fields.Add(new Field(f));
+            }
+        }
+
+  
 
         // START Data
         public char[] type;
@@ -252,6 +276,13 @@ namespace TES5
 
 
             //
+
+            if (id == 0x10036C9)
+            {
+                //string edid = find_field_OR_FAIL("EDID", "").readString();
+                //Log.info(edid);
+                Log.info("No");
+            }
             
             //
 
@@ -314,7 +345,19 @@ namespace TES5
 
         }
 
-        public Field find_field(string f_name)
+        // Finds the given FIELD or reports error if not found
+        public Field find_field_OR_FAIL(string f_name, string error)
+        {
+            Field f = try_find_field(f_name);
+            if (f == null)
+            {
+                Log.error("Field: " + f_name + " not found in Record: " + new string(type) + " formid: " + id + '\n' + '\n' + error);
+            }
+
+            return f;
+        }
+
+        public Field try_find_field(string f_name)
         {
             foreach (Field f in fields)
             {

@@ -99,7 +99,7 @@ namespace Utility
         {         
             Console.WriteLine(obj);
             Console.Write("Press ENTER to exit ...");
-            Console.Read();
+            Console.ReadLine();
             System.Environment.Exit(0);
         }
 

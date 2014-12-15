@@ -51,6 +51,19 @@ namespace TES5
 
         }
 
+        public Field(Field f)
+        {
+            byte[] data_ = f.getData().ReadBytes(f.dataSize);
+
+            this.type = f.type;
+
+            this.data = new MemoryStream();
+            this.data.Write(data_, 0, data_.Length);
+            this.dataSize = (UInt16)data_.Length;
+            this.data.Position = 0;
+        }
+
+
         public Field(string type_, char[] zstring)
         {
             this.type = type_.ToCharArray(0, 4);
@@ -68,6 +81,12 @@ namespace TES5
             this.data.Write(data_, 0, data_.Length);
             this.dataSize = (UInt16)data_.Length;
             this.data.Position = 0;
+        }
+
+        public string readString()
+        {
+            return Text.toString(getData().ReadChars(dataSize));
+
         }
 
         public bool isType(string type_str)

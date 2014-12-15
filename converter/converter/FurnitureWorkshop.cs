@@ -88,7 +88,7 @@ namespace converter
 
         public static void make_marker_config()
         {
-            TES5.ESM esm = new TES5.ESM();
+            TES5.ESM esm = new TES5.ESM(Config.Paths.Temporary.furn_placement_esp);
             esm.add_masters("Skyrim.esm");
 
             TextWriter file_01 = File.CreateText(Config.Paths.Temporary.furn_linker);
@@ -125,14 +125,8 @@ namespace converter
             HashSet<string> model_lst = new HashSet<string>();
             foreach (TES5.Record record in grps)
             {
-                TES5.Field modl = record.find_field("MODL");
+                TES5.Field modl = record.find_field_OR_FAIL("MODL", "STAT found with no model.");
                 
-
-                if (modl == null)
-                {
-                    Log.error("STAT found with no model.");
-                }
-
                 string model = Text.trim(new string(modl.getData().ReadChars(modl.dataSize))).ToLower();
 
                 if (!(model.Contains("chair") || model.Contains("bench") || model.Contains("bed") || model.Contains("stool") || model.Contains("hammock")))
@@ -240,7 +234,7 @@ namespace converter
 
             TES5.ESM esm = TES5.ESM.read_from_file(Config.Paths.Temporary.furn_placement_esp);
             TES5.Group ref_grp = null;
-            foreach (TES5.Group g in esm.groups)
+            foreach (TES5.Group g in esm.getGroups())
             {
                 ref_grp = g.find_group(cell_id, TES5.Group.TYPE.TEMP_REFR);
                 if (ref_grp != null)

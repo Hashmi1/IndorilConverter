@@ -226,9 +226,11 @@ namespace TES5
 
             return false;
         }
-
-        public bool isLabel(string type_str)
+        
+        public bool hasLabel(string type_str)
         {
+            type_str = type_str.ToUpper();
+
             if (!isType(TYPE.TOP))
             {
                 Log.error("Group is not TOP type. Can not compare CHAR label.");
@@ -264,10 +266,10 @@ namespace TES5
         public Record find_record(string editor_id)
         {
             // Will not look in descendents past children
-
+            // Warning Can be SLOW depending on size
             foreach (Record r in records)
             {
-                Field EDID = r.find_field("EDID");
+                Field EDID = r.try_find_field("EDID");
 
                 if (EDID == null)
                 {

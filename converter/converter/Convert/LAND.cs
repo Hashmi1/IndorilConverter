@@ -51,7 +51,7 @@ namespace Convert
             tesannwyn.convert(file, Config.Paths.tmp + "tmp.esp");
 
             ESM esm = ESM.read_from_file(Config.Paths.tmp + "tmp.esp");
-            List<Group> grps = esm.groups;
+            List<Group> grps = esm.getGroups();
             
             new LAND().renumber_formids(grps);
             

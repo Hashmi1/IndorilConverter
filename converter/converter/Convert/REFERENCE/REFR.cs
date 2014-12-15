@@ -28,6 +28,24 @@ namespace Convert.REFERENCE
             //ext_index.make(exterior_cells); // TODO: Remove comment after testing
         }
 
+        private static void handle_owner(string owner, TES5.REFR refr)
+        {
+            if (owner == null)
+            {
+                return;
+            }
+
+            uint owner_id = TES5.FormID.get(owner);
+            if (owner_id != 0)
+            {                
+                refr.add_owner(owner_id);
+                return;
+            }
+
+            Log.confirm("OWNER: '" + owner + "' has not been converted. Will not be assigned to owned references.");
+
+        }
+
         public static void add_references(string filename, List<TES5.Group> interiors,List<TES5.Group> exteriors)
         {
             make_indices(interiors, exteriors);
@@ -80,7 +98,9 @@ namespace Convert.REFERENCE
                             skyrim_reference.configure_light();
                         }
                     }
-
+                    
+                    handle_owner(refr.owner, skyrim_reference);
+                    
                     if (cell.interior)
                     {
 

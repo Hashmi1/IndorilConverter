@@ -448,6 +448,10 @@ Number of unique main headers = 42
 
 20: BODY =  1125 (    75,     92.73,    103)
 	Body Parts
+
+	NAME = Editor_ID (Null Terminated String)
+	MODL = Model Path (Null Terminated String)
+	FNAM = Race Name (Null Terminated String)
 	BYDT = Body part data (4 bytes)
 		byte Part
 			0 = Head
@@ -466,9 +470,9 @@ Number of unique main headers = 42
 			13 = Clavicle
 			14 = Tail
 		byte Vampire
-		byte Flags
-			1 = Female
-			2 = Playable
+		byte Flags (bit flags)
+			0x01 = Female
+			0x02 = NOT Playable
 		byte PartType
 			0 = Skin
 			1 = Clothing

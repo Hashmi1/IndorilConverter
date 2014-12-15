@@ -65,82 +65,38 @@ namespace Convert
             has_read = true;
 
             TES5.ESM esm = TES5.ESM.read_from_file(Config.Paths.light_templates);
-
-            foreach (TES5.Group g in esm.groups)
-            {
-                if (g.isType(TES5.Group.TYPE.TOP) && Encoding.ASCII.GetString(g.label).Equals("LGTM"))
-                {
-                    foreach (TES5.Record r in g.records)
-                    {
-                        
-                        # region assign templates
-                        TES5.Field edid = r.find_field("EDID");
-                        string editor_id = Text.trim(new string(edid.getData().ReadChars(edid.dataSize)));
-                        r.reset_formid(editor_id);
-                        Log.info(editor_id);
-                        if (editor_id.Equals("mw_ltmp_default"))
-                        {
-                            default_ = r;
-                        }
-
-                        else if (editor_id.Equals("mw_ltmp_daedric"))
-                        {
-                            daedric = r;
-                        }
-
-                        else if (editor_id.Equals("mw_ltmp_fort"))
-                        {
-                            fort = r;
-                        }
-
-                        else if (editor_id.Equals("mw_ltmp_dwemer"))
-                        {
-                            dwemer = r;
-                        }
-
-                        else if (editor_id.Equals("mw_ltmp_tomb"))
-                        {
-                            tomb = velothi = r;
-                        }
-
-                        else if (editor_id.Equals("mw_ltmp_hlaalu"))
-                        {
-                            hlaalu = r;
-                        }
-
-                        else if (editor_id.Equals("mw_ltmp_redoran"))
-                        {
-                            redoran = r;
-                        }
-
-                        else if (editor_id.Equals("mw_ltmp_telvanni"))
-                        {
-                            telvanni = r;
-                        }
-
-                        else if (editor_id.Equals("mw_ltmp_mine"))
-                        {
-                            cave = mine = r;
-                        }
-
-                        else if (editor_id.Equals("mw_ltmp_imperial"))
-                        {
-                            imperial = r;
-                        }
-                        #endregion
-
-                    }
-
-                }
-            }
+            TES5.Group LGTM_GRUP = esm.find_TOP_group_OR_FAIL("LGTM","No LGTM Group in Template File");
 
 
+            default_ = LGTM_GRUP.find_record("mw_ltmp_default");
+            daedric = LGTM_GRUP.find_record("mw_ltmp_daedric");
+            fort = LGTM_GRUP.find_record("mw_ltmp_fort");
+            dwemer = LGTM_GRUP.find_record("mw_ltmp_dwemer");
+            tomb = velothi = LGTM_GRUP.find_record("mw_ltmp_tomb");
+            hlaalu = LGTM_GRUP.find_record("mw_ltmp_hlaalu");
+            redoran = LGTM_GRUP.find_record("mw_ltmp_redoran");
+            telvanni = LGTM_GRUP.find_record("mw_ltmp_telvanni");
+            cave = mine = LGTM_GRUP.find_record("mw_ltmp_mine");
+            imperial = LGTM_GRUP.find_record("mw_ltmp_imperial");
+            
             if (default_ == null || hlaalu == null || fort == null || imperial == null || redoran == null || telvanni == null || dwemer == null || daedric == null || cave == null || tomb == null)
             {
                 Log.error("TES5:LTMP Not all Lighting templates were assigned");
             }
 
-                      
+
+            default_.reset_formid("mw_ltmp_default");
+            daedric.reset_formid("mw_ltmp_daedric");
+            fort.reset_formid("mw_ltmp_fort");
+            dwemer.reset_formid("mw_ltmp_dwemer");
+            tomb.reset_formid("mw_ltmp_tomb");
+            hlaalu.reset_formid("mw_ltmp_hlaalu");
+            redoran.reset_formid("mw_ltmp_redoran");
+            telvanni.reset_formid("mw_ltmp_telvanni");
+            cave.reset_formid("mw_ltmp_mine");
+            imperial.reset_formid("mw_ltmp_imperial");
+            
+
 
         }
 

@@ -54,6 +54,7 @@ namespace TES3
         public float yR = 0;
         public float zR = 0;
 
+        public string owner = null;
         
                 
         public int read(int readable_size)
@@ -110,6 +111,10 @@ namespace TES3
 
                 }
 
+                else if (subrec.isType("ANAM"))
+                {
+                    owner = Text.trim(new string(srec_data.ReadChars(subrec.size)));
+                }
 
 
             }

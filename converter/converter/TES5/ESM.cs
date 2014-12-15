@@ -22,14 +22,54 @@ namespace TES5
     class ESM
     {
 
-        public List<Group> groups { get; private set; }
-        private TES4 header = new TES4(1);
-        
-        public ESM()
+        private List<Group> groups;
+
+        public List<Group> getGroups()
         {
+            if (groups == null)
+            {
+                Log.error("No Groups in ESM.");
+            }
+
+            return groups;
+        }
+        
+        private TES4 header = new TES4(1);
+        private string filename_;
+
+        public ESM(string filename)
+        {
+            this.filename_ = filename;
             groups = new List<Group>();
             header = new TES4(1);
         }
+
+        public Group find_TOP_group_OR_FAIL(string grup, string error="")
+        {
+            Group g = try_find_TOP_group(grup);
+
+            if (g == null)
+            {
+                Log.error("Group: " + grup + " was not found ESM:" + filename_ + '\n' + error);
+            }
+
+            return g;
+        }
+
+        public Group try_find_TOP_group(string grup)
+        {
+            foreach (Group g in groups)
+            {
+                if (g.isType(Group.TYPE.TOP) && g.hasLabel(grup))
+                {
+                    return g;
+                }                
+                
+            }
+
+            return null;
+        }
+
 
         public void add_masters(params string[] files)
         {
@@ -55,8 +95,9 @@ namespace TES5
             {
                 Log.error("TES5.ESM asked to open non-existing file: " +filename);
             }
-
-            ESM esm = new ESM();
+                        
+            ESM esm = new ESM(filename);
+            esm.filename_ = filename;
 
             FileStream fstream = new FileStream(filename,FileMode.Open);
             BinaryReader reader = new BinaryReader(fstream);

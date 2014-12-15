@@ -37,10 +37,9 @@ namespace Utility
             return (flag | option);
         }
 
-        static uint remove(uint flag)
+        public static uint remove(uint flag, uint option)
         {
-            Log.error("Remove Flag not implemented");
-            return 0;
+            return (flag & ~option);
         }
 
         public static bool isSet(uint flag, uint option)

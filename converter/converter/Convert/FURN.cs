@@ -98,11 +98,13 @@ namespace Convert
             furn = new TES5.Group("FURN");
             
             TES5.ESM esm = TES5.ESM.read_from_file(Config.Paths.Templates.furniture);
-            
-            chair = esm.groups[0].find_record("mw_chair_marker");
-            bed = esm.groups[0].find_record("mw_bed_marker");
-            bench = esm.groups[0].find_record("mw_bench_marker");
-            bed_double = esm.groups[0].find_record("mw_doublebed_marker");
+
+            TES5.Group furn_g = esm.find_TOP_group_OR_FAIL("FURN");
+
+            chair = furn_g.find_record("mw_chair_marker");
+            bed = furn_g.find_record("mw_bed_marker");
+            bench = furn_g.find_record("mw_bench_marker");
+            bed_double = furn_g.find_record("mw_doublebed_marker");
 
             if (chair == null || bed == null || bench == null || bed_double == null)
             {

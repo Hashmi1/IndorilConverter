@@ -15,12 +15,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Utility;
 
 namespace TES3
 {
 
     class Record
     {
+        Dictionary<string, List<SubRecord>> subrecord_index = new Dictionary<string, List<SubRecord>>();
 
         public char[] Name;
         public int Size;
@@ -50,6 +52,15 @@ namespace TES3
 
                     SubRecord subrec = new SubRecord();
                     subrec.read();
+
+                    string srec_name = Text.trim(new string(subrec.name));
+                    if (!subrecord_index.ContainsKey(srec_name))
+                    {
+                        subrecord_index.Add(Text.trim(new string(subrec.name)), new List<SubRecord>());
+                    }
+                    subrecord_index[srec_name].Add(subrec);
+                    
+
                     subRecords.Add(subrec);
                     read_size = read_size + subrec.size + 8;
 
@@ -58,7 +69,7 @@ namespace TES3
 
             
         }
-
+        
         public void dump()
         {
             Console.WriteLine(Name);
@@ -68,8 +79,34 @@ namespace TES3
 
         }
 
-        
+        public SubRecord find_first(string srec_name, bool acceptNULL=false)
+        {            
+            if (!subrecord_index.ContainsKey(srec_name) || subrecord_index[srec_name].Count == 0)
+            {
+                if (acceptNULL)
+                {
+                    return null;
+                }
+                Log.error("Subrecord " + srec_name + " not found in " +new string(this.Name));
+            }
 
+            return subrecord_index[srec_name][0];
+        }
+
+        public List<SubRecord> find_all(string srec_name, bool AcceptNULL=false)
+        {
+            if (!subrecord_index.ContainsKey(srec_name) || subrecord_index[srec_name].Count == 0)
+            {
+                if (AcceptNULL == true)
+                {
+                    return new List<SubRecord>();
+                }
+                Log.error("Subrecord " + srec_name + " not found in " + new string(this.Name));
+            }
+
+            return subrecord_index[srec_name];
+        }
+       
 
     }
 

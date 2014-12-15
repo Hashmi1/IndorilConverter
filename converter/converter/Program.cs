@@ -28,14 +28,19 @@ namespace Program
         static void Main(string[] args)
         {
 
-            TES5.ESM esm = new TES5.ESM();
+            //Convert.NPC_.presets();
+            //Log.exit("DONE");
+
+           
+            
+            TES5.ESM esm = new TES5.ESM("final.esp");
             esm.add_masters("Skyrim.esm");
-                        
+            
             TES5.Group[] ltex = Convert.LTEX.convert(Config.Paths.mw_esm);
             //TES5.Group door = Convert.DOOR.convert(Config.Paths.mw_esm);
             TES5.Group furn = Convert.FURN.convert();
             TES5.Group acti = Convert.ACTI.getInstance().convert(Config.Paths.mw_esm);
-
+            TES5.Group npc_ = Convert.NPC_.convert(Config.Paths.mw_esm);
             TES5.Group stat = Convert.STAT.convert(Config.Paths.mw_esm);
 
             TES5.Group lgtm = Convert.LGTM.convert();
@@ -57,6 +62,7 @@ namespace Program
             esm.add_group(ltex[0]);
             esm.add_group(ltex[1]);
             esm.add_group(stat);
+            esm.add_group(npc_);
             esm.add_group(furn);
             esm.add_group(lgtm);
             esm.add_group(acti);

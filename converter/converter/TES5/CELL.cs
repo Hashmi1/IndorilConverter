@@ -187,6 +187,7 @@ namespace TES5
             {
                 REFR water_mesh = new REFR(ACTI.get_water_instance().id, (max_x+min_x)/2f, (max_y+min_y)/2f, height, 0, 0, 0, size / 2048f);
                 persistent_references.addRecord(water_mesh);
+                water_mesh.make_persistent();
             }
 
             else

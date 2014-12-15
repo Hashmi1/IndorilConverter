@@ -101,6 +101,16 @@ namespace TES5
 
         }
 
+        public void make_persistent()
+        {
+            this.flags = BinaryFlag.set(this.flags, 0x400);
+        }
+
+        public void add_owner(uint owner_id)
+        {
+            addField(new Field("XOWN", Binary.toBin((uint)(owner_id))));
+        }
+
         public Placement loc;
 
         public void attach_portal(REFR other_end)
@@ -151,14 +161,9 @@ namespace TES5
             this.version = r.version;
             this.unknown = r.unknown;
             this.fields = r.fields;
-            
-            Field data = r.find_field("DATA");
-            Field name = r.find_field("NAME");
 
-            if (data == null)
-            {
-                Log.error("TES5.REFR.interpret() No Placement info found in given record");
-            }
+            Field data = r.find_field_OR_FAIL("DATA", "TES5.REFR.interpret() No Placement info found in given record");
+            Field name = r.find_field_OR_FAIL("NAME","REFR has no base type?");
 
             BinaryReader br = data.getData();
             loc = new Placement(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
@@ -168,6 +173,20 @@ namespace TES5
 
         public REFR(uint formid,float x, float y, float z, float xR, float yR, float zR,float scale = 1f) : base("REFR")
         {
+
+            if ((id == 0x10036C9 ||
+id == 0x10036CA ||
+id == 0x10036CB ||
+id == 0x10036CC ||
+id == 0x1006596 ||
+id == 0x1006597 ||
+id == 0x1006598 || 
+id == 0x1006599 ||
+id == 0x100659A ||
+id == 0x100659B))
+            {
+                Log.info(id);
+            }
 
             base_id = formid;
 
