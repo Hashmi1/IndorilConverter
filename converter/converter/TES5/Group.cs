@@ -191,7 +191,7 @@ namespace TES5
                 }
 
                 turn.Add(1);
-                Record rec = new Record();
+                Record rec = new Record(null);
                 rec.read(input);
                 //Log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + rec.id);
                 //rec.dump();
@@ -263,6 +263,27 @@ namespace TES5
             return null;
         }
 
+        public void remove_records(string type)
+        {
+                        
+        }
+
+        public List<Record> find_record_type(string type)
+        {
+            List<Record> results = new List<Record>();
+
+            foreach (Record r in records)
+            {
+                if (r.isType(type))
+                {
+                    results.Add(r);
+                }
+            }
+
+            return results;
+
+        }
+
         public Record find_record(string editor_id)
         {
             // Will not look in descendents past children
@@ -276,7 +297,7 @@ namespace TES5
                     continue;
                 }
 
-                string rec_ed_id = Text.trim(new string(EDID.getData().ReadChars(EDID.dataSize)));
+                string rec_ed_id = Text.trim(new string(EDID.getData().ReadChars(EDID.data_size())));
 
                 if (editor_id.Equals(rec_ed_id))
                 {

@@ -127,7 +127,7 @@ namespace converter
             {
                 TES5.Field modl = record.find_field_OR_FAIL("MODL", "STAT found with no model.");
                 
-                string model = Text.trim(new string(modl.getData().ReadChars(modl.dataSize))).ToLower();
+                string model = Text.trim(new string(modl.getData().ReadChars(modl.data_size()))).ToLower();
 
                 if (!(model.Contains("chair") || model.Contains("bench") || model.Contains("bed") || model.Contains("stool") || model.Contains("hammock")))
                 {

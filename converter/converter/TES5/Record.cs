@@ -20,7 +20,6 @@ using Utility;
 namespace TES5
 {
    
-
     class Record
     {
         public enum FLAGS : uint
@@ -70,8 +69,11 @@ namespace TES5
         public UInt16 version;
         public UInt16 unknown;
         public List<Field> fields = new List<Field>();
+
         //byte[] compressed_data;
         // END Data
+
+
 
         public void setFlag(uint option)
         {
@@ -88,14 +90,13 @@ namespace TES5
         {
             this.id = FormID.set(editor_id);
         }
-
-        public Record()
-        {
-        }
-
-                
+        
         public Record(string type,bool compressed=false)
         {
+            if (type == null)
+            {
+                return;
+            }
             
             this.type = type.ToCharArray(0, 4);
             //this.flags = flags;
@@ -133,7 +134,7 @@ namespace TES5
         }
 
         public bool isType(string type_str)
-        {
+        {            
             return type_str.Equals(new string(type));
         }
                         
@@ -151,7 +152,7 @@ namespace TES5
 
                 for (int i = 0; i < fields.Count; i++)
                 {
-                    size = size + fields[i].dataSize + 6;
+                    size = size + (uint)fields[i].data_size() + 6;
                 }
 
                 this.dataSize = size;
@@ -205,7 +206,10 @@ namespace TES5
 
             long reading_size = dataSize;
 
-            //Log.info("     Reading Record: " + new string(type) + " " +id.ToString("X") + " >>> " + uint.MaxValue.ToString("X"));
+            if (Config.GeneralSettings.verbose)
+            {
+                Log.info("     Reading Record: " + new string(type) + " " + id.ToString("X") + " >>> " + uint.MaxValue.ToString("X"));
+            }
 
             // If compressed flag is set then uncompress the data
             if (BinaryFlag.isSet(flags,0x00040000))
@@ -250,41 +254,35 @@ namespace TES5
                 Field field = new Field();
                 field.read(input);
                 fields.Add(field);
-                read_data = read_data + field.dataSize + 6;
+
+                if (field.isBig)
+                {
+                    read_data = read_data + (uint)field.data_size() + 6 + /*XXX size*/ + 10;
+                }
+                else
+                {
+                    read_data = read_data + (uint)field.data_size() + 6;
+                }
             }
 
             
 
         }
 
-        public void dumps()
+        public void dump()
         {
-            Log.info("Record dump <");
-            Log.info(new string(type));
-            Log.info(dataSize);
-            Log.info(flags);
-            Log.info(id);
-            Log.info(revision);
-            Log.info(version);
-            Log.info(unknown);
-            Log.info(fields);
-            Log.info(">Record dump");
+            Log.info(new string(type) + "  ....  " + dataSize);
+            
+
+            foreach (Field f in fields)
+            {
+                Log.info("          " + new string(f.type) + "  ....  " + f.data_size());                
+            }
+
         }
 
         public void write(BinaryWriter output)
         {
-
-
-            //
-
-            if (id == 0x10036C9)
-            {
-                //string edid = find_field_OR_FAIL("EDID", "").readString();
-                //Log.info(edid);
-                Log.info("No");
-            }
-            
-            //
 
             Log.info("Writing RECORD: " + new string(type));
 

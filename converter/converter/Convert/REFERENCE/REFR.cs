@@ -42,7 +42,7 @@ namespace Convert.REFERENCE
                 return;
             }
 
-            Log.confirm("OWNER: '" + owner + "' has not been converted. Will not be assigned to owned references.");
+            //Log.confirm("OWNER: '" + owner + "' has not been converted. Will not be assigned to owned references.");
 
         }
 

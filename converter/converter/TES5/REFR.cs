@@ -113,11 +113,13 @@ namespace TES5
 
         public Placement loc;
 
+        public float scale = 1.0f;
+
         public void attach_portal(REFR other_end)
         {
             Portal_Data portal_positioning = new Portal_Data(other_end.loc.x, other_end.loc.y, other_end.loc.z, other_end.loc.xR, other_end.loc.yR, other_end.loc.zR, other_end.id);
             Field XTEL = new Field("XTEL", portal_positioning.toBin());
-            fields.Add(XTEL);
+            addField(XTEL);
         }
         
         public void configure_light()
@@ -144,7 +146,7 @@ namespace TES5
 
         public uint base_id { get; private set; }
         
-        public REFR(Record r)
+        public REFR(Record r) : base("REFR")
         {
             if (!r.isType("REFR"))
             {
@@ -169,25 +171,17 @@ namespace TES5
             loc = new Placement(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
 
             this.base_id = name.getData().ReadUInt32();
+
+            Field scale_f = r.try_find_field("XSCL");
+
+            if (scale_f != null)
+            {
+                this.scale = scale_f.getData().ReadSingle();
+            }
         }
 
         public REFR(uint formid,float x, float y, float z, float xR, float yR, float zR,float scale = 1f) : base("REFR")
-        {
-
-            if ((id == 0x10036C9 ||
-id == 0x10036CA ||
-id == 0x10036CB ||
-id == 0x10036CC ||
-id == 0x1006596 ||
-id == 0x1006597 ||
-id == 0x1006598 || 
-id == 0x1006599 ||
-id == 0x100659A ||
-id == 0x100659B))
-            {
-                Log.info(id);
-            }
-
+        {                        
             base_id = formid;
 
             loc = new Placement(x, y, z, xR, yR, zR);

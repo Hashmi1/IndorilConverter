@@ -56,13 +56,19 @@ namespace Utility
 
         public static void non_fatal_error(Object obj)
         {
+            
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine(obj);
             Console.ResetColor();
         }
 
 
-
+        public static void info_colored(Object obj, ConsoleColor col)
+        {
+            Console.ForegroundColor = col;
+            Console.WriteLine(obj);
+            Console.ResetColor();
+        }
 
         public static void info_(params Object[] objs)
         {
@@ -73,8 +79,43 @@ namespace Utility
             Console.Write('\n');
         }
 
+        public static bool ask(Object obj)
+        {
+            Console.Beep(1000, 2000);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(obj);        
+            Console.ResetColor();
+
+            string line = "";
+
+            while (!line.ToLower().Equals("y") && !line.ToLower().Equals("n"))
+            {
+                Console.WriteLine("Enter Y for YES or N for NO:");
+                line = Console.ReadLine();
+            }
+                        
+            Console.ResetColor();
+
+            if (line.ToLower().Equals("y"))
+            {
+                return true;
+            }
+
+            else if (line.ToLower().Equals("n"))
+            {
+                return false;
+            }
+
+            else
+            {
+                Log.error("Shouldn't happen");
+                return false;
+            }
+        }
+
         public static void confirm(Object obj)
         {
+            Console.Beep(1000, 2000);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(obj);
             Console.ResetColor();
@@ -84,6 +125,7 @@ namespace Utility
 
         public static void error(Object obj)
         {
+            Console.Beep(1000, 2000);
             Console.ForegroundColor = ConsoleColor.Red;
 
             Console.WriteLine("\nFatal Error Encountered:");
@@ -96,7 +138,8 @@ namespace Utility
         }
 
         public static void exit(Object obj)
-        {         
+        {
+            Console.Beep(1000, 2000);
             Console.WriteLine(obj);
             Console.Write("Press ENTER to exit ...");
             Console.ReadLine();

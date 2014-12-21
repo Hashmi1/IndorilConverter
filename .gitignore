@@ -225,3 +225,4 @@ pip-log.txt
 !tesannwyn.exe
 *.lnk
 *.nif
+NifConvert.dll

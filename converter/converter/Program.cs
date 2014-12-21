@@ -18,7 +18,9 @@ using TES3;
 using Utility;
 using System.IO;
 
+
 using External;
+using System.Threading;
 
 namespace Program
 {
@@ -27,20 +29,15 @@ namespace Program
         
         static void Main(string[] args)
         {
-
-            //Convert.NPC_.presets();
-            //Log.exit("DONE");
-
-           
             
             TES5.ESM esm = new TES5.ESM("final.esp");
             esm.add_masters("Skyrim.esm");
             
             TES5.Group[] ltex = Convert.LTEX.convert(Config.Paths.mw_esm);
-            //TES5.Group door = Convert.DOOR.convert(Config.Paths.mw_esm);
+            //TES5.Group door = Convert.DOOR.convert(ConfigNew.Paths.mw_esm);
             TES5.Group furn = Convert.FURN.convert();
             TES5.Group acti = Convert.ACTI.getInstance().convert(Config.Paths.mw_esm);
-            TES5.Group npc_ = Convert.NPC_.convert(Config.Paths.mw_esm);
+            //TES5.Group npc_ = Convert.NPC_.convert(ConfigNew.Paths.mw_esm);
             TES5.Group stat = Convert.STAT.convert(Config.Paths.mw_esm);
 
             TES5.Group lgtm = Convert.LGTM.convert();
@@ -50,7 +47,7 @@ namespace Program
             TES5.Group light = Convert.LIGH.convert(Config.Paths.mw_esm);
             
             TES5.Group cell = Convert.CELL.convert(Config.Paths.mw_esm);
-            //List<TES5.Group> wrld = Convert.LAND.convert(Config.Paths.mw_esm);
+            //List<TES5.Group> wrld = Convert.LAND.convert(ConfigNew.Paths.mw_esm);
 
             List<TES5.Group> cell_grp = new List<TES5.Group>();
             cell_grp.Add(cell);
@@ -62,7 +59,7 @@ namespace Program
             esm.add_group(ltex[0]);
             esm.add_group(ltex[1]);
             esm.add_group(stat);
-            esm.add_group(npc_);
+            //esm.add_group(npc_);
             esm.add_group(furn);
             esm.add_group(lgtm);
             esm.add_group(acti);

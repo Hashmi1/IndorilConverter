@@ -20,6 +20,7 @@ using System.IO;
 
 namespace TES5.NPC
 {
+    /*
     public enum Skill_Index : int
     {
         OneHanded = 0,
@@ -85,4 +86,5 @@ namespace TES5.NPC
 
 
     }
+     * */
 }

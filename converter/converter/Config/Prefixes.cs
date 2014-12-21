@@ -15,20 +15,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Convert
+namespace Config
 {
-    class ModelConverter
-    {        
-        public static bool convert(string path, string type,bool incremental)
-        {
-            if (Config.Ignored.ignored_models.Contains(path.ToLower()) || Config.Ignored.ignored_model_folders.Contains(path.Split('\\').First()))
-            {
-                return false;
-            }
-
-            External.NifConvert nconvert = new External.NifConvert();
-            nconvert.convert(path,type,incremental);
-            return false;
-        }
+    public class Prefixes
+    {
+        public static string converted_meshes = "morrowind\\";
+        public static string converted_textures = "textures\\morrowind\\";
+        public static string converted_editor_ids = "mw_";
     }
 }

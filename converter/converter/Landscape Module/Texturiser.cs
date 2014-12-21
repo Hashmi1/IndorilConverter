@@ -152,7 +152,7 @@ namespace Landscape_Module
             BinaryReader vtxt_data = VTXT.getData();
 
             int read_data = 0;
-            while (read_data < VTXT.dataSize)
+            while (read_data < VTXT.data_size())
             {
                 int position = vtxt_data.ReadUInt16(); // position
                 vtxt_data.ReadByte(); //unknown

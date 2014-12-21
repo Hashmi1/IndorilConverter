@@ -95,7 +95,7 @@ namespace Convert
                 stat_grup.addRecord(stat_tes5);
                 
 
-               // ModelConverter.convert(stat.model_path,"stat",true);
+                ModelConverter.convert(stat.model_path,"stat",true);
             }
 
             

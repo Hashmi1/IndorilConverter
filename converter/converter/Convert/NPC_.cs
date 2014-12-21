@@ -19,7 +19,7 @@ using System.IO;
 
 namespace Convert
 {
-    class NPC_
+    class NPC
     {
         public static Dictionary<string, TES5.Record> body_templates = new Dictionary<string, TES5.Record>();
 
@@ -103,7 +103,7 @@ namespace Convert
             }
 
             BinaryReader bw = new BinaryReader(new FileStream("tmp\\Skyrim.esm",FileMode.Open));
-            TES5.Record head = new TES5.Record();
+            TES5.Record head = new TES5.Record("TES4");
 
             head.read(bw);
 

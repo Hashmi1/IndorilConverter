@@ -50,7 +50,7 @@
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Program.Program</StartupObject>
+    <StartupObject>NavMesh.StandAlone</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ionic.Zip.Reduced">
@@ -66,7 +66,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config.cs" />
+    <Compile Include="Config\GeneralSettings.cs" />
+    <Compile Include="Config\Ignored.cs" />
+    <Compile Include="Config\NavMesh.cs" />
+    <Compile Include="Config\Paths.cs" />
+    <Compile Include="Config\Prefixes.cs" />
     <Compile Include="Convert\ACTI.cs" />
     <Compile Include="Convert\FACT.cs" />
     <Compile Include="Convert\Generic.cs" />
@@ -100,6 +104,9 @@
     <Compile Include="Landscape Module\Texturiser.cs" />
     <Compile Include="Landscape Module\World.cs" />
     <Compile Include="Lighting Module\Shadow.cs" />
+    <Compile Include="NavMesh\Matlib.cs" />
+    <Compile Include="NavMesh\StandAlone.cs" />
+    <Compile Include="NavMesh\Generator.cs" />
     <Compile Include="TES3\CELL.cs" />
     <Compile Include="TES3\LIGH.cs" />
     <Compile Include="TES3\NPC_.cs" />
@@ -114,14 +121,17 @@
     <Compile Include="TES5\Field.cs" />
     <Compile Include="TES5\Flags.cs" />
     <Compile Include="TES5\Group.cs" />
-    <Compile Include="TES5\LAND.cs" />
+    <Compile Include="TES5\ESM_Index.cs" />
     <Compile Include="TES5\LIGH.cs" />
     <Compile Include="Convert\LGTM.cs" />
+    <Compile Include="TES5\NVNM.cs" />
     <Compile Include="TES5\NPC\ACBS.cs" />
     <Compile Include="TES5\NPC\DNAM.cs" />
     <Compile Include="TES5\NPC\NPC_.cs" />
+    <Compile Include="TES5\PagedData.cs" />
     <Compile Include="TES5\Record.cs" />
     <Compile Include="TES5\REFR.cs" />
+    <Compile Include="TES5\StreamableData.cs" />
     <Compile Include="TES5\TES4.cs" />
     <Compile Include="Utility\Binary.cs" />
     <Compile Include="Utility\BinaryFlag.cs" />

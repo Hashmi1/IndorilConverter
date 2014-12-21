@@ -109,7 +109,7 @@ namespace Convert.REFERENCE
                             continue;
                         }
 
-                        if (DATA.dataSize < 2)
+                        if (DATA.data_size() < 2)
                         {
                             continue;
                         }
@@ -126,7 +126,7 @@ namespace Convert.REFERENCE
                         if (EDID != null)
                         {
                             BinaryReader reader = EDID.getData();
-                            string cell_id = Text.trim(new string (reader.ReadChars(EDID.dataSize)));                            
+                            string cell_id = Text.trim(new string (reader.ReadChars(EDID.data_size())));                            
                             formid_index.Add(r.id, cell_id);
                         }
                     }
